@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AuctionDocuments\**" />
+    <Compile Remove="Report\**" />
+    <EmbeddedResource Remove="AuctionDocuments\**" />
+    <EmbeddedResource Remove="Report\**" />
+    <None Remove="AuctionDocuments\**" />
+    <None Remove="Report\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MNBEC.Domain\MNBEC.Domain.csproj" />
+  </ItemGroup>
+
+
+
+</Project>

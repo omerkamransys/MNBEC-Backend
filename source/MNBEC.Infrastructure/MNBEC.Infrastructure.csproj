@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+    <PackageReference Include="MySql.Data" Version="8.0.12" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MNBEC.CacheInterface\MNBEC.CacheInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.Cache\MNBEC.Cache.csproj" />
+    <ProjectReference Include="..\MNBEC.Core\MNBEC.Core.csproj" />
+    <ProjectReference Include="..\MNBEC.InfrastructureInterface\MNBEC.InfrastructureInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.ViewModel\MNBEC.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

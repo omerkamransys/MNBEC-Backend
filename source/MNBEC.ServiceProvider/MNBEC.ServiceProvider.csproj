@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DocuSign.eSign.dll" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="1.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
+    <PackageReference Include="Sendgrid" Version="9.10.0" />
+    <PackageReference Include="System.Net.Http.Formatting.Extension" Version="5.2.3" />
+    <PackageReference Include="Twilio" Version="5.30.0" />
+    <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MNBEC.ApplicationInterface\MNBEC.ApplicationInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.Core\MNBEC.Core.csproj" />
+    <ProjectReference Include="..\MNBEC.InfrastructureInterface\MNBEC.InfrastructureInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.ServiceProviderInterface\MNBEC.ServiceProviderInterface.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.SignalR.Core">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.signalr.core\1.0.1\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,25 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+.vs
+/source/*/obj
+/source/*/bin
+/.vs
+/source/TestResults
+/source/*/appsettings.Development.json
+/source/Vitol.Enzo.Database/Vitol.Enzo.Database.dbmdl
+/source/Vitol.Enzo.Database/Vitol.Enzo.Database.jfm
+/source/appsettings.Development.json
+/-remote
+/source/Vitol.Enzo.API.Dealer/BackgroundTasks/AuctionwishlistbackgroundTask.cs
+/source/Vitol.Enzo.API.Notification.Test/SignalRClientTest.cs
+/source/TestSIgnalR
+/source/Vitol.Enzo.Database/.vs/slnx.sqlite
+/source/Vitol.Enzo.Database/.vs/VSWorkspaceState.json
+*.json

@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MNBEC.ApplicationInterface\MNBEC.ApplicationInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.CacheInterface\MNBEC.CacheInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.Core\MNBEC.Core.csproj" />
+    <ProjectReference Include="..\MNBEC.Domain\MNBEC.Domain.csproj" />
+    <ProjectReference Include="..\MNBEC.InfrastructureInterface\MNBEC.InfrastructureInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.Infrastructure\MNBEC.Infrastructure.csproj" />
+    <ProjectReference Include="..\MNBEC.ServiceConnectorInterface\MNBEC.ServiceConnectorInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.ServiceConnector\MNBEC.ServiceConnector.csproj" />
+    <ProjectReference Include="..\MNBEC.ServiceProviderInterface\MNBEC.ServiceProviderInterface.csproj" />
+    <ProjectReference Include="..\MNBEC.ViewModel\MNBEC.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.SignalR.Core">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.signalr.core\1.0.1\lib\netstandard2.0\Microsoft.AspNetCore.SignalR.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
