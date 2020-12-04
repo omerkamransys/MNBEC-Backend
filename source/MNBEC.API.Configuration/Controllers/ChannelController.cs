@@ -65,7 +65,7 @@ namespace MNBEC.API.Configuration.Controllers
 
 
         /// <summary>
-        /// Activate provides API to activate/deactivate record and returns true if action was successfull.
+        /// Activate provides API to activasste/deactivate record and returns true if action was successfull.
         /// API Path: api/Channel/activate
         /// </summary>
         /// <param name="requestVm"></param>
