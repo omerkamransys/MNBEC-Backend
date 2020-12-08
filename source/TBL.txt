@@ -1,0 +1,370 @@
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationclaimgroup')) 
+ BEGIN
+CREATE TABLE applicationclaimgroup (
+  [ClaimGroupId] int check ([ClaimGroupId] > 0) NOT NULL,
+  [ClaimGroupLabel] varchar(100) DEFAULT NULL,
+  [ClaimGroupLabelTranslation] varchar(100) DEFAULT NULL,
+  [ClaimGroupCode] varchar(10) DEFAULT NULL,
+
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([ClaimGroupId]),
+  CONSTRAINT [ClaimGroupCode_UNIQUE] UNIQUE  ([ClaimGroupCode])
+)
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationclaim')) 
+ BEGIN
+CREATE TABLE applicationclaim (
+  [ClaimId] int check ([ClaimId] > 0) NOT NULL IDENTITY,
+  [ClaimGroupId] int check ([ClaimGroupId] > 0) DEFAULT NULL,
+  [ClaimType] varchar(256) DEFAULT NULL,
+  [ClaimLabel] varchar(100) DEFAULT NULL,
+  [ClaimLabelTranslation] varchar(100) DEFAULT NULL,
+  [ClaimCode] varchar(10) DEFAULT NULL,
+
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([ClaimId]),
+  CONSTRAINT [ClaimCode_UNIQUE] UNIQUE  ([ClaimCode])
+ ,
+  CONSTRAINT [FK_applicationclaim_applicationclaimgroup_ClaimGroupId] FOREIGN KEY ([ClaimGroupId]) REFERENCES applicationclaimgroup ([ClaimGroupId]) ON DELETE NO ACTION ON UPDATE NO ACTION
+)
+
+CREATE INDEX [_idx] ON applicationclaim ([ClaimGroupId])
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationrole')) 
+ BEGIN
+CREATE TABLE applicationrole (
+  [RoleId] int check ([RoleId] > 0) NOT NULL IDENTITY,
+  [RoleName] varchar(60) NOT NULL,
+  [RoleNameTranslation] varchar(60) DEFAULT NULL,
+  [RoleNameCode] varchar(10) DEFAULT NULL,
+  [NormalizedNameRoleName] varchar(60) DEFAULT NULL,
+  [RoleDescription] varchar(256) DEFAULT NULL,
+
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([RoleId])
+);
+
+CREATE INDEX [RoleNameIndex] ON applicationrole ([RoleName]);
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'ApplicationUser')) 
+ BEGIN
+CREATE TABLE ApplicationUser (
+  [UserId] int check ([UserId] > 0) NOT NULL IDENTITY,
+  [UserName] varchar(256) NOT NULL,
+  [NormalizedUserName] varchar(256) DEFAULT NULL,
+  [FirstName] varchar(60) DEFAULT NULL,
+  [LastName] varchar(60) DEFAULT NULL,
+
+  [IdentificationNumber] varchar(20) NOT NULL,  
+  [Address1] varchar(100) DEFAULT NULL,
+  [Address2] varchar(100) DEFAULT NULL,
+  [CityId] int check ([CityId] > 0) DEFAULT  NULL,
+  [StateId] int check ([StateId] > 0) DEFAULT  NULL,
+  [PostalCode] varchar(20) DEFAULT NULL,
+
+  [Email] varchar(256) DEFAULT NULL,
+  [NormalizedEmail] varchar(256) DEFAULT NULL,
+  [EmailConfirmed] binary(1) NOT NULL,
+  [PasswordHash] varchar(256) DEFAULT NULL ,
+  [SecurityStamp] varchar(256) DEFAULT NULL ,
+  [ConcurrencyStamp] varchar(256) DEFAULT NULL ,
+  [PhoneNumber] varchar(20) DEFAULT NULL,
+  [PhoneNumberConfirmed] binary(1) NOT NULL,
+  [TwoFactorEnabled] binary(1) NOT NULL,
+  [LockoutEnd] datetime2(0) DEFAULT NULL,
+  [LockoutEnabled] binary(1) NOT NULL,
+  [AccessFailedCount] int NOT NULL,
+  
+  [LoginDate] datetime2(0) DEFAULT NULL,
+  
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([UserId]),
+  CONSTRAINT [UserNameIndex] UNIQUE ([UserName])
+
+);
+
+CREATE INDEX [EmailIndex] ON ApplicationUser ([Email]);
+CREATE INDEX [IX_User_StateId] ON ApplicationUser ([StateId]);
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationuserrole')) 
+ BEGIN
+
+ CREATE TABLE applicationuserrole (
+  [UserRoleId] int check ([UserRoleId] > 0) NOT NULL IDENTITY,
+  [UserId] int check ([UserId] > 0) NOT NULL,
+  [RoleId] int check ([RoleId] > 0) NOT NULL,
+  
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([UserRoleId])
+ ,
+  CONSTRAINT [FK_ApplicationUserRole_ApplicationRole_RoleId] FOREIGN KEY ([RoleId]) REFERENCES applicationrole ([RoleId]),
+  CONSTRAINT [FK_ApplicationUserRole_ApplicationUser_UserId] FOREIGN KEY ([UserId]) REFERENCES applicationuser ([UserId])
+);
+
+CREATE INDEX [IX_ApplicationUserRole_RoleId] ON applicationuserrole ([RoleId]);
+CREATE INDEX [FK_ApplicationUserRole_ApplicationUser_UserId] ON applicationuserrole ([UserId]);
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationroleclaim')) 
+ BEGIN
+
+ CREATE TABLE applicationroleclaim (
+  [RoleClaimId] int check ([RoleClaimId] > 0) NOT NULL IDENTITY,
+  [RoleId] int check ([RoleId] > 0) NOT NULL,
+  [ClaimType] varchar(256) DEFAULT NULL,
+  [ClaimValue] varchar(max) ,
+  [ClaimId] int check ([ClaimId] > 0) DEFAULT NULL,
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([RoleClaimId])
+ ,
+  CONSTRAINT [FK_ApplicationRoleClaim_AppicationClaim_ClaimId] FOREIGN KEY ([ClaimId]) REFERENCES applicationclaim ([ClaimId]) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT [FK_ApplicationRoleClaim_AppicationRole_RoleId] FOREIGN KEY ([RoleId]) REFERENCES applicationrole ([RoleId])
+);
+
+CREATE INDEX [IX_ApplicationRoleClaim_RoleId] ON applicationroleclaim ([RoleId]);
+CREATE INDEX [FK_ApplicationRoleClaim_AppicationClaim_ClaimId_idx] ON applicationroleclaim ([ClaimId]);
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationuserclaim')) 
+ BEGIN
+
+ 
+ CREATE TABLE applicationuserclaim (
+  [UserClaimId] int check ([UserClaimId] > 0) NOT NULL IDENTITY,
+  [UserId] int check ([UserId] > 0) NOT NULL,
+  [ClaimType] varchar(256) DEFAULT NULL,
+  [ClaimValue] varchar(max) ,
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([UserClaimId])
+ ,
+  CONSTRAINT [FK_ApplicationUserClaim_ApplicationUser_UserId] FOREIGN KEY ([UserId]) REFERENCES applicationuser ([UserId])
+);
+
+CREATE INDEX [IX_ApplicationUserClaim_UserId] ON applicationuserclaim ([UserId]);
+
+END;
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'usertype')) 
+ BEGIN
+
+ CREATE TABLE usertype (
+  [UserTypeId] int check ([UserTypeId] > 0) NOT NULL IDENTITY,
+  [UserTypeCode] varchar(10) DEFAULT NULL,
+  [UserTypeName] varchar(60) DEFAULT NULL,
+  [UserTypeNameTranslation] varchar(60) DEFAULT NULL,
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([UserTypeId])
+);
+
+
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'Employee')) 
+ BEGIN
+
+ CREATE TABLE Employee (
+  [EmployeeId] int check ([EmployeeId] > 0) NOT NULL,
+  [UserTypeId] int check ([UserTypeId] > 0) NOT NULL,
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([EmployeeId])
+ ,
+  CONSTRAINT [FK_Employee_UserType_UserId] FOREIGN KEY ([UserTypeId]) REFERENCES usertype ([UserTypeId]),
+  CONSTRAINT [FK_Employee_User_UserId] FOREIGN KEY ([EmployeeId]) REFERENCES applicationuser ([UserId])
+);
+
+CREATE INDEX [IX_employee_EmployeeId] ON Employee ([EmployeeId]);
+CREATE INDEX [FK_Employee_UserType_UserId] ON Employee ([UserTypeId]);
+
+
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationroleclaimlog')) 
+ BEGIN
+
+ CREATE TABLE applicationroleclaimlog (
+ 
+  [RoleClaimId] int check ([RoleClaimId] > 0) NOT NULL ,
+  [RoleId] int check ([RoleId] > 0) NOT NULL,
+  [ClaimType] varchar(256) DEFAULT NULL,
+  [ClaimValue] varchar(max) ,
+  [ClaimId] int check ([ClaimId] > 0) DEFAULT NULL,
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
+  [AuditDate] datetime2(0) DEFAULT NULL,
+  [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
+  PRIMARY KEY ([AuditLogId])
+);
+
+
+END;
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationrolelog')) 
+ BEGIN
+
+CREATE TABLE applicationrolelog (
+ 
+  [RoleId] int check ([RoleId] > 0) NOT NULL ,
+  [RoleName] varchar(60) NOT NULL,
+  [RoleNameTranslation] varchar(60) DEFAULT NULL,
+  [RoleNameCode] varchar(60) DEFAULT NULL,
+  [NormalizedNameRoleName] varchar(60) DEFAULT NULL,
+  [RoleDescription] varchar(256) DEFAULT NULL,
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+   [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
+  [AuditDate] datetime2(0) DEFAULT NULL,
+  [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
+  PRIMARY KEY ([AuditLogId])
+);
+
+
+END;
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'ApplicationUserlog')) 
+ BEGIN
+
+
+CREATE TABLE ApplicationUserlog (
+ 
+  [UserId] int check ([UserId] > 0) NOT NULL ,
+  [UserName] varchar(256) NOT NULL,
+  [NormalizedUserName] varchar(256) DEFAULT NULL,
+  [FirstName] varchar(60) DEFAULT NULL,
+  [LastName] varchar(60) DEFAULT NULL,
+
+  [IdentificationNumber] varchar(20) NOT NULL,  
+  [Address1] varchar(100) DEFAULT NULL,
+  [Address2] varchar(100) DEFAULT NULL,
+  [CityId] int check ([CityId] > 0) DEFAULT  NULL,
+  [StateId] int check ([StateId] > 0) DEFAULT  NULL,
+  [PostalCode] varchar(20) DEFAULT NULL,
+
+  [Email] varchar(256) DEFAULT NULL,
+  [NormalizedEmail] varchar(256) DEFAULT NULL,
+  [EmailConfirmed] binary(1) NOT NULL,
+  [PasswordHash] varchar(256) DEFAULT NULL ,
+  [SecurityStamp] varchar(256) DEFAULT NULL ,
+  [ConcurrencyStamp] varchar(256) DEFAULT NULL ,
+  [PhoneNumber] varchar(20) DEFAULT NULL,
+  [PhoneNumberConfirmed] binary(1) NOT NULL,
+  [TwoFactorEnabled] binary(1) NOT NULL,
+  [LockoutEnd] datetime2(0) DEFAULT NULL,
+  [LockoutEnabled] binary(1) NOT NULL,
+  [AccessFailedCount] int NOT NULL,
+  
+  [LoginDate] datetime2(0) DEFAULT NULL,
+  
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+   [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
+  [AuditDate] datetime2(0) DEFAULT NULL,
+  [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
+  PRIMARY KEY ([AuditLogId])
+);
+
+
+END;
+
+
+
+
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'applicationuserrolelog')) 
+ BEGIN
+
+
+CREATE TABLE applicationuserrolelog (
+ 
+  [UserRoleId] int check ([UserRoleId] > 0) NOT NULL,
+  [UserId] int check ([UserId] > 0) NOT NULL,
+  [RoleId] int check ([RoleId] > 0) NOT NULL,
+  
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
+  [AuditDate] datetime2(0) DEFAULT NULL,
+  [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
+  PRIMARY KEY ([AuditLogId])
+);
+
+
+END;
+
+
+
+
+
+

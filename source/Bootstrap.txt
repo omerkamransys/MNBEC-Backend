@@ -1,0 +1,160 @@
+
+
+INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(1,'User Management','USERMGT',1, GETUTCDATE(), 1 , NULL ,1);
+
+INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(2,'Account','ACC',1, GETUTCDATE(), 1 , NULL ,1);
+INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(3,'Claim','CLM',1, GETUTCDATE(), 1 , NULL ,1);
+INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(4,'ClaimGroup','CLMG',1, GETUTCDATE(), 1 , NULL ,1);
+
+INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(6,'Role','RL',1, GETUTCDATE(), 1 , NULL ,1);
+  
+
+
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (1,'UserManagement.Add','Add New','UMGT_AD',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (1,'UserManagement.Get','Get','UMGT_GET',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (1,'UserManagement.GetAll','Get All','UMGT_GA',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (1,'UserManagement.Activate','Activate/Deactivate','UMGT_ACT',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (1,'UserManagement.Update','Update','UMGT_UP',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.GetUserById','Get User by Id','ACC_GUBI',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.GetAll','Get All','ACC_GA',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.Login','Login','ACC_LG',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.Update','Update','ACC_UP',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.CreateUser','Create User','ACC_CU',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.ForgotPassword','Frogot Password','ACC_FP',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.ResetPassword','Reset Password','ACC_RP',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.GetUserByEmail','Get User by Email','ACC_GBE',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.Search','Search','ACC_SR',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.AddDealer','Add Dealer','ACC_AD',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.UpdateDealer','Update Dealer','ACC_UD',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.AddDealerShip','Add Dealership','ACC_ADS',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (2,'Account.ChangePassword','ChangePassword','ACC_CP',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (3,'Claim.GetList','Get List','CLM_GL',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (3,'Claim.GetListByRole','Get List by Role','CLM_GLBR',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (3,'Claim.GetListByUser','Get List by User','CLM_GLBU',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (4,'ClaimGroup.GetAll','Get All','CLMG_GA',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (4,'ClaimGroup.GetAllByUser','Get All By User','CLMG_GABU',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES (4,'ClaimGroup.GetList','Get List','CLMG_GL',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('6','Role.Activate','Activate/Deactivate','RL_ACT',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('6','Role.Add','Add New','RL_AD',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('6','Role.Get','Get','RL_GET',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('6','Role.GetAll','Get All','RL_GA',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('6','Role.GetList','Get List','RL_GL',1,GETUTCDATE() , NULL ,NULL, 1);
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('6','Role.Update','Update','RL_UP',1,GETUTCDATE() , NULL ,NULL, 1);
+
+
+
+SET IDENTITY_INSERT ApplicationRole ON
+
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (1,'Administrator',NULL,'ADMN',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (2,'Chief Merchant Officer',NULL,'DSN',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (3,'Designer',NULL,'PDM',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (4,'Merchandiser',NULL,'VMD',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (5,'Product Development',NULL,'PDP',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (6,'Visual Merchandiser',NULL,'PMGR',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (7,'Product Planner',NULL,'SPR',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (8,'Store planner',NULL,'ALL',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (9,'Store intelligence',NULL,'SIN',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (10,'Allocator',NULL,'SUPCHN',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (11,'Store intelligence',NULL,'FNC',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (12,'Supply chain',NULL,'STRG',NULL,NULL,1,GETUTCDATE(),1,null,1);
+INSERT INTO ApplicationRole (RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (13,'Finance',NULL,'CMO',NULL,NULL,1,GETUTCDATE(),1,null,1);
+SET IDENTITY_INSERT ApplicationRole OFF
+
+INSERT INTO ApplicationUser (UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (1,'omer@kamran.com','omer@kamran.com','Omer','Kamran','','DHA',NULL,NULL,NULL,NULL,'omer@kamran.com','omer@kamran.com',1,'AQAAAAEAACcQAAAAEEiyxWRX7tAOX0V6jw5lUa1MUGBVru4mbJ39uiDPCzbVID3TLiyzPunOMtYF4dIIEA==',NULL,NULL,'+923018486854',1,0,'0001-01-01 00:00:00',0,0,NULL,1,'2019-01-01 00:00:00',NULL,'2019-01-01 00:00:00',1);
+INSERT INTO ApplicationUser (UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (2,'mateen@shafiq.com','mateen@shafiq.com','Mateen','Shafiq','','DHA',NULL,NULL,NULL,NULL,'mateen@shafiq.com','mateen@shafiq.com',1,'AQAAAAEAACcQAAAAEEiyxWRX7tAOX0V6jw5lUa1MUGBVru4mbJ39uiDPCzbVID3TLiyzPunOMtYF4dIIEA==',NULL,NULL,'+923334142589',1,0,'0001-01-01 00:00:00',0,0,NULL,1,'2019-01-01 00:00:00',NULL,'2019-01-01 00:00:00',1);
+INSERT INTO ApplicationUser (UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (3,'mehran@khan.com','mehran@khan.com','Mehran','Khan','','DHA',NULL,NULL,NULL,NULL,'mehran@khan.com','mehran@khan.com',1,'AQAAAAEAACcQAAAAEEiyxWRX7tAOX0V6jw5lUa1MUGBVru4mbJ39uiDPCzbVID3TLiyzPunOMtYF4dIIEA==',NULL,NULL,'+923334142589',1,0,'0001-01-01 00:00:00',0,0,NULL,1,'2019-01-01 00:00:00',NULL,'2019-01-01 00:00:00',1);
+INSERT INTO ApplicationUser (UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (4,'khizer@aziz.com','khizer@aziz.com','Khizer','Aziz','','DHA',NULL,NULL,NULL,NULL,'khizer@aziz.com','khizer@aziz.com',1,'AQAAAAEAACcQAAAAEEiyxWRX7tAOX0V6jw5lUa1MUGBVru4mbJ39uiDPCzbVID3TLiyzPunOMtYF4dIIEA==',NULL,NULL,'+923334142589',1,0,'0001-01-01 00:00:00',0,0,NULL,1,'2019-01-01 00:00:00',NULL,'2019-01-01 00:00:00',1);
+
+
+INSERT INTO UserType (UserTypeId,UserTypeCode,UserTypeName,UserTypeNameTranslation,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (1,'001','Administrator','Administrator',NULL,NULL,NULL,NULL,1);
+INSERT INTO UserType (UserTypeId,UserTypeCode,UserTypeName,UserTypeNameTranslation,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (2,'002','Application User','Inspector',NULL,NULL,NULL,NULL,1);
+
+
+INSERT INTO applicationuserrole (UserRoleId, UserId, RoleId, CreatedById, Active) VALUES (1, 1, 1, 1, 1);
+INSERT INTO applicationuserrole (UserRoleId, UserId, RoleId, CreatedById, Active) VALUES (2, 2, 1, 1, 1);
+INSERT INTO applicationuserrole (UserRoleId, UserId, RoleId, CreatedById, Active) VALUES (3, 3, 1, 1, 1);
+INSERT INTO applicationuserrole (UserRoleId, UserId, RoleId, CreatedById, Active) VALUES (4, 4, 1, 1, 1);
+
+
+
+INSERT into applicationroleclaim (RoleId,ClaimType,ClaimId)
+select 1,ClaimType,ClaimId
+from applicationclaim;
+
+INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (1, 1, 1, 1);
+INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (2, 1, 1, 1);
+INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (3, 1, 1, 1);
+INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (4, 1, 1, 1);

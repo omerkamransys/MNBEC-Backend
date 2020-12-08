@@ -1,0 +1,873 @@
+DROP PROCEDURE IF EXISTS [ApplicationClaimActivate];
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+CREATE PROCEDURE ApplicationClaimActivate(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary,
+ @PClaimId	int 
+	)
+AS
+BEGIN
+SET NOCOUNT ON;
+	UPDATE applicationclaim 
+		SET 
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate = GETUTCDATE(),
+			Active = @PActive
+	WHERE ClaimId = @PClaimId;
+End;
+
+GO
+
+
+DROP PROCEDURE if exists [ApplicationClaimAdd];
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+CREATE PROCEDURE ApplicationClaimAdd
+(
+ @PCurrentUserId int,
+ @PClaimId	int OUTPUT,
+ @PClaimCode varchar(10),
+ @PClaimType	varchar(256),
+ @PClaimLabel	varchar(100),
+ @PClaimGroupId	varchar(10),
+ @PActive	binary)
+As
+Begin
+	SET NOCOUNT ON;
+	Insert Into applicationclaim
+				(ClaimType,  ClaimLabel,ClaimGroupId,ClaimCode,  CreatedById,  CreatedDate,  Active)
+		Values	(@PClaimType, @PClaimLabel,@PClaimGroupId,@PClaimCode, @PCurrentUserId, GETUTCDATE(), @PActive);
+
+	Set @PClaimId = SCOPE_IDENTITY();
+End;
+GO
+
+
+DROP procedure if exists [ApplicationClaimGet];
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGet(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary,
+ @PClaimId	int 
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		tbl.ClaimId, 
+		tbl.ClaimType, 
+		tbl.ClaimLabel, 
+		tbl.ClaimLabelTranslation,
+		tbl.ClaimCode,
+		tbl.CreatedById, tbl.CreatedDate, tbl.ModifiedById, tbl.ModifiedDate, tbl.Active
+	From applicationclaim tbl
+	Where tbl.Active = @PActive
+	And tbl.ClaimId = @PClaimId;
+
+End;
+
+GO
+
+DROP procedure if exists [ApplicationUserAdd];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE ApplicationUserAdd(	
+ @PUserId	int OUT,
+ @PCurrentUserId int,
+ @PUserName	varchar(256),
+ @PFirstName	varchar(60),
+ @PLastName	varchar(60),
+ @PIdentificationNumber varchar(20),
+ @PEmail	varchar(256),
+ @PEmailConfirmed	binary,
+ @PPasswordHash	varchar(max),
+ @PSecurityStamp	varchar(max),
+ @PConcurrencyStamp	varchar(max),
+ @PPhoneNumber	varchar(max),
+ @PAddress1	varchar(max),
+ @PAddress2	varchar(max),
+ @PCityId	int,
+ @PStateId	int,
+ @PPhoneNumberConfirmed	binary,
+ @PTwoFactorEnabled	binary,
+ @PLockoutEnd	datetime2(0),
+ @PLockoutEnabled	binary,
+ @PAccessFailedCount	int,
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+
+IF @PStateId = 0 BEGIN 
+	   set @PStateId = null;
+	END 
+IF @PCityId = 0 BEGIN 
+   set @PCityId = null;
+END 
+
+	Insert Into applicationuser
+				(UserName,  FirstName,  LastName, IdentificationNumber,  Email, Address1,Address2,CityId,StateId, EmailConfirmed,  PasswordHash,  SecurityStamp,  ConcurrencyStamp,  PhoneNumber,  PhoneNumberConfirmed,  TwoFactorEnabled,  LockoutEnd,  LockoutEnabled,  AccessFailedCount,  CreatedById,  CreatedDate,  Active)
+		Values	(@PUserName, @PFirstName, @PLastName, @PIdentificationNumber, @PEmail, @PAddress1,@PAddress2,@PCityId,@PStateId,@PEmailConfirmed, @PPasswordHash, @PSecurityStamp, @PConcurrencyStamp, @PPhoneNumber, @PPhoneNumberConfirmed, @PTwoFactorEnabled, @PLockoutEnd, @PLockoutEnabled, @PAccessFailedCount, @PCurrentUserId, GETUTCDATE(), 1);
+
+	Set @PUserId = SCOPE_IDENTITY();
+End;
+
+GO
+
+
+DROP procedure if exists [ApplicationClaimGetList];
+
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE PROCEDURE ApplicationClaimGetList(	
+ @PCurrentUserId int 
+	)
+As
+Begin
+Set nocount on;
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	Select 
+		tbl.ClaimId, tbl.ClaimType, tbl.ClaimCode
+	From applicationclaim  tbl
+	Where tbl.Active = 1;
+
+End;
+
+GO
+
+
+
+DROP procedure if exists [ApplicationUserGetbyName];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+-- SQLINES LICENSE FOR EVALUATION USE ONLY
+CREATE PROCEDURE ApplicationUserGetbyName(
+ @PUserName	varchar(256)
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		tbl.UserId, tbl.UserName, tbl.FirstName, tbl.LastName, tbl.Email, tbl.EmailConfirmed, tbl.PasswordHash, tbl.SecurityStamp, tbl.ConcurrencyStamp, tbl.PhoneNumber, tbl.PhoneNumberConfirmed, tbl.TwoFactorEnabled, tbl.LockoutEnd, tbl.LockoutEnabled, tbl.AccessFailedCount, tbl.CreatedById, tbl.CreatedDate, tbl.ModifiedById, tbl.ModifiedDate, tbl.Active
+	From applicationuser tbl
+	Where tbl.UserName = @PUserName AND tbl.Active =1;
+
+End;
+
+GO
+
+DROP procedure if exists [ApplicationClaimGetAllClaimsWithRole];
+
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGetAllClaimsWithRole(	
+ @PCurrentUserId int 
+	-- SQLINES DEMO *** signed,
+ -- SQLINES DEMO *** rchar(60)
+	)
+As
+Begin
+Set nocount on;
+
+    Select 
+	tbl.RoleId,
+	tbl.RoleName,
+	tbl.RoleNameCode,
+	tbl.Active
+	From applicationrole tbl 
+	where Active = 1;
+
+	Select 
+		tbl.RoleId,
+		tbl.ClaimId,
+		ac.ClaimCode
+		From applicationroleclaim  tbl
+        inner join applicationclaim ac on ac.ClaimId = tbl.ClaimId
+        inner join applicationrole ar on  ar.RoleId = tbl.RoleId
+		Where tbl.Active = 1  and ar.Active = 1 ; 
+    
+
+End;
+
+GO
+
+
+DROP procedure if exists [ApplicationClaimGetListByRole];
+
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGetListByRole(	
+ @PCurrentUserId int,
+ @PRoleId int,
+    @PRoleCode varchar(60)
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		tbl.ClaimId, tbl.ClaimType, tbl.ClaimCode,tbl.ClaimLabel,tbl.ClaimLabelTranslation        
+	From applicationclaim  tbl
+    
+		Inner Join applicationroleclaim rctbl On tbl.ClaimId = rctbl.ClaimId  And rctbl.Active = 1        
+		Inner Join applicationrole rtbl On rctbl.RoleId = rtbl.RoleId And rtbl.Active = 1 
+        
+	Where tbl.Active = 1  And ( rctbl.RoleId=@PRoleId OR rtbl.RoleNameCode = @PRoleCode);
+
+End;
+
+GO
+
+
+DROP procedure if exists [ApplicationClaimGetListByUser];
+
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGetListByUser(	
+ @PCurrentUserId int 
+	)
+As
+Begin
+Set nocount on;
+	
+	Select Distinct
+		tbl.ClaimId, tbl.ClaimType, tbl.ClaimCode, 
+        tbl.ClaimLabel, tbl.ClaimGroupId,tbl.ClaimLabelTranslation
+	From applicationclaim  tbl
+		Inner Join applicationroleclaim rctbl On tbl.ClaimId = rctbl.ClaimId  And rctbl.Active = 1 
+		Inner Join applicationrole rtbl On rctbl.RoleId = rtbl.RoleId And rtbl.Active = 1  
+		Inner Join applicationuserrole urtbl On rtbl.RoleId = urtbl.RoleId And urtbl.Active = 1 And urtbl.UserId = @PCurrentUserId
+	Where tbl.Active = 1;
+
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [ApplicationClaimGroupAdd];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGroupAdd(	
+ @PCurrentUserId int,
+ @PClaimGroupId	int OUT,
+ @PClaimGroupLabel	varchar(100),
+ @PClaimGroupCode	varchar(10),
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	Insert Into applicationclaimgroup
+				(ClaimGroupId,  ClaimGroupLabel,  ClaimGroupCode,  CreatedById,  CreatedDate,  Active)
+		Values	(@PClaimGroupId, @PClaimGroupLabel, @PClaimGroupCode, @PCurrentUserId, GETUTCDATE(), @PActive);
+
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [ApplicationClaimGroupGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGroupGet(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		tbl.ClaimGroupId, tbl.ClaimGroupLabel,
+		tbl.ClaimGroupLabelTranslation,
+		tbl.ClaimGroupCode, tbl.CreatedById, tbl.CreatedDate, tbl.ModifiedById, tbl.ModifiedDate, tbl.Active
+	From applicationclaimgroup tbl
+	Where tbl.Active = @PActive;
+
+End;
+
+GO
+
+
+DROP procedure if exists [ApplicationClaimGroupGetList];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE ApplicationClaimGroupGetList(	
+ @PCurrentUserId int 
+	)
+As
+Begin
+Set nocount on;
+
+    Select 
+        tbl.ClaimGroupId, tbl.ClaimGroupCode, tbl.ClaimGroupLabel,tbl.ClaimGroupLabelTranslation
+	From applicationclaimGroup tbl
+	Where tbl.Active = 1
+    Order By tbl.ClaimGroupLabel Asc;
+
+End;
+
+GO
+
+DROP procedure if exists [ApplicationClaimGroupUpdate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGroupUpdate(	
+ @PCurrentUserId int,
+ @PClaimGroupId	int,
+ @PClaimGroupLabel	varchar(100),
+ @PClaimGroupCode	varchar(10),
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	Update applicationclaimgroup 
+		Set 
+			ClaimGroupId=@PClaimGroupId,
+			ClaimGroupLabel=@PClaimGroupLabel,
+			ClaimGroupCode=@PClaimGroupCode,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate= GETUTCDATE(),
+			Active=@PActive;
+
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [ApplicationClaimUpdate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimUpdate(	
+ @PCurrentUserId int,
+ @PClaimId	int,
+ @PClaimType	varchar(256),
+ @PClaimLabel	varchar(100),
+ @PClaimGroupLabel	varchar(10),
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	Update applicationclaim 
+		Set 
+			ClaimType=@PClaimType,
+			ClaimLabel=@PClaimLabel,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate= GETUTCDATE(),
+			Active=@PActive
+	Where ClaimId=@PClaimId;
+End;
+
+GO
+
+
+
+DROP procedure if exists [ApplicationRoleActivate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationRoleActivate(	
+ @PCurrentUserId int,
+	--IN PReasonCodeId int unsigned,
+ @PActive binary,
+ @PRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	Update applicationrole 
+		Set 
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+	Where RoleId=@PRoleId;
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [ApplicationRoleAdd];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationRoleAdd(
+ @PCurrentUserId int,
+ @PRoleId	int OUT,
+ @PRoleName	varchar(60),
+    @PRoleCode	varchar(10),
+    @PRoleNameTranslation	varchar(60),
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	Insert Into applicationrole
+				(RoleName, RoleNameTranslation,RoleNameCode, CreatedById,    CreatedDate,     Active)
+		Values	(@PRoleName,@PRoleNameTranslation,@PRoleCode,  @PCurrentUserId, GETUTCDATE(), @PActive);
+
+	Set @PRoleId= SCOPE_IDENTITY();
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [ApplicationRoleClaimLogAdd];
+
+GO
+-- =============================================
+-- Author:		Omer Kamran Butt
+-- Create date: January, 01, 2019
+-- Description:	ApplicationRoleClaimLog Add
+-- =============================================
+
+CREATE  PROCEDURE ApplicationRoleClaimLogAdd(	
+ @PCurrentUserId int,
+ @PRoleId	int,
+ @PClaimId	int 
+	)
+As
+Begin
+Set nocount on;
+
+			INSERT INTO applicationroleclaimLog
+						(RoleClaimId,RoleId,ClaimType,ClaimValue,ClaimId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+				SELECT	RoleClaimId,RoleId,ClaimType,ClaimValue,ClaimId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+				FROM	applicationroleclaim
+				WHERE	ClaimId=@PClaimId 
+				And		RoleId = @PRoleId;
+             
+
+End;
+
+GO
+
+
+
+DROP procedure if exists [ApplicationClaimGroupActivate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGroupActivate(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary
+	)
+As
+Begin
+Set nocount on;
+	Update applicationclaimgroup
+		Set 
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive;
+
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [ApplicationRoleClaimUpdate];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE ApplicationRoleClaimUpdate(	
+ @PCurrentUserId int,
+ @PRoleId	int,
+ @PClaimId	int,
+ @PClaimType	varchar(256),
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+
+	If Exists (Select * From applicationroleclaim tbl Where ClaimId=@PClaimId And RoleId = @PRoleId) Begin
+		EXEC ApplicationRoleClaimLogAdd @PCurrentUserId ,@PRoleId ,@PClaimId;
+		
+		Update applicationroleclaim 
+			Set 
+				ClaimType=@PClaimType,
+				ModifiedById=@PCurrentUserId,
+				ModifiedDate=GETUTCDATE(),
+				Active=@PActive
+		Where ClaimId=@PClaimId 
+		And RoleId = @PRoleId;
+    End
+    Else Begin
+		INSERT INTO applicationroleclaim
+					(RoleId,  ClaimType,  ClaimId,  CreatedById,    CreatedDate,     Active)
+			 VALUES (@PRoleId, @PClaimType, @PClaimId, @PCurrentUserId, GETUTCDATE(), @PActive);
+             
+	End 
+End;
+
+GO
+
+
+
+DROP procedure if exists [ApplicationRoleGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationRoleGet(	
+ @PRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		tbl.RoleId, tbl.RoleName,tbl.RoleNameCode,
+        tbl.RoleNameTranslation,
+        tbl.RoleDescription, tbl.CreatedById, tbl.CreatedDate, tbl.ModifiedById, tbl.ModifiedDate, tbl.Active
+	From applicationrole tbl
+	Where tbl.RoleId=@PRoleId;
+    
+    
+    Select Distinct 
+        cgtbl.ClaimGroupId, cgtbl.ClaimGroupCode, cgtbl.ClaimGroupLabel ,cgtbl.ClaimGroupLabelTranslation
+	From applicationclaimGroup cgtbl
+	Where cgtbl.Active = 1
+    Order By cgtbl.ClaimGroupLabel asc;
+    
+	
+	Select Distinct
+		ctbl.ClaimId, ctbl.ClaimType, ctbl.ClaimCode, ctbl.ClaimLabel, ctbl.ClaimLabelTranslation, ctbl.ClaimGroupId,
+        rctbl.Active --rtbl.RoleId is Not Null And  Active
+	From applicationclaim ctbl
+		Left Outer Join applicationroleclaim rctbl On ctbl.ClaimId = rctbl.ClaimId And rctbl.RoleId = @PRoleId And rctbl.Active = 1 
+		Left Outer Join applicationrole rtbl On rctbl.RoleId = rtbl.RoleId --And rtbl.Active = 1
+	Where ctbl.Active = 1 
+    Order By ctbl.ClaimGroupId, ctbl.ClaimLabel; 	 
+
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [ApplicationRoleGetbyName];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationRoleGetbyName(	
+ @PRoleName varchar(60)
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		tbl.RoleId, tbl.RoleName,tbl.RoleNameTranslation, tbl.RoleDescription, tbl.CreatedById, tbl.CreatedDate, tbl.ModifiedById, tbl.ModifiedDate, tbl.Active
+	From applicationrole tbl
+	Where tbl.RoleName = @PRoleName;
+	 
+
+End;
+
+GO
+
+
+
+DROP procedure if exists [ApplicationRoleLogAdd];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationRoleLogAdd(
+ @PCurrentUserId int,
+ @PRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	INSERT INTO applicationrolelog
+				(RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,
+				CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+	SELECT		RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,
+				CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+	FROM		applicationrole
+	WHERE		RoleId=	@PRoleId;
+
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationRoleUpdate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationRoleUpdate(	
+ @PCurrentUserId int,
+ @PRoleId	int,
+ @PRoleName	varchar(60),
+ @PRoleCode	varchar(10),
+ @PRoleNameTranslation	varchar(60),
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	EXEC ApplicationRoleLogAdd @PCurrentUserId,@PRoleId;
+	Update applicationrole 
+		Set 
+			RoleName=@PRoleName,
+			RoleNameCode=@PRoleCode,
+            RoleNameTranslation=@PRoleNameTranslation,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+	Where RoleId=@PRoleId;
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserLogAdd];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	Application User Log Add
+-- =============================================
+
+
+CREATE  PROCEDURE ApplicationUserLogAdd(	
+ @PUserId	int OUT,
+ @PCurrentUserId int 
+	)
+As
+Begin
+Set nocount on;
+
+
+	Insert	into	applicationuserlog
+					(UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,
+					Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,
+					LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+			SELECT	UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,
+					Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,
+					LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+			FROM	applicationuser
+			WHERE	UserId=@PUserId;
+
+	
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserActivate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserActivate(	
+ @PCurrentUserId int,
+	--IN PReasonCodeId int unsigned,
+ @PActive binary,
+ @PUserId	int 
+	)
+As
+Begin
+Set nocount on;
+	EXEC ApplicationUserLogAdd @PUserId,@PCurrentUserId; 
+	Update applicationuser 
+		Set 
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+	Where UserId=@PUserId;
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationRoleGetList];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE  PROCEDURE ApplicationRoleGetList(
+ @PCurrentUserId int)
+as
+begin
+set nocount on;
+
+	
+	select 
+		RoleId,
+		RoleName,
+		NormalizedNameRoleName,
+        RoleDescription,
+        RoleNameTranslation,
+		RoleNameCode
+	from applicationrole tbl
+	where Active = 1
+	order by RoleName asc;
+
+End;
+GO
+
+
+
+
+
