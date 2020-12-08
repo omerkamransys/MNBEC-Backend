@@ -16,7 +16,7 @@ namespace MNBEC.Infrastructure
     /// <summary>
     /// ClaimGroupInfrastructure inherits from BaseDataAccess and implements IClaimGroupInfrastructure. It performs all required CRUD operations on ClaimGroup Entity on database.
     /// </summary>
-    public class ClaimGroupInfrastructure : BaseInfrastructure, IClaimGroupInfrastructure
+    public class ClaimGroupInfrastructure : BaseSQLInfrastructure, IClaimGroupInfrastructure
     {
         #region Constructor
         /// <summary>
@@ -66,7 +66,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupLabelParameterName, applicationClaimGroup.ClaimGroupLabel),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupCodeParameterName, applicationClaimGroup.ClaimGroupLabel),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupCodeParameterName, applicationClaimGroup.ClaimGroupCode),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
             };
             //TODO: Add other parameters.
 
@@ -87,7 +87,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupIdParameterName, applicationClaimGroup.ClaimGroupId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, ClaimGroupInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
@@ -106,7 +106,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupIdParameterName, applicationClaimGroup.ClaimGroupId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ClaimGroupInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
@@ -121,12 +121,12 @@ namespace MNBEC.Infrastructure
                             ClaimGroupLabel = dataReader.GetStringValue(ClaimGroupInfrastructure.ClaimGroupLabelColumnName),
                             ClaimGroupLabelTranslation = dataReader.GetStringValue(ClaimGroupInfrastructure.ClaimGroupLabelTranslationColumnName),
                             ClaimGroupCode = dataReader.GetStringValue(ClaimGroupInfrastructure.ClaimGroupCodeColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.CreatedByIdColumnName),
-                            CreatedByName = dataReader.GetStringValue(BaseInfrastructure.CreatedByNameColumnName),
-                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
-                            ModifiedById = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.ModifiedByIdColumnName),
-                            ModifiedByName = dataReader.GetStringValue(BaseInfrastructure.ModifiedByNameColumnName),
-                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName)
+                            CreatedById = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CreatedByName = dataReader.GetStringValue(BaseSQLInfrastructure.CreatedByNameColumnName),
+                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
+                            ModifiedById = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.ModifiedByIdColumnName),
+                            ModifiedByName = dataReader.GetStringValue(BaseSQLInfrastructure.ModifiedByNameColumnName),
+                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName)
                         };
                     }
                     if (!dataReader.IsClosed)
@@ -170,7 +170,7 @@ namespace MNBEC.Infrastructure
             ApplicationClaimGroup applicationClaimGroupItem = null;
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ClaimGroupInfrastructure.GetListStoredProcedureName, CommandType.StoredProcedure))
@@ -211,7 +211,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupIdParameterName, applicationClaimGroup.ClaimGroupId),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupLabelParameterName, applicationClaimGroup.ClaimGroupLabel),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupCodeParameterName, applicationClaimGroup.ClaimGroupCode),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
             };
             //TODO: Add other parameters.
 
@@ -243,15 +243,15 @@ namespace MNBEC.Infrastructure
             ApplicationClaimGroup applicationClaimGroupItem = null;
             ApplicationClaimGroup currentGroup = null;
             ApplicationClaim applicationClaimItem = null;
-            var totalRecordParamter = base.GetParameterOut(BaseInfrastructure.TotalRecordParameterName, SqlDbType.Int, result.TotalRecord);
+            var totalRecordParamter = base.GetParameterOut(BaseSQLInfrastructure.TotalRecordParameterName, SqlDbType.Int, result.TotalRecord);
             var parameters = new List<DbParameter>
             {
                 totalRecordParamter,
-                base.GetParameter(BaseInfrastructure.OffsetParameterName, applicationClaimGroup.Offset),
-                base.GetParameter(BaseInfrastructure.PageSizeParameterName, applicationClaimGroup.PageSize),
-                base.GetParameter(BaseInfrastructure.SortColumnParameterName, applicationClaimGroup.SortColumn),
-                base.GetParameter(BaseInfrastructure.SortAscendingParameterName, applicationClaimGroup.SortAscending),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.Data.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.OffsetParameterName, applicationClaimGroup.Offset),
+                base.GetParameter(BaseSQLInfrastructure.PageSizeParameterName, applicationClaimGroup.PageSize),
+                base.GetParameter(BaseSQLInfrastructure.SortColumnParameterName, applicationClaimGroup.SortColumn),
+                base.GetParameter(BaseSQLInfrastructure.SortAscendingParameterName, applicationClaimGroup.SortAscending),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.Data.CreatedById)
             };
             //TODO: Add other parameters.
 

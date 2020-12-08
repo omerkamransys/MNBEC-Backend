@@ -18,7 +18,7 @@ namespace MNBEC.Infrastructure
     /// <summary>
     /// UserInfrastructure inherits from BaseDataAccess and implements IUserInfrastructure. It performs all required CRUD operations on ApplicationUser Entity on database.
     /// </summary>
-    public class UserInfrastructure : BaseInfrastructure, IUserInfrastructure, IUserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>,
+    public class UserInfrastructure : BaseSQLInfrastructure, IUserInfrastructure, IUserStore<ApplicationUser>, IUserEmailStore<ApplicationUser>, IUserPhoneNumberStore<ApplicationUser>,
             IUserTwoFactorStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>, IUserRoleStore<ApplicationUser>
     {
         #region Constructor
@@ -146,8 +146,8 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(UserInfrastructure.LockoutEndParameterName, applicationUser.LockoutEnd),
                 base.GetParameter(UserInfrastructure.LockoutEnabledParameterName, applicationUser.LockoutEnabled),
                 base.GetParameter(UserInfrastructure.AccessFailedCountParameterName, applicationUser.AccessFailedCount),
-                base.GetParameter(BaseInfrastructure.ActiveParameterName, applicationUser.Active),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, applicationUser.Active),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
             };
 
             await base.ExecuteNonQuery(parameters, UserInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
@@ -177,7 +177,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(UserInfrastructure.ApplicationUserIdParameterName, userId),
-                //base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
+                //base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, UserInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
@@ -196,10 +196,10 @@ namespace MNBEC.Infrastructure
                             LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                             PhoneNumber = dataReader.GetStringValue(UserInfrastructure.PhoneNumberColumnName),
                             Active = dataReader.GetBooleanValue(UserInfrastructure.ActiveColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.CreatedByIdColumnName),
-                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
-                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.ModifiedByIdColumnName),
-                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName)
+                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
+                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
+                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName)
                         };
                     }
                     if (!dataReader.IsClosed)
@@ -219,7 +219,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(UserInfrastructure.ApplicationUserIdParameterName, user.UserId),
-                //base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
+                //base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, UserInfrastructure.GetUserByIdStoredProcedureName, CommandType.StoredProcedure))
@@ -239,7 +239,7 @@ namespace MNBEC.Infrastructure
                             UserTypeId = dataReader.GetUnsignedIntegerValue(UserInfrastructure.UserTypeIdColumnName),
                             UserTypeName = dataReader.GetStringValue(UserInfrastructure.UserTypeNameColumnName),
                             PhoneNumber = dataReader.GetStringValue(UserInfrastructure.PhoneNumberColumnName),
-                            Active = dataReader.GetBooleanValue(BaseInfrastructure.ActiveColumnName)
+                            Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
                         };
                     }
                     if (dataReader.NextResult())
@@ -290,7 +290,7 @@ namespace MNBEC.Infrastructure
                             LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                             UserTypeCode = dataReader.GetStringValue(UserInfrastructure.UserTypeCodeColumnName),
                             UserTypeName = dataReader.GetStringValue(UserInfrastructure.UserTypeNameColumnName),
-                            Active = dataReader.GetBooleanValue(BaseInfrastructure.ActiveColumnName)
+                            Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
                         };
                     }
                     if (dataReader.NextResult())
@@ -340,7 +340,7 @@ namespace MNBEC.Infrastructure
                                 FirstName = dataReader.GetStringValue(UserInfrastructure.FirstNameColumnName),
                                 LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                                 Email = dataReader.GetStringValue(UserInfrastructure.EmailColumnName),
-                                Active = dataReader.GetBooleanValue(BaseInfrastructure.ActiveColumnName),
+                                Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName),
                                 IdentificationNumber = dataReader.GetStringValue(UserInfrastructure.IdentificationNumberColumnName)
                             };
 
@@ -372,15 +372,15 @@ namespace MNBEC.Infrastructure
             };
             ApplicationUser currentApplicationUser = null;
             UserRoles roleItems;
-            var totalRecordParamter = base.GetParameterOut(BaseInfrastructure.TotalRecordParameterName, SqlDbType.Int, result.TotalRecord);
+            var totalRecordParamter = base.GetParameterOut(BaseSQLInfrastructure.TotalRecordParameterName, SqlDbType.Int, result.TotalRecord);
             var parameters = new List<DbParameter>
             {
                 totalRecordParamter,
-                base.GetParameter(BaseInfrastructure.OffsetParameterName, make.Offset),
-                base.GetParameter(BaseInfrastructure.PageSizeParameterName, make.PageSize),
-                base.GetParameter(BaseInfrastructure.SortColumnParameterName, make.SortColumn),
-                base.GetParameter(BaseInfrastructure.SortAscendingParameterName, make.SortAscending),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, make.Data.CreatedById),
+                base.GetParameter(BaseSQLInfrastructure.OffsetParameterName, make.Offset),
+                base.GetParameter(BaseSQLInfrastructure.PageSizeParameterName, make.PageSize),
+                base.GetParameter(BaseSQLInfrastructure.SortColumnParameterName, make.SortColumn),
+                base.GetParameter(BaseSQLInfrastructure.SortAscendingParameterName, make.SortAscending),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, make.Data.CreatedById),
                 base.GetParameter(UserInfrastructure.ApplicationUserTypeIdParameterName, make.Data.UserTypeId),
                 base.GetParameter(UserInfrastructure.ActiveParameterName, make.Data.ActiveColumn),
                 base.GetParameter(UserInfrastructure.ApplicationRoleIdParameterName, make.Data.RoleId),
@@ -405,7 +405,7 @@ namespace MNBEC.Infrastructure
                             LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                             UserTypeId = dataReader.GetUnsignedIntegerValue(UserInfrastructure.UserTypeIdColumnName),
                             UserTypeName = dataReader.GetStringValue(UserInfrastructure.UserTypeNameColumnName),
-                            Active = dataReader.GetBooleanValue(BaseInfrastructure.ActiveColumnName),
+                            Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName),
                             ApplicationUserRoles = new List<UserRoles>()
                         };
                         //TODO: Add other Columns.
@@ -453,7 +453,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(UserInfrastructure.ApplicationUserNameParameterName, normalizedUserName),
-                //base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, model.CreatedById)
+                //base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, model.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, UserInfrastructure.GetbyUserNameStoredProcedureName, CommandType.StoredProcedure))
@@ -471,10 +471,10 @@ namespace MNBEC.Infrastructure
                             LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                             PhoneNumber = dataReader.GetStringValue(UserInfrastructure.PhoneNumberColumnName),
                             Active = dataReader.GetBooleanValue(UserInfrastructure.ActiveColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.CreatedByIdColumnName),
-                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
-                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.ModifiedByIdColumnName),
-                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName),
+                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
+                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
+                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName),
                             PasswordHash = dataReader.GetStringValue(UserInfrastructure.PasswordHashColumnName)
                         };
                     }
@@ -507,7 +507,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(UserInfrastructure.ApplicationUserIdParameterName, applicationUser.UserId),
-                base.GetParameter(BaseInfrastructure.ActiveParameterName, applicationUser.Active),
+                base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, applicationUser.Active),
 
                 base.GetParameter(UserInfrastructure.ApplicationUserNameParameterName, applicationUser.UserName),
                 base.GetParameter(UserInfrastructure.FirstNameParameterName, applicationUser.FirstName),
@@ -523,7 +523,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(UserInfrastructure.LockoutEndParameterName, applicationUser.LockoutEnd),
                 base.GetParameter(UserInfrastructure.LockoutEnabledParameterName, applicationUser.LockoutEnabled),
                 base.GetParameter(UserInfrastructure.AccessFailedCountParameterName, applicationUser.AccessFailedCount),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
             };
             //TODO: Add other parameters.
 
@@ -560,7 +560,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(UserInfrastructure.UserEmailParameterName, normalizedEmail),
-                //base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, model.CreatedById)
+                //base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, model.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, UserInfrastructure.GetbyEmailStoredProcedureName, CommandType.StoredProcedure))
@@ -579,10 +579,10 @@ namespace MNBEC.Infrastructure
                             LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                             PhoneNumber = dataReader.GetStringValue(UserInfrastructure.PhoneNumberColumnName),
                             Active = dataReader.GetBooleanValue(UserInfrastructure.ActiveColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.CreatedByIdColumnName),
-                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
-                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.ModifiedByIdColumnName),
-                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName)
+                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
+                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
+                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName)
                         };
                     }
 
@@ -656,10 +656,10 @@ namespace MNBEC.Infrastructure
                             LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                             PhoneNumber = dataReader.GetStringValue(UserInfrastructure.PhoneNumberColumnName),
                             Active = dataReader.GetBooleanValue(UserInfrastructure.ActiveColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.CreatedByIdColumnName),
-                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
-                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.ModifiedByIdColumnName),
-                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName)
+                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
+                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
+                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName)
                         };
                     }
 
@@ -700,10 +700,10 @@ namespace MNBEC.Infrastructure
                             LastName = dataReader.GetStringValue(UserInfrastructure.LastNameColumnName),
                             PhoneNumber = dataReader.GetStringValue(UserInfrastructure.PhoneNumberColumnName),
                             Active = dataReader.GetBooleanValue(UserInfrastructure.ActiveColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.CreatedByIdColumnName),
-                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
-                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.ModifiedByIdColumnName),
-                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName)
+                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
+                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
+                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName)
                         };
                     }
 
@@ -880,7 +880,7 @@ namespace MNBEC.Infrastructure
                 applicationUserRoleIdParamter,
                 base.GetParameter(UserInfrastructure.ApplicationUserIdParameterName, applicationUser.UserId),
                 base.GetParameter(UserInfrastructure.ApplicationRoleIdParameterName, roleId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
             };
 
             await base.ExecuteNonQuery(parameters, UserInfrastructure.AddUserRoleStoredProcedureName, CommandType.StoredProcedure);
@@ -898,7 +898,7 @@ namespace MNBEC.Infrastructure
                 applicationUserRoleIdParamter,
                 base.GetParameter(UserInfrastructure.ApplicationUserIdParameterName, applicationUser.UserId),
                 base.GetParameter(UserInfrastructure.ApplicationRoleIdParameterName, roleId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
             };
 
             await base.ExecuteNonQuery(parameters, UserInfrastructure.AddUserRoleStoredProcedureName, CommandType.StoredProcedure);
@@ -914,7 +914,7 @@ namespace MNBEC.Infrastructure
 
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, user.UserId)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, user.UserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, UserInfrastructure.ApplicationUserRoleGetByUserStoredProcedureName, CommandType.StoredProcedure))
@@ -939,7 +939,7 @@ namespace MNBEC.Infrastructure
         public async Task<bool> IsInRoleAsync(ApplicationUser user, string roleName, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            var totalRecordParamter = base.GetParameterOut(BaseInfrastructure.TotalRecordParameterName, SqlDbType.Int);
+            var totalRecordParamter = base.GetParameterOut(BaseSQLInfrastructure.TotalRecordParameterName, SqlDbType.Int);
             var parameters = new List<DbParameter>
             {
                 totalRecordParamter,
@@ -1001,7 +1001,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(UserInfrastructure.ApplicationUserIdParameterName, user.UserId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, user.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, user.CreatedById)
             };
             //TODO: Add other parameters.
 
