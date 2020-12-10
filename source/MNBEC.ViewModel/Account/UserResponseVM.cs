@@ -7,11 +7,11 @@ namespace MNBEC.ViewModel.Account
 {
    public class UserResponseVM 
     {
-        public uint UserId { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public uint UserTypeId { get; set; }
+        public int UserTypeId { get; set; }
         public string UserTypeName { get; set; }
         public bool Active { get; set; }
         public string PhoneNumber { get; set; }

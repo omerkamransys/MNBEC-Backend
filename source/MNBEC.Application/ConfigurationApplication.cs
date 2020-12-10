@@ -40,7 +40,7 @@ namespace MNBEC.Application
         /// </summary>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Configuration configuration)
+        public async Task<int> Add(Configuration configuration)
         {
             return await this.ConfigurationInfrastructure.Add(configuration);
         }

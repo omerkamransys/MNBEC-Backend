@@ -8,7 +8,7 @@ namespace MNBEC.Domain
     public class UserType : BaseDomain
     {
         #region Propeties
-		public uint UserTypeId { get; set; }
+		public int UserTypeId { get; set; }
 		public string UserTypeCode { get; set; }
 		public string UserTypeName { get; set; }
 		public string UserTypeNameTranslation { get; set; }

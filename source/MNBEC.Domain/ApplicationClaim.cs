@@ -10,7 +10,7 @@ namespace MNBEC.Domain
         /// <summary>
         /// An auto-incremented ID that is meant to minify the size of a claim Eg 1, 2, 3, 4 ...
         /// </summary>
-        public uint ClaimId { get; set; }
+        public int ClaimId { get; set; }
 
         /// <summary>
         /// A Claim using the format [Controller Name].[Api] Eg Values.Delete
@@ -25,7 +25,7 @@ namespace MNBEC.Domain
         /// <summary>
         /// 
         /// </summary>
-        public uint ClaimGroupId { get; set; }
+        public int ClaimGroupId { get; set; }
 
         /// <summary>
         /// 

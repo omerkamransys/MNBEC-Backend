@@ -13,8 +13,8 @@ namespace MNBEC.Domain
             ApplicationClaims = new List<ApplicationClaim>();
         }
         #region Propeties
-		    public uint RoleId { get; set; }
-		    public string RoleName { get; set; }
+		public int RoleId { get; set; }
+		public string RoleName { get; set; }
         public string RoleNameCode { get; set; }
         public string RoleNameTranslation { get; set; }
         public string NormalizedRoleName { get; set; }

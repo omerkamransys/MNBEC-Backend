@@ -40,7 +40,7 @@ namespace MNBEC.Application
         /// </summary>
         /// <param name="employee"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Employee employee)
+        public async Task<int> Add(Employee employee)
         {
             return await this.EmployeeInfrastructure.Add(employee);
         }

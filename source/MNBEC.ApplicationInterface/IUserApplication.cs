@@ -39,7 +39,7 @@ namespace MNBEC.ApplicationInterface
         Task<bool> DealerSendResetPasswordEmail(ApplicationUser user, bool useDefault);
         Task<bool> InspectorSendForgetPasswordEmail(ApplicationUser user, bool useDefault);
         Task<bool> RemoveExistingRolesForUser(ApplicationUser make, CancellationToken ct);
-        Task<uint> InsertRole(ApplicationUser user, string roleName, CancellationToken ct);
+        Task<int> InsertRole(ApplicationUser user, string roleName, CancellationToken ct);
         Task<ApplicationUser> GetUserTypeByEmailAsync(string normalizedEmail);
 
 

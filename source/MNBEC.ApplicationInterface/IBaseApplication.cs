@@ -16,7 +16,7 @@ namespace MNBEC.ApplicationInterface
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<uint> Add(T entity);
+        Task<int> Add(T entity);
 
         /// <summary>
         /// Activate activate/deactive provided record and returns true if action was successfull.

@@ -36,12 +36,12 @@ namespace MNBEC.Infrastructure.Extensions
         }
 
         /// <summary>
-        /// GetUnsignedIntegerValue get value from DataReader for provided ColumnName and converts it to uint.
+        /// GetUnsignedIntegerValue get value from DataReader for provided ColumnName and converts it to int.
         /// </summary>
         /// <param name="dataReader"></param>
         /// <param name="columnName"></param>
         /// <returns></returns>
-        public static uint GetUnsignedIntegerValue(this DbDataReader dataReader, string columnName)
+        public static int GetUnsignedIntegerValue(this DbDataReader dataReader, string columnName)
         {
             var objVal = dataReader.GetValue(columnName);
 
@@ -52,12 +52,12 @@ namespace MNBEC.Infrastructure.Extensions
 
 
         /// <summary>
-        /// GetUnsignedIntegerValueNullable get value from DataReader for provided ColumnName and converts it to Nullable<uint/>.
+        /// GetUnsignedIntegerValueNullable get value from DataReader for provided ColumnName and converts it to Nullable<int/>.
         /// </summary>
         /// <param name="dataReader"></param>
         /// <param name="columnName"></param>
         /// <returns></returns>
-        public static uint? GetUnsignedIntegerValueNullable(this DbDataReader dataReader, string columnName)
+        public static int? GetUnsignedIntegerValueNullable(this DbDataReader dataReader, string columnName)
         {
             var objVal = dataReader.GetValue(columnName);
 
@@ -72,7 +72,7 @@ namespace MNBEC.Infrastructure.Extensions
         /// <param name="dataReader"></param>
         /// <param name="columnName"></param>
         /// <returns></returns>
-        public static uint GetUnsignedShortValue(this DbDataReader dataReader, string columnName)
+        public static int GetUnsignedShortValue(this DbDataReader dataReader, string columnName)
         {
             var objVal = dataReader.GetValue(columnName);
 

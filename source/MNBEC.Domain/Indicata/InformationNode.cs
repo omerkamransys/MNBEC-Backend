@@ -5,7 +5,7 @@
     /// </summary>
     public class InformationNode
     {
-        public uint[] Key { get; set; }
+        public int[] Key { get; set; }
         public string Summary { get; set; }
         public string Name { get; set; }
         public Description[] Description { get; set; }

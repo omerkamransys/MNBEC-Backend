@@ -70,7 +70,7 @@ namespace MNBEC.Application
         /// </summary>
         /// <param name="applicationRole"></param>
         /// <returns></returns>
-        public async Task<uint> Add(ApplicationRole applicationRole)
+        public async Task<int> Add(ApplicationRole applicationRole)
         {
             return await this.RoleInfrastructure.Add(applicationRole);
         }

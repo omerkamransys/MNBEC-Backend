@@ -105,7 +105,7 @@ namespace MNBEC.API.Core.Middleware
             await this.Next(context);
         }
 
-        private async Task TrackActivity(HttpContext context, uint userId)
+        private async Task TrackActivity(HttpContext context, int userId)
         {
             var data = context.Request.Path.ToString();
 
@@ -125,7 +125,7 @@ namespace MNBEC.API.Core.Middleware
         /// </summary>
         /// <param name="token"></param>
         /// <returns></returns>
-        private uint GetUserIdFromToken(string token)
+        private int GetUserIdFromToken(string token)
         {
             var userId = string.Empty;
 
@@ -168,7 +168,7 @@ namespace MNBEC.API.Core.Middleware
                 base.Logger?.LogError(ex, "custom Exception Message: [Failed in TokenValidatorMiddleware.GetUserIdFromToken] " + "Exception Message: " + ex.Message);
                 return 0;
             }
-            return Convert.ToUInt32(userId);
+            return Convert.ToInt32(userId);
         }
 
         #endregion

@@ -71,7 +71,7 @@ namespace Vitol.Enzo.Infrastructure
         /// </summary>
         /// <param name="documents"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Documents documents)
+        public async Task<int> Add(Documents documents)
         {
 
             var DocumentIdParamter = base.GetParameterOut(DocumentInfrastructure.DocumentIdParameterName, SqlDbType.Int, documents.DocumentId);
@@ -88,7 +88,7 @@ namespace Vitol.Enzo.Infrastructure
 
             await base.ExecuteNonQuery(parameters, DocumentInfrastructure.FileUploadProcedureName, CommandType.StoredProcedure);
 
-            documents.DocumentId = Convert.ToUInt32(DocumentIdParamter.Value);
+            documents.DocumentId = Convert.ToInt32(DocumentIdParamter.Value);
 
             return documents.DocumentId;
         }

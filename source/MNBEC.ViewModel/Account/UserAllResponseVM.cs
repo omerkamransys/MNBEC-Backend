@@ -7,16 +7,16 @@ namespace MNBEC.ViewModel.Account
 {
    public class UserAllResponseVM
     {
-        public uint UserId { get; set; }
-        public uint UserName { get; set; }
+        public int UserId { get; set; }
+        public int UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-        public uint UserTypeId { get; set; }
+        public int UserTypeId { get; set; }
         public string UserTypeName { get; set; }
         public bool Active { get; set; }
         public string RoleName { get; set; }
-        public uint RoleId { get; set; }
+        public int RoleId { get; set; }
         public IList<UserRoles> UserRoles { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace MNBEC.ViewModel.Common
     {
         #region Properties and Data Members
         public bool Active { get; set; }
-        public uint? CurrentUserId { get; set; }
+        public int? CurrentUserId { get; set; }
         #endregion
     }
 }

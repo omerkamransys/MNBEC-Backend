@@ -2,9 +2,9 @@
 {
     public class DocumentGroupRequestVM
     {
-        public uint DocumentGroupId { get; set; }
+        public int DocumentGroupId { get; set; }
         public string DocumentGroupName { get; set; }
         public string DocumentGroupCode { get; set; }
-        public uint? OrderNumber { get; set; }
+        public int? OrderNumber { get; set; }
     }
 }

@@ -84,7 +84,7 @@ namespace MNBEC.Cache
 
         //    if (list != null)
         //    {
-        //        response.TotalRecord = Convert.ToUInt32(list.Count);
+        //        response.TotalRecord = Convert.ToInt32(list.Count);
         //        response.Data = list.Sort(request.SortColumn, request.SortAscending);
         //    }
 

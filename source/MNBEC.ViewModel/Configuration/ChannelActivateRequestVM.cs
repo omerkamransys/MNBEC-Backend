@@ -10,8 +10,8 @@ namespace MNBEC.ViewModel.Configuration
     {
         #region Properties and Data Members
         [Required]
-        [Range(1, uint.MaxValue)]
-        public uint ChannelId { get; set; }
+        [Range(1, int.MaxValue)]
+        public int ChannelId { get; set; }
         #endregion
     }
 }

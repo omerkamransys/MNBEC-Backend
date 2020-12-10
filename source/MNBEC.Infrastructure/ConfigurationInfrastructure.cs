@@ -53,7 +53,7 @@ namespace MNBEC.Infrastructure
         /// </summary>
         /// <param name="configuration"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Configuration configuration)
+        public async Task<int> Add(Configuration configuration)
         {
             var configurationIdParamter = base.GetParameterOut(ConfigurationInfrastructure.ConfigurationIdColumnName, SqlDbType.Int, configuration.ConfigurationId);
             var parameters = new List<DbParameter>
@@ -67,7 +67,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, ConfigurationInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
 
-            configuration.ConfigurationId = Convert.ToUInt32(configurationIdParamter.Value);
+            configuration.ConfigurationId = Convert.ToInt32(configurationIdParamter.Value);
 
             return configuration.ConfigurationId;
         }
@@ -186,7 +186,7 @@ namespace MNBEC.Infrastructure
                         dataReader.Close();
                     }
 
-                    result.TotalRecord = Convert.ToUInt32(totalRecordParamter.Value);
+                    result.TotalRecord = Convert.ToInt32(totalRecordParamter.Value);
                 }
             }
 

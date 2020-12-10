@@ -3,7 +3,7 @@
     public class DocumentTypeRequestVM
     {
        
-        public uint DocumentGroupId { get; set; }
+        public int DocumentGroupId { get; set; }
        
     }
 }

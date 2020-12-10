@@ -15,7 +15,7 @@ namespace MNBEC.Core.Extensions
         /// </summary>
         /// <param name="sourceValue"></param>
         /// <returns></returns>
-        public static uint GetUnsignedIntegerValue(this object sourceValue)
+        public static int GetUnsignedIntegerValue(this object sourceValue)
         {
             var value = sourceValue.GetUnsignedIntegerValueNullable();
 
@@ -24,7 +24,7 @@ namespace MNBEC.Core.Extensions
                 return value.Value;
             }
 
-            return default(uint);
+            return default(int);
         }
 
         /// <summary>
@@ -66,19 +66,19 @@ namespace MNBEC.Core.Extensions
         /// </summary>
         /// <param name="sourceValue"></param>
         /// <returns></returns>
-        public static uint? GetUnsignedIntegerValueNullable(this object sourceValue)
+        public static int? GetUnsignedIntegerValueNullable(this object sourceValue)
         {
-            uint? value = null;
+            int? value = null;
 
             if (sourceValue != null)
             {
-                if (sourceValue is uint)
+                if (sourceValue is int)
                 {
-                    value = (uint)sourceValue;
+                    value = (int)sourceValue;
                 }
                 else if (!string.IsNullOrWhiteSpace(sourceValue.ToString()))
                 {
-                    value = Convert.ToUInt32(sourceValue);
+                    value = Convert.ToInt32(sourceValue);
                 }
             }
 
@@ -530,23 +530,23 @@ namespace MNBEC.Core.Extensions
         }
 
         /// <summary>
-        /// GetUnsignedIntegerValue Converts the sourceValue of DayOfWeek type to uint.
+        /// GetUnsignedIntegerValue Converts the sourceValue of DayOfWeek type to int.
         /// </summary>
         /// <param name="sourceValue"></param>
         /// <returns></returns>
-        public static uint GetUnsignedIntegerValue(this DayOfWeek sourceValue)
+        public static int GetUnsignedIntegerValue(this DayOfWeek sourceValue)
         {
-            uint value = sourceValue != DayOfWeek.Sunday ? Convert.ToUInt32(sourceValue) : 7;
+            int value = sourceValue != DayOfWeek.Sunday ? Convert.ToInt32(sourceValue) : 7;
 
             return value;
         }
 
         /// <summary>
-        /// GetUnsignedIntegerValue Converts the sourceValue of DayOfWeek type to uint.
+        /// GetUnsignedIntegerValue Converts the sourceValue of DayOfWeek type to int.
         /// </summary>
         /// <param name="sourceValue"></param>
         /// <returns></returns>
-        public static uint GetUnsignedIntegerValue(this DateTime sourceValue)
+        public static int GetUnsignedIntegerValue(this DateTime sourceValue)
         {
             return sourceValue.DayOfWeek.GetUnsignedIntegerValue();
         }

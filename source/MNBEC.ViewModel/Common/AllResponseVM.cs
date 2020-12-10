@@ -10,9 +10,9 @@ namespace MNBEC.ViewModel.Common
     {
         #region Properties and Data Members
         public List<T> Data { get; set; }
-        public uint Offset { get; set; }
-        public uint PageSize { get; set; }
-        public uint TotalRecord { get; set; }
+        public int Offset { get; set; }
+        public int PageSize { get; set; }
+        public int TotalRecord { get; set; }
         public string SortColumn { get; set; }
         public bool SortAscending { get; set; }
         public string SearchText { get; set; }

@@ -55,7 +55,7 @@ namespace MNBEC.Infrastructure
         /// </summary>
         /// <param name="employee"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Employee employee)
+        public async Task<int> Add(Employee employee)
         {
             var employeeIdParamter = base.GetParameterOut(EmployeeInfrastructure.EmployeeIdColumnName, SqlDbType.Int, employee.EmployeeId);
             var parameters = new List<DbParameter>
@@ -72,7 +72,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, EmployeeInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
 
-            employee.EmployeeId = (uint)employeeIdParamter.Value;
+            employee.EmployeeId = (int)employeeIdParamter.Value;
 
             return employee.EmployeeId;
         }
@@ -191,7 +191,7 @@ namespace MNBEC.Infrastructure
                         dataReader.Close();
                     }
 
-                    result.TotalRecord = (uint)totalRecordParamter.Value;
+                    result.TotalRecord = (int)totalRecordParamter.Value;
                 }
             }
 

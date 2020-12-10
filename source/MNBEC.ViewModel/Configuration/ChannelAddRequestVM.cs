@@ -9,9 +9,9 @@ namespace MNBEC.ViewModel.Configuration
     public class ChannelAddRequestVM : BaseRequestVM
     {
         #region Properties and Data Members
-        public uint ChannelId { get; set; }
+        public int ChannelId { get; set; }
         [Required]
-        public uint ClientId { get; set; }
+        public int ClientId { get; set; }
         public string ChannelName { get; set; }
         public string Description { get; set; }
 

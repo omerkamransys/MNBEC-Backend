@@ -12,7 +12,7 @@ namespace MNBEC.ViewModel.Account
     public class UserGetByRoleRequestVM : BaseRequestVM
     {
         #region Propeties
-        public uint RoleId { get; set; }
+        public int RoleId { get; set; }
 
         #endregion
     }

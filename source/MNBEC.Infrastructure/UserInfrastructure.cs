@@ -143,7 +143,6 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(UserInfrastructure.PhoneNumberParameterName, applicationUser.PhoneNumber),
                 base.GetParameter(UserInfrastructure.PhoneNumberConfirmedParameterName, applicationUser.PhoneNumberConfirmed),
                 base.GetParameter(UserInfrastructure.TwoFactorEnabledParameterName, applicationUser.TwoFactorEnabled),
-                base.GetParameter(UserInfrastructure.LockoutEndParameterName, applicationUser.LockoutEnd),
                 base.GetParameter(UserInfrastructure.LockoutEnabledParameterName, applicationUser.LockoutEnabled),
                 base.GetParameter(UserInfrastructure.AccessFailedCountParameterName, applicationUser.AccessFailedCount),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, applicationUser.Active),
@@ -152,7 +151,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, UserInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
 
-            applicationUser.UserId = Convert.ToUInt32(applicationUserIdParamter.Value);
+            applicationUser.UserId = Convert.ToInt32(applicationUserIdParamter.Value);
 
 
             return IdentityResult.Success;
@@ -438,7 +437,7 @@ namespace MNBEC.Infrastructure
                         dataReader.Close();
                     }
 
-                    result.TotalRecord = Convert.ToUInt32(totalRecordParamter.Value);
+                    result.TotalRecord = Convert.ToInt32(totalRecordParamter.Value);
                 }
             }
 
@@ -844,7 +843,7 @@ namespace MNBEC.Infrastructure
         {
             return Task.FromResult(user.PasswordHash != null);
         }
-        public async Task<uint> GetRoleId(string role)
+        public async Task<int> GetRoleId(string role)
         {
             ApplicationRole modelItem = new ApplicationRole();
             var parameters = new List<DbParameter>
@@ -885,11 +884,11 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, UserInfrastructure.AddUserRoleStoredProcedureName, CommandType.StoredProcedure);
 
-            var userRoleId = Convert.ToUInt32(applicationUserRoleIdParamter.Value);
+            var userRoleId = Convert.ToInt32(applicationUserRoleIdParamter.Value);
 
 
         }
-        public async Task<uint> InsertRole(ApplicationUser applicationUser, string role, CancellationToken ct)
+        public async Task<int> InsertRole(ApplicationUser applicationUser, string role, CancellationToken ct)
         {
             var roleId = await GetRoleId(role);
             var applicationUserRoleIdParamter = base.GetParameterOut(UserInfrastructure.ApplicationUserRoleIdParameterName, SqlDbType.Int);
@@ -903,7 +902,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, UserInfrastructure.AddUserRoleStoredProcedureName, CommandType.StoredProcedure);
 
-            var userRoleId = Convert.ToUInt32(applicationUserRoleIdParamter.Value);
+            var userRoleId = Convert.ToInt32(applicationUserRoleIdParamter.Value);
             return userRoleId;
 
 

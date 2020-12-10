@@ -9,7 +9,7 @@ namespace MNBEC.Domain
     public class ApplicationClaimGroup : BaseDomain
     {
         #region Propeties
-        public uint ClaimGroupId { get; set; }
+        public int ClaimGroupId { get; set; }
         public string ClaimGroupLabel { get; set; }
         public string ClaimGroupCode { get; set; }
         public string ClaimGroupLabelTranslation { get; set; }

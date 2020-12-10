@@ -6,7 +6,7 @@
     public class ConfigurationListResponseVM
     {
         #region Properties and Data Members
-        public uint ConfigurationId { get; set; }
+        public int ConfigurationId { get; set; }
         public string ConfigurationKey { get; set; }
         public string ConfigurationValue { get; set; }
         #endregion

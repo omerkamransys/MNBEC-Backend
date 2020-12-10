@@ -8,7 +8,7 @@ namespace MNBEC.ViewModel.Account
     public class ClaimGroupAllRequestVM : BaseAllRequestVM
     {
         #region Properties and Data Members
-        public uint ApplicationClaimGroupId { get; set; }
+        public int ApplicationClaimGroupId { get; set; }
         public string ApplicationClaimGroupName { get; set; }
         public string ApplicationClaimGroupCode { get; set; }
         #endregion

@@ -6,7 +6,7 @@
     public class ClaimGroupListResponseVM
     {
         #region Properties and Data Members
-        public uint ClaimGroupId { get; set; }
+        public int ClaimGroupId { get; set; }
         public string ClaimGroupLabel { get; set; }
         public string ClaimGroupCode { get; set; }
         #endregion

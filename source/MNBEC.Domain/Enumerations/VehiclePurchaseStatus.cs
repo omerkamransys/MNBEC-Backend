@@ -5,7 +5,7 @@ namespace MNBEC.Domain.Enumerations
     /// <summary>
     /// InspectionStatusEnum hold values from InspectionStatus Table with Id Mapping.
     /// </summary>
-    public enum VehiclePurchaseStatusEnum : uint
+    public enum VehiclePurchaseStatusEnum : int
     {
         [Description("PUR")]
         Purchased = 1,

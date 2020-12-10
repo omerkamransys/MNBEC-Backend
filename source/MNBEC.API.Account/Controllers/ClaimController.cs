@@ -47,7 +47,7 @@ namespace MNBEC.API.Account.Controllers
         ///// <param name="requestVM"></param>
         ///// <returns></returns>
         //[HttpPost("add")]
-        //public async Task<uint> Add([FromBody] ApplicationClaimRequestVM requestVM)
+        //public async Task<int> Add([FromBody] ApplicationClaimRequestVM requestVM)
         //{
         //    ApplicationClaim request = requestVM.Convert();
 
@@ -135,7 +135,8 @@ namespace MNBEC.API.Account.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpGet("getlistbyrole")]
-        [Authorize(Policy = "CLM_GLBR")]
+        //[Authorize(Policy = "CLM_GLBR")]
+        [AllowAnonymous]
         public async Task<List<ClaimListResponseVM>> GetListByRole([FromQuery] RoleRequestVM requestVM)
         {
             ApplicationRole request = requestVM.Convert();

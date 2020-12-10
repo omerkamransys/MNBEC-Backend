@@ -62,7 +62,7 @@ namespace MNBEC.Infrastructure
         /// </summary>
         /// <param name="Channel"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Channel Channel)
+        public async Task<int> Add(Channel Channel)
         {
             var ChannelIdParamter = base.GetParameterOut(ChannelInfrastructure.ChannelIdParameterName, SqlDbType.Int, Channel.ChannelId);
             var parameters = new List<DbParameter>
@@ -77,7 +77,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, ChannelInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
 
-            Channel.ChannelId = Convert.ToUInt32(ChannelIdParamter.Value);
+            Channel.ChannelId = Convert.ToInt32(ChannelIdParamter.Value);
 
             return Channel.ChannelId;
         }
@@ -198,7 +198,7 @@ namespace MNBEC.Infrastructure
                         dataReader.Close();
                     }
 
-                    result.TotalRecord = Convert.ToUInt32(totalRecordParamter.Value);
+                    result.TotalRecord = Convert.ToInt32(totalRecordParamter.Value);
                 }
             }
 

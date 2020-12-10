@@ -8,7 +8,7 @@ namespace MNBEC.Domain
     public class Configuration : BaseDomain
     {
         #region Propeties
-        public uint ConfigurationId { get; set; }
+        public int ConfigurationId { get; set; }
         public string ConfigurationKey { get; set; }
         public string ConfigurationValue { get; set; }
         public string ConfigurationValueTranslation { get; set; }

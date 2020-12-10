@@ -215,10 +215,10 @@ namespace MNBEC.Infrastructure
             return returnValue;
         }
 
-        protected async Task<List<uint>> BulkInsertSQL(string query, List<string> values)
+        protected async Task<List<int>> BulkInsertSQL(string query, List<string> values)
         {
 
-            List<uint> InsertedIds = new List<uint>();
+            List<int> InsertedIds = new List<int>();
 
             BulkInsertResponse bulkInsertResponse  = new BulkInsertResponse();
 
@@ -277,10 +277,10 @@ namespace MNBEC.Infrastructure
             return InsertedIds;
         }
 
-        protected async Task<List<uint>> BulkInsertMySQL(StringBuilder SQLquery, List<string> values)
+        protected async Task<List<int>> BulkInsertMySQL(StringBuilder SQLquery, List<string> values)
         {
 
-            List<uint> InsertedIds = new List<uint>();
+            List<int> InsertedIds = new List<int>();
 
             BulkInsertResponse bulkInsertResponse = new BulkInsertResponse();            
 
@@ -400,10 +400,10 @@ namespace MNBEC.Infrastructure
         }
 
 
-        protected async Task<List<uint>> BulkInsertSQLGeneric(string query, List<string> values)
+        protected async Task<List<int>> BulkInsertSQLGeneric(string query, List<string> values)
         {
 
-            List<uint> InsertedIds = new List<uint>();
+            List<int> InsertedIds = new List<int>();
 
             BulkInsertResponse bulkInsertResponse = new BulkInsertResponse();
 
@@ -450,7 +450,7 @@ namespace MNBEC.Infrastructure
         protected async Task<bool> BulkUpdateSQLGeneric(string query, List<string> values)
         {
 
-            List<uint> InsertedIds = new List<uint>();
+            List<int> InsertedIds = new List<int>();
 
             BulkInsertResponse bulkInsertResponse = new BulkInsertResponse();
 

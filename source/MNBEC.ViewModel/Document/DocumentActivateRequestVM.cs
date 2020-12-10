@@ -9,8 +9,8 @@ namespace MNBEC.ViewModel.Document
     public class DocumentActivateRequestVM : BaseRequestVM
     {
         #region Properties and Data Members
-        public uint DocumentId { get; set; }
-        public uint DocumentTypeId { get; set; }
+        public int DocumentId { get; set; }
+        public int DocumentTypeId { get; set; }
         public string DocumentFile { get; set; }
         public string DocumentName { get; set; }
         public string DocumentExtension { get; set; }

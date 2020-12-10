@@ -10,7 +10,7 @@ namespace MNBEC.ViewModel.Account
     public class RoleAddRequestVM : BaseRequestVM
     {
         #region Propeties
-        public uint RoleId { get; set; }
+        public int RoleId { get; set; }
         [Required]
         public string RoleName { get; set; }
         public string RoleNameCode { get; set; }

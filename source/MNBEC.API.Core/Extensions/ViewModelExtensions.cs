@@ -21,7 +21,7 @@ namespace MNBEC.API.Core.Extensions
             {
                 Data = new T(),
                 Offset = vm.Offset,
-                PageSize = vm.PageSize > 0 ? vm.PageSize : uint.MaxValue,
+                PageSize = vm.PageSize > 0 ? vm.PageSize : int.MaxValue,
                 SortColumn = vm.SortColumn,
                 SortAscending = vm.SortAscending,
                 FilterColumnId = vm.FilterColumnId

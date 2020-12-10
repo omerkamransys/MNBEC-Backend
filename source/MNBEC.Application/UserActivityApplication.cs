@@ -43,7 +43,7 @@ namespace MNBEC.Application
         /// </summary>
         /// <param name="UserActivity"></param>
         /// <returns></returns>
-        public async Task<uint> Add(UserActivity UserActivity)
+        public async Task<int> Add(UserActivity UserActivity)
         {
             var response= await this.UserActivityInfrastructure.Add(UserActivity);
             

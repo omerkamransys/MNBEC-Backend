@@ -8,8 +8,8 @@ namespace MNBEC.Domain
     public class Documents : BaseDomain
     {
         #region Propeties
-        public uint DocumentId { get; set; }
-        public uint DocumentTypeId { get; set; }
+        public int DocumentId { get; set; }
+        public int DocumentTypeId { get; set; }
         public string ClientName { get; set; }
         public string DocumentTypeCode { get; set; }
         public string DocumentName { get; set; }
@@ -18,7 +18,7 @@ namespace MNBEC.Domain
         public string DocumentPath { get; set; }
         public byte[] DocumentByte { get; set; }
         public bool SecureDocument { get; set; }
-        public uint AuctionId { get; set; }
+        public int AuctionId { get; set; }
         public bool PrimaryDocument { get; set; }
 
 

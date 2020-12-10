@@ -47,7 +47,7 @@ namespace MNBEC.Application
         /// </summary>
         /// <param name="Document"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Documents document)
+        public async Task<int> Add(Documents document)
         {
             document.DocumentPath = await this.UploadFile(document);
 

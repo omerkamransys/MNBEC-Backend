@@ -6,7 +6,7 @@
     public interface IUser
     {
         #region Properties
-        uint UserId { get; set; }        
+        int UserId { get; set; }        
         #endregion
     }
 }

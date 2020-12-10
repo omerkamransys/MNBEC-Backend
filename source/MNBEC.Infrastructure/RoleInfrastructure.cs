@@ -115,7 +115,7 @@ namespace MNBEC.Infrastructure
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return await this.Get(new ApplicationRole { RoleId = Convert.ToUInt32(roleId) });
+            return await this.Get(new ApplicationRole { RoleId = Convert.ToInt32(roleId) });
         }
 
         public async Task<ApplicationRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
@@ -172,7 +172,7 @@ namespace MNBEC.Infrastructure
         /// <param name="applicationRole"></param>
         /// <returns></returns>
         /// 
-        public async Task<uint> Add(ApplicationRole applicationRole)
+        public async Task<int> Add(ApplicationRole applicationRole)
         {
             var applicatioRoleIdParamter = base.GetParameterOut(RoleInfrastructure.RoleIdParameterName, SqlDbType.Int, applicationRole.RoleId);
             var parameters = new List<DbParameter>
@@ -187,7 +187,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, RoleInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
 
-            applicationRole.RoleId = Convert.ToUInt32(applicatioRoleIdParamter.Value);
+            applicationRole.RoleId = Convert.ToInt32(applicatioRoleIdParamter.Value);
 
             return applicationRole.RoleId;
         }
@@ -352,7 +352,7 @@ namespace MNBEC.Infrastructure
                         dataReader.Close();
                     }
 
-                    result.TotalRecord = Convert.ToUInt32(totalRecordParamter.Value);
+                    result.TotalRecord = Convert.ToInt32(totalRecordParamter.Value);
                 }
             }
 

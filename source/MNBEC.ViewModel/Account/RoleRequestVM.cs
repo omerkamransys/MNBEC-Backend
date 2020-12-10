@@ -11,7 +11,7 @@ namespace MNBEC.ViewModel.Account
     public class RoleRequestVM : BaseRequestVM
     {
         #region Propeties
-        public uint RoleId { get; set; }
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
         public IList<ClaimGroupResponseVM> ClaimGroups { get; set; }
         #endregion

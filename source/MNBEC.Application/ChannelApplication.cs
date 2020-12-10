@@ -43,7 +43,7 @@ namespace MNBEC.Application
         /// </summary>
         /// <param name="Channel"></param>
         /// <returns></returns>
-        public async Task<uint> Add(Channel Channel)
+        public async Task<int> Add(Channel Channel)
         {
             //return await this.ChannelInfrastructure.Add(Channel);
             var response= await this.ChannelInfrastructure.Add(Channel);

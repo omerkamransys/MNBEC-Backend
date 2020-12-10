@@ -8,7 +8,7 @@ namespace MNBEC.Domain
     public class SMS : BaseDomain
     {
         #region Propeties
-        public uint SMSTemplateId { get; set; }
+        public int SMSTemplateId { get; set; }
         public string SMSCode { get; set; }
         public string Message { get; set; }
         public string MessageTranslation { get; set; }

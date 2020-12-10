@@ -61,10 +61,10 @@ namespace MNBEC.Application
         {
             var result = await _userManager.CreateAsync(user, Password);
             user.ResetUrlKey = await GetPasswordRestToken(user);
-            if (result.Succeeded == true && isdealer == false)
-            {
-                await this.EmailApplication.SendEmployeeCreationEmail(user, useDefaultLanguage);
-            }
+            //if (result.Succeeded == true && isdealer == false)
+            //{
+            //    await this.EmailApplication.SendEmployeeCreationEmail(user, useDefaultLanguage);
+            //}
             if (result.Succeeded)
             {
                 user.PasswordHash = "";
@@ -259,7 +259,7 @@ namespace MNBEC.Application
             return outputBytes;
         }
 
-        public async Task<uint> InsertRole(ApplicationUser user, string roleName, CancellationToken ct)
+        public async Task<int> InsertRole(ApplicationUser user, string roleName, CancellationToken ct)
         {
             return await ApplicationUserInfrastructure.InsertRole(user, roleName, ct);
         }

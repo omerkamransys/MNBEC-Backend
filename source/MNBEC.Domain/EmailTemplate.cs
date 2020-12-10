@@ -9,7 +9,7 @@ namespace MNBEC.Domain
     public class EmailTemplate : BaseDomain
     {
         #region Propeties
-        public uint EmailTemplateId { get; set; }
+        public int EmailTemplateId { get; set; }
         public string EmailTemplateCode { get; set; }
         public string Message { get; set; }
         public string Subject { get; set; }

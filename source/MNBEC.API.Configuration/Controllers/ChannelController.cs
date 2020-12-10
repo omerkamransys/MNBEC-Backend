@@ -54,7 +54,7 @@ namespace MNBEC.API.Configuration.Controllers
         /// <returns></returns>
         [HttpPost("add")]
         [AllowAnonymous]
-        public async Task<uint> Add([FromBody] ChannelAddRequestVM requestVm)
+        public async Task<int> Add([FromBody] ChannelAddRequestVM requestVm)
         {
             Channel request = requestVm.ConvertAdd();
 

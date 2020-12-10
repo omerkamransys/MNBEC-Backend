@@ -6,7 +6,7 @@
     public class ConfigurationRequestVM : BaseRequestVM
     {
         #region Properties and Data Members
-        public uint ConfigurationId { get; set; }
+        public int ConfigurationId { get; set; }
         public string ConfigurationKey { get; set; }
         #endregion
     }

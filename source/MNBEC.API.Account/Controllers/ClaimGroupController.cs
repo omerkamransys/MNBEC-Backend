@@ -49,7 +49,7 @@ namespace MNBEC.API.Account.Controllers
         ///// <param name="requestVM"></param>
         ///// <returns></returns>
         //[HttpPost("add")]
-        //public async Task<uint> Add([FromBody] ClaimGroupRequestVM requestVM)
+        //public async Task<int> Add([FromBody] ClaimGroupRequestVM requestVM)
         //{
         //    ApplicationClaimGroup request = requestVM.Convert();
 

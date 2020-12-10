@@ -7,7 +7,7 @@ namespace MNBEC.ViewModel.Account
 {
    public class RoleAllRequestVM : BaseAllRequestVM
     {
-        public uint RoleId { get; set; }
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
     }
 }

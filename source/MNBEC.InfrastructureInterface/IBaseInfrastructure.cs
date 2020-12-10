@@ -16,7 +16,7 @@ namespace MNBEC.InfrastructureInterface
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        Task<uint> Add(T entity);
+        Task<int> Add(T entity);
         /// <summary>
         /// Update calls ExternalAuctionInfrastructure to update the external Acution
         /// </summary>

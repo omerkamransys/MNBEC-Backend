@@ -8,9 +8,9 @@ namespace MNBEC.Domain
     public class ApplicationUserRole : BaseDomain
     {
         #region Propeties
-		public uint UserRoleId { get; set; }
-		public uint UserId { get; set; }
-		public uint RoleId { get; set; }
+		public int UserRoleId { get; set; }
+		public int UserId { get; set; }
+		public int RoleId { get; set; }
 
         #endregion
     }

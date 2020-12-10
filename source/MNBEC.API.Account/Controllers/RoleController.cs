@@ -50,7 +50,7 @@ namespace MNBEC.API.Account.Controllers
         /// <returns></returns>
         [HttpPost("add")]
         [Authorize(Policy = "RL_AD")]
-        public async Task<uint> Add([FromBody] RoleAddRequestVM requestVM)
+        public async Task<int> Add([FromBody] RoleAddRequestVM requestVM)
         {
             ApplicationRole request = requestVM.ConvertAdd();
 

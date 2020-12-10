@@ -7,7 +7,7 @@ namespace MNBEC.ViewModel.Account
 {
     public class RoleResponseVM
     {
-        public uint RoleId { get; set; }
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string RoleNameTranslation { get; set; }
         public string RoleNameCode { get; set; }

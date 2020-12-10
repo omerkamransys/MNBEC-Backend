@@ -8,7 +8,7 @@
     public class User : IUser
     {
         #region Properties
-       public uint UserId { get; set; }      
+       public int UserId { get; set; }      
         #endregion
     }
 }

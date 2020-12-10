@@ -10,7 +10,7 @@ namespace MNBEC.Domain
     public class ApplicationUser : BaseDomain
     {
         #region Propeties
-        public uint UserId { get; set; }
+        public int UserId { get; set; }
         public string UserName { get; set; }
         public string DealershipName { get; set; }
         public string FirstName { get; set; }
@@ -31,13 +31,13 @@ namespace MNBEC.Domain
         public string IdentificationNumber { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
-        public uint StateId { get; set; }
-        public uint CityId { get; set; }
+        public int StateId { get; set; }
+        public int CityId { get; set; }
         public string PostalCode { get; set; }
 
-        public uint UserTypeId { get; set; }
+        public int UserTypeId { get; set; }
         public string UserTypeName { get; set; }
-        public uint RoleId { get; set; }
+        public int RoleId { get; set; }
         public string RoleName { get; set; }
         public IList<ApplicationRole> Roles { get; set; }
         public IEnumerable<UserRoles> UserRoles { get; set; }

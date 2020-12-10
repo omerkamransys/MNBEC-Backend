@@ -8,7 +8,7 @@ namespace MNBEC.Domain
     public class DocumentByte : BaseDomain
     {
         #region Propeties
-        public uint DocumentId { get; set; }
+        public int DocumentId { get; set; }
         
         public byte[] DocumentsByte { get; set; }
 

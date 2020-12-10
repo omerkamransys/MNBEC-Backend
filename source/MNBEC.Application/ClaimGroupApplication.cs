@@ -40,7 +40,7 @@ namespace MNBEC.Application
         /// </summary>
         /// <param name="applicationClaimGroup"></param>
         /// <returns></returns>
-        public async Task<uint> Add(ApplicationClaimGroup applicationClaimGroup)
+        public async Task<int> Add(ApplicationClaimGroup applicationClaimGroup)
         {
             return await this.ClaimGroupInfrastructure.Add(applicationClaimGroup);
         }

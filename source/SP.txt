@@ -113,7 +113,6 @@ CREATE  PROCEDURE ApplicationUserAdd(
  @PStateId	int,
  @PPhoneNumberConfirmed	binary,
  @PTwoFactorEnabled	binary,
- @PLockoutEnd	datetime2(0),
  @PLockoutEnabled	binary,
  @PAccessFailedCount	int,
  @PActive	binary
@@ -130,14 +129,13 @@ IF @PCityId = 0 BEGIN
 END 
 
 	Insert Into applicationuser
-				(UserName,  FirstName,  LastName, IdentificationNumber,  Email, Address1,Address2,CityId,StateId, EmailConfirmed,  PasswordHash,  SecurityStamp,  ConcurrencyStamp,  PhoneNumber,  PhoneNumberConfirmed,  TwoFactorEnabled,  LockoutEnd,  LockoutEnabled,  AccessFailedCount,  CreatedById,  CreatedDate,  Active)
-		Values	(@PUserName, @PFirstName, @PLastName, @PIdentificationNumber, @PEmail, @PAddress1,@PAddress2,@PCityId,@PStateId,@PEmailConfirmed, @PPasswordHash, @PSecurityStamp, @PConcurrencyStamp, @PPhoneNumber, @PPhoneNumberConfirmed, @PTwoFactorEnabled, @PLockoutEnd, @PLockoutEnabled, @PAccessFailedCount, @PCurrentUserId, GETUTCDATE(), 1);
+				(UserName,  FirstName,  LastName, IdentificationNumber,  Email, Address1,Address2,CityId,StateId, EmailConfirmed,  PasswordHash,  SecurityStamp,  ConcurrencyStamp,  PhoneNumber,  PhoneNumberConfirmed,  TwoFactorEnabled,  LockoutEnabled,  AccessFailedCount,  CreatedById,  CreatedDate,  Active)
+		Values	(@PUserName, @PFirstName, @PLastName, @PIdentificationNumber, @PEmail, @PAddress1,@PAddress2,@PCityId,@PStateId,@PEmailConfirmed, @PPasswordHash, @PSecurityStamp, @PConcurrencyStamp, @PPhoneNumber, @PPhoneNumberConfirmed, @PTwoFactorEnabled, @PLockoutEnabled, @PAccessFailedCount, @PCurrentUserId, GETUTCDATE(), 1);
 
 	Set @PUserId = SCOPE_IDENTITY();
 End;
 
 GO
-
 
 DROP procedure if exists [ApplicationClaimGetList];
 
@@ -2277,6 +2275,35 @@ GO
 
 
 
+
+
+DROP procedure if exists [ApplicationUserRoleCheck];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+CREATE PROCEDURE ApplicationUserRoleCheck(
+ @PRoleName varchar(60),
+ @PUserId int,
+    @PTotalRecord int out)
+as
+begin
+set nocount on;
+
+     -- SQLINES LICENSE FOR EVALUATION USE ONLY
+    select  * from applicationuserrole where UserId = @PUserId and RoleId in (select 
+		RoleId
+	from applicationrole tbl
+	where RoleName = @PRoleName and Active = 1);
+    set @PTotalRecord = (Select COUNT(*) from applicationuserrole where UserId = @PUserId and RoleId in (select 
+		RoleId
+	from applicationrole tbl
+	where RoleName = @PRoleName and Active = 1));
+End;
+GO
 
 
 

@@ -9,7 +9,7 @@ namespace MNBEC.Domain
     {
         #region Propeties 
 
-        public uint FirstId { get; set; }
+        public int FirstId { get; set; }
         public int RowCount { get; set; }
         #endregion
 

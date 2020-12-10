@@ -7,11 +7,11 @@ namespace MNBEC.ViewModel.Account
 {
    public class UserAllRequestVM : BaseAllRequestVM
     {
-        public uint UserId { get; set; }
+        public int UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public uint UserTypeId { get; set; }
-        public uint RoleId { get; set; }
+        public int UserTypeId { get; set; }
+        public int RoleId { get; set; }
         public bool? ActiveColumn { get; set; }
     }
 }

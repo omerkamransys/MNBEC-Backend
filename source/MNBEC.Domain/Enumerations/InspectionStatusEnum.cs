@@ -5,7 +5,7 @@ namespace MNBEC.Domain.Enumerations
     /// <summary>
     /// InspectionStatusEnum hold values from InspectionStatus Table with Id Mapping.
     /// </summary>
-    public enum InspectionStatusEnum : uint
+    public enum InspectionStatusEnum : int
     {
         [Description("RFINSP")]
         ReadyForInspection = 1,

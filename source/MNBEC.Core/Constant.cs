@@ -31,6 +31,6 @@ namespace MNBEC.Core
         //public const string SecondaryLanguage = "tr-TR";
         public const string TurkeyName = "Turkey";
 
-        public const uint DefaultUserId = 1;
+        public const int DefaultUserId = 1;
     }
 }

@@ -57,7 +57,7 @@ namespace MNBEC.Infrastructure
         /// </summary>
         /// <param name="applicationClaimGroup"></param>
         /// <returns></returns>
-        public async Task<uint> Add(ApplicationClaimGroup applicationClaimGroup)
+        public async Task<int> Add(ApplicationClaimGroup applicationClaimGroup)
         {
             var applicationClaimGroupIdParamter = base.GetParameterOut(ClaimGroupInfrastructure.ClaimGroupIdColumnName, SqlDbType.Int, applicationClaimGroup.ClaimGroupId);
             var parameters = new List<DbParameter>
@@ -72,7 +72,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, ClaimGroupInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
 
-            applicationClaimGroup.ClaimGroupId = Convert.ToUInt32(applicationClaimGroupIdParamter.Value);
+            applicationClaimGroup.ClaimGroupId = Convert.ToInt32(applicationClaimGroupIdParamter.Value);
 
             return applicationClaimGroup.ClaimGroupId;
         }
@@ -303,7 +303,7 @@ namespace MNBEC.Infrastructure
                         dataReader.Close();
                     }
 
-                    result.TotalRecord = Convert.ToUInt32(totalRecordParamter.Value);
+                    result.TotalRecord = Convert.ToInt32(totalRecordParamter.Value);
                 }
             }
 

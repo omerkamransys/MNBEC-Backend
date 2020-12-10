@@ -8,8 +8,8 @@ namespace MNBEC.Domain
     public class Employee : BaseDomain
     {
         #region Propeties
-		public uint EmployeeId { get; set; }
-		public uint UserTypeId { get; set; }
+		public int EmployeeId { get; set; }
+		public int UserTypeId { get; set; }
 
         #endregion
     }

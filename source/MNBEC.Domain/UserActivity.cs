@@ -8,9 +8,9 @@ namespace MNBEC.Domain
     /// </summary>
     public class UserActivity 
     {
-        public uint UserId { get; set; }
+        public int UserId { get; set; }
         public string UserName { get; set; }
-        public uint TotalRecords { get; set; }
+        public int TotalRecords { get; set; }
         public string UserActivityName { get; set; }
         public string UserActivityDescription { get; set; }
         public DateTime? CreatedDate { get; set; }

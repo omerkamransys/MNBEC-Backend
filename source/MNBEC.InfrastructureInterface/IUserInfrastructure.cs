@@ -20,7 +20,7 @@ namespace MNBEC.InfrastructureInterface
         Task<List<ApplicationUser>> Search(string searchText);
         Task SetPasswordHashAsync(ApplicationUser user, string passwordHash, CancellationToken cancellationToken);
         Task<bool> RemoveExistingRolesForUser(ApplicationUser user, CancellationToken ct);
-        Task<uint> InsertRole(ApplicationUser user, string roleName, CancellationToken ct);
+        Task<int> InsertRole(ApplicationUser user, string roleName, CancellationToken ct);
         Task<List<ApplicationUser>> GetAdmins();
         Task<ApplicationUser> GetDealerbyEmail(string normalizedEmail, CancellationToken ct);
         Task<ApplicationUser> GetInspectorbyEmail(string normalizedEmail, CancellationToken ct);

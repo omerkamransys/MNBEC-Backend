@@ -67,7 +67,7 @@ namespace MNBEC.Infrastructure
         /// </summary>
         /// <param name="applicationClaim"></param>
         /// <returns></returns>
-        public async Task<uint> Add(ApplicationClaim applicationClaim)
+        public async Task<int> Add(ApplicationClaim applicationClaim)
         {
             var claimIdParamter = base.GetParameterOut(ClaimInfrastructure.ClaimIdColumnName, SqlDbType.Int, applicationClaim.ClaimId);
             var parameters = new List<DbParameter>
@@ -83,7 +83,7 @@ namespace MNBEC.Infrastructure
 
             await base.ExecuteNonQuery(parameters, ClaimInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
 
-            applicationClaim.ClaimId = Convert.ToUInt32(claimIdParamter.Value);
+            applicationClaim.ClaimId = Convert.ToInt32(claimIdParamter.Value);
 
             return applicationClaim.ClaimId;
         }
@@ -203,7 +203,7 @@ namespace MNBEC.Infrastructure
                         dataReader.Close();
                     }
 
-                    result.TotalRecord = Convert.ToUInt32(totalRecordParamter.Value);
+                    result.TotalRecord = Convert.ToInt32(totalRecordParamter.Value);
                 }
             }
 
@@ -261,6 +261,7 @@ namespace MNBEC.Infrastructure
         {
             var applicationClaims = new List<ApplicationClaim>();
             ApplicationClaim applicationClaimItem = null;
+
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(RoleInfrastructure.RoleIdParameterName, applicationRole.RoleId),
@@ -268,6 +269,13 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
 
             };
+            //var parameters = new List<DbParameter>
+            //{
+            //    base.GetParameter(RoleInfrastructure.RoleIdParameterName, applicationRole.RoleId),
+            //    base.GetParameter(RoleInfrastructure.RoleCodeParameterName, applicationRole.RoleNameCode),
+            //    base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
+
+            //};
 
             using (var dataReader = await base.ExecuteReader(parameters, ClaimInfrastructure.GetListByRoleStoredProcedureName, CommandType.StoredProcedure))
             {
@@ -337,7 +345,7 @@ namespace MNBEC.Infrastructure
                         {
                             applicationClaim = new ApplicationClaim();
 
-                            uint RoleId = dataReader.GetUnsignedIntegerValue(ClaimInfrastructure.RoleIdColumnName);
+                            int RoleId = dataReader.GetUnsignedIntegerValue(ClaimInfrastructure.RoleIdColumnName);
 
                             applicationClaim.ClaimCode = dataReader.GetStringValue(ClaimInfrastructure.ClaimCodeColumnName);
 

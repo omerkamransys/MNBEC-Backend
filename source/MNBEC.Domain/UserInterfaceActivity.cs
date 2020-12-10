@@ -9,12 +9,12 @@ namespace MNBEC.Domain
     public class UserInterfaceActivity : BaseDomain
     {
         #region Propeties
-        public uint UserInterfaceActivityId { get; set; }
-        public uint UserId { get; set; }
-        public uint MenuId { get; set; }
+        public int UserInterfaceActivityId { get; set; }
+        public int UserId { get; set; }
+        public int MenuId { get; set; }
         public string MenuName { get; set; }
         public string Username { get; set; }
-        public uint? Counter { get; set; }
+        public int? Counter { get; set; }
         #endregion
     }
 }

@@ -10,7 +10,7 @@ namespace MNBEC.ApplicationInterface
     /// </summary>
     public interface IEmployeeApplication : IBaseApplication<Employee>
     {
-        //Task<uint> Add(Employee employee);
+        //Task<int> Add(Employee employee);
         //Task<bool> Activate(Employee employee);
         //Task<Employee> Get(Employee employee);
         //Task<AllResponse<Employee>> GetAll(AllRequest<Employee> employee);

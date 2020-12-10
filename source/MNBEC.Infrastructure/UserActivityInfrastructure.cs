@@ -66,7 +66,7 @@ namespace MNBEC.Infrastructure
         /// </summary>
         /// <param name="UserActivity"></param>
         /// <returns></returns>
-        public async Task<uint> Add(UserActivity UserActivity)
+        public async Task<int> Add(UserActivity UserActivity)
         {
            
             var parameters = new List<DbParameter>

@@ -11,7 +11,7 @@ namespace MNBEC.API.Account.Extensions
     public static class UrlHelperExtensions
     {
         
-        public static string EmailConfirmationLink(this IUrlHelper urlHelper, uint userId, string code, string scheme)
+        public static string EmailConfirmationLink(this IUrlHelper urlHelper, int userId, string code, string scheme)
         {
             return urlHelper.Action(
                 action: string.Empty,
@@ -20,7 +20,7 @@ namespace MNBEC.API.Account.Extensions
                 protocol: scheme);
         }
 
-        public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, uint userId, string code, string scheme)
+        public static string ResetPasswordCallbackLink(this IUrlHelper urlHelper, int userId, string code, string scheme)
         {
             return urlHelper.Action(
                 action: string.Empty,
