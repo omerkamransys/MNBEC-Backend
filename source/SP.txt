@@ -868,6 +868,1416 @@ End;
 GO
 
 
+DROP procedure if exists [ApplicationRoleIdGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationRoleIdGet(	
+ @PRoleName varchar(60)
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		RoleId,
+        RoleName,
+        RoleNameTranslation
+	From applicationrole tbl
+	Where RoleName = @PRoleName OR
+    	RoleNameTranslation = @PRoleName;
+
+End;
+GO
+
+
+
+
+
+DROP procedure if exists [ApplicationUserGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationUserGet(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary,
+ @PUserId	int 
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		UserId, UserName, FirstName, LastName, Email, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationuser tbl
+	Where Active = @PActive
+	And UserId=@PUserId;
+
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserGetbyEmail];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationUserGetbyEmail(	
+ @PUserEmail	varchar(256)
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		UserId, UserName,'' as 'DealershipName' , FirstName, LastName, Email, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationuser tbl
+	Where Email=@PUserEmail AND Active =1;
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserGetByRole];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserGetByRole gets the users by Role Id
+-- =============================================
+
+
+CREATE  PROCEDURE ApplicationUserGetByRole(
+ @PRoleId int)
+as
+begin
+set nocount on;
+
+	
+	select 
+	au.UserId,
+	au.UserName,
+	au.FirstName,
+	au.LastName,
+	au.Email,
+	au.PhoneNumber,
+	au.Active,
+	au.IdentificationNumber
+	from applicationuser au
+	inner join applicationuserrole aur on aur.UserId = au.UserId and aur.Active = 1
+	inner join applicationrole ar on ar.RoleId = aur.RoleId and ar.RoleId = @PRoleId
+	where au.active = 1 ;
+
+End;
+GO
+
+
+
+
+
+DROP procedure if exists [ApplicationUserGetDealerbyEmail];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserGetDealerbyEmail(	
+ @PUserEmail	varchar(256)
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		UserId, UserName, FirstName, LastName, Email, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumber, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnd, LockoutEnabled, AccessFailedCount, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationuser tbl
+	Where Email = @PUserEmail AND Active =1;
+End;
+GO
+
+
+
+DROP procedure if exists [ApplicationUserRoleActivate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationUserRoleActivate(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary,
+ @PUserRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	Update applicationuserrole 
+		Set 
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+	Where UserRoleId=@PUserRoleId;
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserRoleAdd];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserRoleAdd(	
+ @PCurrentUserId int,
+ @PUserRoleId	int OUT,
+ @PUserId	int,
+ @PRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	Insert Into applicationuserrole
+				(UserId,  RoleId,  CreatedById,  CreatedDate)
+		Values	(@PUserId, @PRoleId, @PCurrentUserId, GETUTCDATE());
+
+	Set @PUserRoleId=SCOPE_IDENTITY();
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserRoleGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserRoleGet(	
+ @PRoleId	int,
+    @PUserId	int 
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		UserRoleId, UserId, RoleId, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationuserrole
+	Where UserId = @PUserId 
+	And RoleId = @PRoleId;
+
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserRoleGetByUser];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserRoleGetByUser gets the Roles by User
+-- =============================================
+
+
+CREATE  PROCEDURE ApplicationUserRoleGetByUser(
+ @PCurrentUserId int)
+as
+begin
+set nocount on;
+
+	SELECT Distinct ar.RoleName
+	FROM applicationuserrole tbl
+	Inner Join applicationrole ar on tbl.RoleId = ar.RoleId
+	where UserId = @PCurrentUserId;
+
+End;
+GO
+
+
+
+
+
+DROP procedure if exists [ApplicationUserRoleLogAdd];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	Application User Role Log
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserRoleLogAdd(	
+ @PCurrentUserId int,
+ @PUserRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	Insert	Into	applicationuserroleLog
+					(UserRoleId,UserId,RoleId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+			SELECT	UserRoleId,UserId,RoleId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+			FROM	applicationuserrole
+			WHERE	UserRoleId=@PUserRoleId ;
+
+	
+End;
+GO
+
+
+
+
+
+
+DROP procedure IF EXISTS [ApplicationUserRolesInactive];
+
+GO
+
+CREATE PROCEDURE ApplicationUserRolesInactive(	
+ @PCurrentUserId int,	
+ @PUserId	int 	
+	)
+As
+Begin
+Set nocount on;
+
+	Update applicationuserrole 
+		Set    			
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active = 0
+	Where UserId=@PUserId;
+End;
+GO
+
+
+
+
+
+DROP procedure if exists [ApplicationUserRoleUpdate];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserRoleUpdate(	
+ @PCurrentUserId int,
+ @PUserRoleId	int,
+ @PUserId	int,
+ @PRoleId	int,
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	Exec ApplicationUserRoleLogAdd @PCurrentUserId,@PUserRoleId; 
+	Update applicationuserrole 
+		Set 
+			UserId=@PUserId,
+			RoleId=@PRoleId,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+	Where UserRoleId=@PUserRoleId;
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationUserSearch];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserSearch(
+    @PSearchText varchar(50))
+as
+begin
+set nocount on;
+
+select tblmak.FirstName,
+	'' LastName,
+    '' Email
+	from applicationuser tblmak
+	where tblmak.FirstName LIKE concat('%',@PSearchText,'%')
+   UNION
+   select tblmak.FirstName,
+	tblmak.LastName,
+    '' Email
+	from applicationuser tblmak
+	where tblmak.LastName LIKE concat('%',@PSearchText,'%')
+    UNION
+   select tblmak.FirstName,
+	tblmak.LastName,
+    tblmak.Email
+	from applicationuser tblmak
+	where tblmak.Email LIKE concat('%',@PSearchText,'%');
+End;
+GO
+
+
+
+DROP procedure if exists [ApplicationUserUpdate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationUserUpdate(	
+ @PCurrentUserId int,
+ @PUserId	int,
+ @PUserName	varchar(256),
+ @PFirstName	varchar(60),
+ @PLastName	varchar(60),
+ @PEmail	varchar(256),
+ @PEmailConfirmed	binary,
+ @PIdentificationNumber varchar(20),
+ @PSecurityStamp	varchar(max),
+ @PConcurrencyStamp	varchar(max),
+ @PPhoneNumber	varchar(max),
+ @PPhoneNumberConfirmed	binary,
+ @PTwoFactorEnabled	binary,
+ @PLockoutEnd	datetime2(0),
+ @PLockoutEnabled	binary,
+ @PAccessFailedCount	int,
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	EXEC ApplicationUserLogAdd @PUserId,@PCurrentUserId; 
+	Update applicationuser 
+		Set 
+			UserName=@PUserName,
+			FirstName=@PFirstName,
+			LastName=@PLastName,
+			Email=@PEmail,
+			EmailConfirmed=@PEmailConfirmed,
+			IdentificationNumber = @PIdentificationNumber,
+			SecurityStamp=@PSecurityStamp,
+			ConcurrencyStamp=@PConcurrencyStamp,
+			PhoneNumber=@PPhoneNumber,
+			PhoneNumberConfirmed=@PPhoneNumberConfirmed,
+			TwoFactorEnabled=@PTwoFactorEnabled,
+			LockoutEnd=@PLockoutEnd,
+			LockoutEnabled=@PLockoutEnabled,
+			AccessFailedCount=@PAccessFailedCount,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+	Where UserId=@PUserId;
+End;
+GO
+
+
+
+
+
+DROP procedure if exists [GetAdmins];
+
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	GetAdmins gets all the admin users from applicationuser table
+-- =============================================
+
+Create Procedure GetAdmins
+As
+Begin
+Set nocount on;
+
+select 
+au.UserId,
+au.UserName,
+au.Email
+from applicationuser au
+inner join applicationuserrole aur on aur.UserId = au.UserID and aur.Active =1 
+inner join applicationrole ar on ar.RoleId = aur.RoleId and ar.RoleId =1 
+Where ar.RoleName = 'ADMIN' and ar.active = 1;
+
+End;
+Go
+
+
+DROP procedure if exists [GetAllManager];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE GetAllManager(
+ @PCurrentUserId int 
+	)
+as
+begin
+set nocount on;
+   
+   select DISTINCT au.UserId, au.UserName,au.FirstName,au.LastName from applicationuserrole aur 
+inner join applicationuser au on au.UserId=aur.UserId
+inner join applicationrole ar on ar.roleid=aur.roleid
+where ar.RoleNameCode='PURCM'
+	order by au.UserId asc;
+End;
+GO
+
+
+
+
+
+Drop Procedure If Exists [GetApplicationUserById];
+GO
+-- =============================================
+-- Author:      
+-- Create date: 
+-- Description: Get Data By GetApplicationUserById from ApplicationUser table 
+-- =============================================
+
+Create PROCEDURE GetApplicationUserById
+( @PUserId	int 
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		UserId, UserName, FirstName, LastName,
+        IdentificationNumber,Address1,Address2,
+        CityId,StateId,PostalCode,
+        Email,EmailConfirmed,
+        PasswordHash,SecurityStamp,
+        ConcurrencyStamp,PhoneNumber,
+        PhoneNumberConfirmed,TwoFactorEnabled,
+        LockoutEnd,LockoutEnabled,AccessFailedCount,
+        Active,CreatedById,CreatedDate,
+        ModifiedById,ModifiedDate
+	From applicationuser tbl
+	Where  UserId=@PUserId;
+End;
+Go
+
+
+
+
+DROP procedure if exists [GetPasswordHash];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE GetPasswordHash(	
+ @PUserId	int 
+	
+	)
+As
+Begin
+Set nocount on;
+	
+	select PasswordHash from applicationuser tbl where
+		 
+			UserId = @PUserId;
+			
+
+End;
+GO
+
+
+DROP procedure if exists [GetUserById];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE GetUserById(
+ @PUserId int 
+	)
+as
+begin
+set nocount on;
+
+	
+	select 
+		UserId,
+		FirstName,
+        LastName,
+        Email,
+		IdentificationNumber,
+        tbl.Active,
+        e.UserTypeId,
+        PhoneNumber,
+		ut.UserTypeName
+	
+	from applicationuser tbl
+   left join employee e on  e.EmployeeId = UserId
+   left join usertype ut on ut.UserTypeId = e.UserTypeId
+	where UserId = @PUserId;
+
+
+select 
+
+		aur.RoleId,
+        ar.RoleName,
+        ar.RoleNameCode,
+        ar.RoleNameTranslation
+        from applicationuserrole aur
+    left join applicationrole ar on ar.RoleId = aur.RoleId
+    where aur.UserId = @PUserId AND aur.Active = 1;
+    
+End;
+GO
+
+
+
+DROP procedure if exists [UserTypeActivate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE  PROCEDURE UserTypeActivate(
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary,
+ @PUserTypeId int 
+ )
+As
+Begin
+Set nocount on;
+ Update usertype 
+  Set 
+   ModifiedById=@PCurrentUserId,
+   ModifiedDate=GETUTCDATE(),
+   Active=@PActive
+ Where UserTypeId=@PUserTypeId;
+ 
+End;
+GO
+
+
+
+
+DROP procedure if exists [UserTypeAdd];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE UserTypeAdd( 
+ @PCurrentUserId int,
+ @PUserTypeId int OUT,
+ @PUserTypeCode varchar(10),
+ @PUserTypeName varchar(60),
+ @PUserTypeNameTranslation varchar(60),
+ @PActive binary
+ )
+As
+Begin
+Set nocount on;
+ Insert Into usertype
+    (UserTypeCode,  UserTypeName,  UserTypeNameTranslation,  CreatedById,  CreatedDate,  Active)
+  Values (@PUserTypeCode, @PUserTypeName, @PUserTypeNameTranslation, @PCurrentUserId, GETUTCDATE(), @PActive);
+
+ Set @PUserTypeId=SCOPE_IDENTITY();
+ 
+End;
+GO
+
+
+
+
+DROP procedure if exists [UserTypeGet];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE  PROCEDURE UserTypeGet( 
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary,
+ @PUserTypeId int 
+ )
+As
+Begin
+Set nocount on;
+ 
+ Select 
+  UserTypeId, UserTypeCode, UserTypeName, UserTypeNameTranslation, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+ From usertype
+ Where Active = @PActive
+ And UserTypeId=@PUserTypeId;
+
+End;
+GO
+
+
+
+DROP procedure if exists [UserTypeGetbyEmail];
+
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE UserTypeGetbyEmail(	
+ @PUserEmail	varchar(256)
+	)
+As
+Begin
+Set nocount on;
+
+	
+    
+    
+    Select top 1 UserId , ut.UserTypeCode, ut.UserTypeName from applicationuser tbl
+	left join employee emp on UserId = emp.EmployeeId
+	left join UserType ut on emp.UserTypeid = ut.UserTypeid
+	where UserName = @PUserEmail and tbl.Active = 1 ;
+    
+    
+End;
+GO
+
+
+
+DROP procedure if exists [UserTypeGetList];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE UserTypeGetList(
+ @PCurrentUserId int)
+as
+begin
+set nocount on;
+
+	
+	select 
+		UserTypeId,
+		UserTypeCode,
+		UserTypeName,
+        UserTypeNameTranslation
+	from usertype tbl
+	where Active = 1
+	order by UserTypeName asc;
+
+End;
+GO
+
+
+
+DROP procedure if exists [UserTypeUpdate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE UserTypeUpdate( 
+	 @PCurrentUserId int,
+	 @PUserTypeId int,
+	 @PUserTypeCode varchar(10),
+	 @PUserTypeName varchar(60),
+	 @PUserTypeNameTranslation varchar(60),
+	 @PActive binary
+ )
+As
+Begin
+Set nocount on;
+ Update usertype 
+  Set 
+   UserTypeCode=@PUserTypeCode,
+   UserTypeName=@PUserTypeName,
+   UserTypeNameTranslation=@PUserTypeNameTranslation,
+   ModifiedById=@PCurrentUserId,
+   ModifiedDate=GETUTCDATE(),
+   Active=@PActive
+ Where UserTypeId=@PUserTypeId;
+ 
+End;
+GO
+
+
+
+DROP procedure if exists [EmployeeAdd];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE EmployeeAdd(	
+ @PCurrentUserId int,
+ @PEmployeeId	int,
+ @PUserTypeId	int,
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	Insert Into employee
+				(EmployeeId,  UserTypeId,  CreatedById,  CreatedDate,  Active)
+		Values	(@PEmployeeId, @PUserTypeId, @PCurrentUserId, GETUTCDATE(), @PActive);
+
+End;
+GO
+
+
+DROP procedure if exists [EmployeeLogAdd];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE EmployeeLogAdd(	
+ @PCurrentUserId int,
+ @PEmployeeId	int 
+	)
+As
+Begin
+Set nocount on;
+	INSERT	INTO employeelog
+				(EmployeeId,UserTypeId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+			SELECT EmployeeId,UserTypeId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+			FROM employee where EmployeeId=@PEmployeeId ;
+
+End;
+GO
+
+
+
+
+DROP procedure if exists [EmployeeActivate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE EmployeeActivate(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary
+	)
+As
+Begin
+Set nocount on;
+	EXEC EmployeeLogAdd @PCurrentUserId,PEmployeeId;
+	Update employee
+		Set 
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive;
+
+End;
+GO
+
+
+
+
+DROP procedure if exists [ApplicationRoleClaimLogAdd];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationRoleClaimLog Add
+-- =============================================
+
+
+CREATE  PROCEDURE ApplicationRoleClaimLogAdd(	
+ @PCurrentUserId int,
+ @PRoleId	int,
+ @PClaimId	int 
+	)
+As
+Begin
+Set nocount on;
+
+			INSERT INTO applicationroleclaimLog
+						(RoleClaimId,RoleId,ClaimType,ClaimValue,ClaimId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+				SELECT	RoleClaimId,RoleId,ClaimType,ClaimValue,ClaimId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+				FROM	applicationroleclaim
+				WHERE	ClaimId=@PClaimId 
+				And		RoleId = @PRoleId;
+             
+
+End;
+GO
+
+
+
+
+
+DROP procedure if exists [ApplicationRoleLogAdd];
+GO
+
+-- =============================================
+-- Author:	
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationRoleLogAdd(
+ @PCurrentUserId int,
+ @PRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	INSERT INTO applicationrolelog
+				(RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,
+				CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+	SELECT		RoleId,RoleName,RoleNameTranslation,RoleNameCode,NormalizedNameRoleName,RoleDescription,
+				CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+	FROM		applicationrole
+	WHERE		RoleId=	@PRoleId;
+
+End;
+GO
+
+
+
+
+
+DROP procedure if exists [ApplicationUserLogAdd];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	Application User Log Add
+-- =============================================
+
+
+CREATE  PROCEDURE ApplicationUserLogAdd(	
+ @PUserId	int OUT,
+ @PCurrentUserId int 
+	)
+As
+Begin
+Set nocount on;
+
+
+	Insert	into	applicationuserlog
+					(UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,
+					Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,
+					LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+			SELECT	UserId,UserName,NormalizedUserName,FirstName,LastName,IdentificationNumber,Address1,Address2,CityId,StateId,PostalCode,
+					Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,
+					LockoutEnd,LockoutEnabled,AccessFailedCount,LoginDate,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+			FROM	applicationuser
+			WHERE	UserId=@PUserId;
+
+	
+End;
+GO
+
+
+
+DROP procedure if exists [ApplicationUserRoleLogAdd];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	Application User Role Log
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserRoleLogAdd(	
+ @PCurrentUserId int,
+ @PUserRoleId	int 
+	)
+As
+Begin
+Set nocount on;
+	Insert	Into	applicationuserroleLog
+					(UserRoleId,UserId,RoleId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,AuditDate,AuditCreatedById)
+			SELECT	UserRoleId,UserId,RoleId,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active,GETUTCDATE(),@PCurrentUserId
+			FROM	applicationuserrole
+			WHERE	UserRoleId=@PUserRoleId ;
+
+	
+End;
+GO
+
+
+DROP procedure if exists [SetPasswordHash];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE SetPasswordHash(	
+ @PPasswordHash varchar(max),
+ @PUserId	int 
+	
+	)
+As
+Begin
+Set nocount on;
+EXEC ApplicationUserLogAdd @PUserId,@PUserId; 
+	Update applicationuser 
+		Set 
+			PasswordHash=@PPasswordHash,
+            ModifiedDate=GETUTCDATE()
+			
+	Where UserId=@PUserId;
+End;
+GO
+
+
+
+
+Drop Procedure If Exists ApplicationUserNotificationActivate;
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserNotificationActivate deletes record from ApplicationUserNotification
+-- =============================================
+
+Create Procedure ApplicationUserNotificationActivate(
+ @PCurrentUserId int,
+ @PActive binary,
+ @PApplicationUserNotificationId	int)
+As
+Begin
+Set nocount on;
+	Update ApplicationUserNotification 
+		Set 
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+	Where ApplicationUserNotificationId=@PApplicationUserNotificationId;
+End;
+Go
+
+
+
+
+
+
+DROP procedure if exists [ApplicationUserGetInspectorbyEmail];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserGetInspectorbyEmail(	
+ @PUserEmail	varchar(256)
+	)
+As
+Begin
+Set nocount on;
+	-- SQLINES LICENSE FOR EVALUATION USE ONLY
+	Select 
+		UserId, 
+        UserName,
+        '' as DealershipName, 
+        FirstName, 
+        LastName, 
+        Email, 
+        EmailConfirmed, 
+        PasswordHash, 
+        SecurityStamp, 
+        ConcurrencyStamp, 
+        PhoneNumber, 
+        PhoneNumberConfirmed, 
+        TwoFactorEnabled, 
+        LockoutEnd, 
+        LockoutEnabled, 
+        AccessFailedCount, 
+        tbl.CreatedById, 
+        tbl.CreatedDate, 
+        tbl.ModifiedById, 
+        tbl.ModifiedDate, 
+        tbl.Active
+	From applicationuser tbl
+	inner join employee e on e.employeeId = UserId AND e.UserTypeId = 2  --Inspector
+    
+	Where Email=@PUserEmail 
+    AND tbl.Active =1;
+    
+End;
+GO
+
+
+
+
+Drop Procedure If Exists [ApplicationUserNotificationAdd];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserNotificationAdd adds new record in ApplicationUserNotification
+-- =============================================
+
+
+Create Procedure ApplicationUserNotificationAdd(	
+    @PCurrentUserId int,
+ @PApplicationUserNotificationId	int OUT,
+ @PUserId	int,
+ @PNotificationId	int,
+	
+ @PNotificationMessage	varchar(256),
+ @PNotificationMessageTranslation	varchar(256)
+	)
+As
+Begin
+Set nocount on;
+		Insert Into ApplicationUserNotification
+					(UserId,  
+					NotificationId,
+					
+					NotificationMessage,
+					NotificationMessageTranslation, 
+					Sent,
+					Viewed,
+					CreatedById,
+					CreatedDate,
+					Active)
+	           Values	
+					(@PUserId,
+					@PNotificationId,
+					
+					@PNotificationMessage,
+					@PNotificationMessageTranslation, 
+					0,
+					0,
+					@PCurrentUserId,
+					GETUTCDATE(),
+					1);
+
+	     Set @PApplicationUserNotificationId=SCOPE_IDENTITY();
+
+End;
+Go
+
+
+
+
+Drop Procedure If Exists [ApplicationUserNotificationGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserNotificationGet gets related record from ApplicationUserNotification
+-- =============================================
+
+Create Procedure ApplicationUserNotificationGet(	
+    @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary,
+ @PApplicationUserNotificationId	int)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		ApplicationUserNotificationId,
+		UserId, 
+		NotificationId,
+		NotificationMessage,
+		NotificationMessageTranslation,
+		Sent,
+		Viewed,
+		CreatedById,
+		CreatedDate,
+		ModifiedById,
+		ModifiedDate,
+		Active
+	From ApplicationUserNotification tbl
+	Where Active = @PActive And ApplicationUserNotificationId=@PApplicationUserNotificationId;
+End;
+Go
+
+
+
+Drop Procedure If Exists [ApplicationUserNotificationUpdate];
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserNotificationUpdate updates record in ApplicationUserNotification
+-- =============================================
+
+Create Procedure ApplicationUserNotificationUpdate
+( @PCurrentUserId int,
+ @PApplicationUserNotificationId	int,
+ @PSent	binary,
+ @PViewed	binary
+	)
+As
+Begin
+Set nocount on;
+	Update ApplicationUserNotification 
+		Set 
+			Sent=@PSent,
+			Viewed=@PViewed,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE()
+	Where ApplicationUserNotificationId=@PApplicationUserNotificationId;
+
+End;
+Go
+
+
+
+Drop Procedure If Exists [ApplicationUserNotificationUpdateViewStatus];
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserNotificationUpdateViewStatus updates record in ApplicationUserNotification
+-- =============================================
+
+Create Procedure ApplicationUserNotificationUpdateViewStatus
+( @PCurrentUserId int,
+ @PApplicationUserNotificationId	int,
+ @PViewedAll	bit
+	)
+As
+Begin
+Set nocount on;
+
+if(@PViewedAll = 1) BEGIN
+		Update ApplicationUserNotification 
+			Set
+				Viewed = 1,
+				ModifiedById = @PCurrentUserId,
+				ModifiedDate = GETUTCDATE()
+		Where   UserId = @PCurrentUserId and ApplicationUserNotificationId > 0;
+    
+END
+ELSE BEGIN
+    	Update ApplicationUserNotification 
+		Set
+			Viewed=1,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE()
+	Where  ApplicationUserNotificationId=@PApplicationUserNotificationId;
+END 
+
+End;
+Go
+
+
+
+
+Drop Procedure If Exists [ApplicationUserNotificationUpdateViewStatus];
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	ApplicationUserNotificationUpdateViewStatus updates record in ApplicationUserNotification
+-- =============================================
+
+Create Procedure ApplicationUserNotificationUpdateViewStatus
+( @PCurrentUserId int,
+ @PApplicationUserNotificationId	int,
+ @PViewedAll	bit
+	)
+As
+Begin
+Set nocount on;
+
+if(@PViewedAll = 1) BEGIN
+		Update ApplicationUserNotification 
+			Set
+				Viewed = 1,
+				ModifiedById = @PCurrentUserId,
+				ModifiedDate = GETUTCDATE()
+		Where   UserId = @PCurrentUserId and ApplicationUserNotificationId > 0;
+    
+END
+ELSE BEGIN
+    	Update ApplicationUserNotification 
+		Set
+			Viewed=1,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE()
+	Where  ApplicationUserNotificationId=@PApplicationUserNotificationId;
+END 
+
+End;
+Go
+
+
+
+DROP procedure if exists [EmployeeGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE  PROCEDURE EmployeeGet(	
+ @PCurrentUserId int,
+ @PReasonCodeId int,
+ @PActive binary
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		EmployeeId, UserTypeId, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From employee
+	Where Active = @PActive;
+
+End;
+GO
+
+
+
+DROP procedure if exists [EmployeeUpdate];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE EmployeeUpdate(	
+ @PCurrentUserId int,
+ @PEmployeeId	int,
+ @PUserTypeId	int,
+ @PActive	binary
+	)
+As
+Begin
+Set nocount on;
+	EXEC EmployeeLogAdd @PCurrentUserId,@PEmployeeId;
+	Update employee 
+		Set 
+			EmployeeId=@PEmployeeId,
+			UserTypeId=@PUserTypeId,
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive;
+
+End;
+GO
+
+
+
+
+
 
 
 

@@ -364,6 +364,112 @@ CREATE TABLE applicationuserrolelog (
 END;
 
 
+IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'Employeelog')) 
+ BEGIN
+
+CREATE TABLE Employeelog (
+ 
+  [EmployeeId] int check ([EmployeeId] > 0) NOT NULL,
+  [UserTypeId] int check ([UserTypeId] > 0) NOT NULL,
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
+  [AuditDate] datetime2(0) DEFAULT NULL,
+  [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
+  PRIMARY KEY ([AuditLogId])
+);
+END;
+
+
+
+-- =============================================
+-- Author:		
+-- Create date:	
+-- Description:	NotificationActionType table holds list of Notification Types.
+-- =============================================
+CREATE TABLE NotificationActionType (
+  [NotificationActionTypeId] int check ([NotificationActionTypeId] > 0) NOT NULL IDENTITY,
+  [NotificationActionTypeName] varchar(60) NOT NULL,
+  [NotificationActionTypeNameTranslation] varchar(60) DEFAULT NULL,
+  [NotificationActionTypeCode] varchar(10) DEFAULT NULL,
+
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([NotificationActionTypeId])
+);
+
+
+
+-- =============================================
+-- Author:		
+-- Create date:	
+-- Description:	Notification holds Notification data.
+-- =============================================
+CREATE TABLE Notification (
+  [NotificationId] int check ([NotificationId] > 0) NOT NULL IDENTITY,
+  [NotificationActionTypeId] INT CHECK ([NotificationActionTypeId] > 0) NULL,  
+  [NotificationName] varchar(500) NOT NULL,
+  [NotificationNameTranslation] varchar(500) DEFAULT NULL,
+  
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [NotificationCode] VARCHAR(20)  DEFAULT NULL Unique,
+  [Active] binary(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY ([NotificationId])
+
+ ,
+  CONSTRAINT [FK_Notification_NotificationActionType_Id] FOREIGN KEY ([NotificationActionTypeId]) REFERENCES NotificationActionType ([NotificationActionTypeId])
+);
+
+CREATE INDEX [IX_Notification_NotificationActionTypeId] ON Notification ([NotificationActionTypeId]);
+
+
+
+
+
+-- =============================================
+-- Author:		
+-- Create date:	
+-- Description:	ApplicationUserNotification holds Notification DATA for ApplicationUser.
+-- =============================================
+CREATE TABLE ApplicationUserNotification (
+  [ApplicationUserNotificationId] int check ([ApplicationUserNotificationId] > 0) NOT NULL IDENTITY,
+  [UserId] int check ([UserId] > 0) NOT NULL,  
+  [NotificationId] int check ([NotificationId] > 0) NOT NULL,  
+  [ItemId] int check ([ItemId] > 0) NULL,
+
+  [NotificationMessage] varchar(256) NOT NULL,
+  [NotificationMessageTranslation] varchar(256) DEFAULT NULL,
+  
+  [Sent] binary(1) NOT NULL DEFAULT 0,
+  [Viewed] binary(1) NOT NULL DEFAULT 0,  
+  
+  [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
+  [CreatedDate] datetime2(0) DEFAULT NULL,
+  [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
+  [ModifiedDate] datetime2(0) DEFAULT NULL,
+  [Active] binary(1) NOT NULL DEFAULT 0,
+
+  PRIMARY KEY ([ApplicationUserNotificationId]),
+
+  CONSTRAINT [FK_ApplicationUserNotification_Notification_NotificationId] FOREIGN KEY ([NotificationId]) REFERENCES Notification ([NotificationId]),
+  CONSTRAINT [FK_ApplicationUserNotification_User_UserId] FOREIGN KEY ([UserId]) REFERENCES ApplicationUser ([UserId])
+);
+
+
+
+
+
+
+
 
 
 
