@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
@@ -350,14 +351,19 @@ namespace MNBEC.Core.Extensions
 
             if (sourceValue != null)
             {
+
                 if (sourceValue is bool)
                 {
                     value = (bool)sourceValue;
                 }
                 else if (!string.IsNullOrWhiteSpace(sourceValue.ToString()))
                 {
-                    value = Convert.ToBoolean(sourceValue);
+
+                    var bit = (byte[])sourceValue;
+                    value = (bit[0] & (1 << 0)) == 0 ? false : true;
                 }
+
+
             }
 
             return value;
@@ -586,7 +592,7 @@ namespace MNBEC.Core.Extensions
             return DateTime.UtcNow.AddMinutes(configuration["General:UTCOffsetInMinutes"].GetDoubleValue());
         }
 
-      
+
         /// <summary>
         /// GetStringValue Converts the sourceValues array to string.
         /// </summary>
