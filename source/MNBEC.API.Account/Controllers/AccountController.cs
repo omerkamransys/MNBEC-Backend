@@ -461,7 +461,8 @@ namespace MNBEC.API.Account.Controllers
         /// <returns></returns>
 
         [HttpGet("GetUsersByRole")]
-        [Authorize(Policy = "ACC_GUBR")]
+        //[Authorize(Policy = "ACC_GUBR")]
+        [AllowAnonymous]
         public async Task<List<UserListResponseVM>> GetUsersByRole([FromQuery] UserGetByRoleRequestVM requestVM)
         {
             ApplicationUser request = requestVM.Convert();

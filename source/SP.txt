@@ -1263,6 +1263,7 @@ GO
 
 
 
+
 DROP procedure if exists [ApplicationUserUpdate];
 
 GO
@@ -1286,7 +1287,6 @@ CREATE PROCEDURE ApplicationUserUpdate(
  @PPhoneNumber	varchar(max),
  @PPhoneNumberConfirmed	binary,
  @PTwoFactorEnabled	binary,
- @PLockoutEnd	datetime2(0),
  @PLockoutEnabled	binary,
  @PAccessFailedCount	int,
  @PActive	binary
@@ -1308,7 +1308,6 @@ Set nocount on;
 			PhoneNumber=@PPhoneNumber,
 			PhoneNumberConfirmed=@PPhoneNumberConfirmed,
 			TwoFactorEnabled=@PTwoFactorEnabled,
-			LockoutEnd=@PLockoutEnd,
 			LockoutEnabled=@PLockoutEnabled,
 			AccessFailedCount=@PAccessFailedCount,
 			ModifiedById=@PCurrentUserId,

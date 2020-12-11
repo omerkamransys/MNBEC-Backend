@@ -14,7 +14,7 @@ namespace MNBEC.Infrastructure
     /// <summary>
     /// EmployeeInfrastructure inherits from BaseDataAccess and implements IEmployeeInfrastructure. It performs all required CRUD operations on Employee Entity on database.
     /// </summary>
-    public class EmployeeInfrastructure : BaseInfrastructure, IEmployeeInfrastructure
+    public class EmployeeInfrastructure : BaseSQLInfrastructure, IEmployeeInfrastructure
     {
         #region Constructor
         /// <summary>
@@ -63,10 +63,10 @@ namespace MNBEC.Infrastructure
                 employeeIdParamter,
                 base.GetParameter(EmployeeInfrastructure.EmployeeIdParameterName, employee.EmployeeId),
                 base.GetParameter(EmployeeInfrastructure.UserTypeIdParameterName, employee.UserTypeId),
-                base.GetParameter(BaseInfrastructure.ActiveParameterName, employee.Active),
+                base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, employee.Active),
 
                 //base.GetParameter(EmployeeInfrastructure.EmployeeNameTranslationParameterName, employee.EmployeeName),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
             };
             //TODO: Add other parameters.
 
@@ -87,7 +87,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(EmployeeInfrastructure.EmployeeIdParameterName, employee.EmployeeId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, EmployeeInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
@@ -106,7 +106,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(EmployeeInfrastructure.EmployeeIdParameterName, employee.EmployeeId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, EmployeeInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
@@ -120,12 +120,12 @@ namespace MNBEC.Infrastructure
                             EmployeeId = dataReader.GetUnsignedIntegerValue(EmployeeInfrastructure.EmployeeIdColumnName),
                             UserTypeId = dataReader.GetUnsignedIntegerValue(EmployeeInfrastructure.UserTypeIdColumnName),
                             // EmployeeName = dataReader.GetStringValue(EmployeeInfrastructure.EmployeeNameColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.CreatedByIdColumnName),
-                            CreatedByName = dataReader.GetStringValue(BaseInfrastructure.CreatedByNameColumnName),
-                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
-                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseInfrastructure.ModifiedByIdColumnName),
-                            ModifiedByName = dataReader.GetStringValue(BaseInfrastructure.ModifiedByNameColumnName),
-                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName)
+                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CreatedByName = dataReader.GetStringValue(BaseSQLInfrastructure.CreatedByNameColumnName),
+                            CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
+                            ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
+                            ModifiedByName = dataReader.GetStringValue(BaseSQLInfrastructure.ModifiedByNameColumnName),
+                            ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName)
                         };
                     }
                     if (!dataReader.IsClosed)
@@ -156,15 +156,15 @@ namespace MNBEC.Infrastructure
             };
 
             Employee employeeItem = null;
-            var totalRecordParamter = base.GetParameterOut(BaseInfrastructure.TotalRecordParameterName, SqlDbType.Int, result.TotalRecord);
+            var totalRecordParamter = base.GetParameterOut(BaseSQLInfrastructure.TotalRecordParameterName, SqlDbType.Int, result.TotalRecord);
             var parameters = new List<DbParameter>
             {
                 totalRecordParamter,
-                base.GetParameter(BaseInfrastructure.OffsetParameterName, employee.Offset),
-                base.GetParameter(BaseInfrastructure.PageSizeParameterName, employee.PageSize),
-                base.GetParameter(BaseInfrastructure.SortColumnParameterName, employee.SortColumn),
-                base.GetParameter(BaseInfrastructure.SortAscendingParameterName, employee.SortAscending),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, employee.Data.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.OffsetParameterName, employee.Offset),
+                base.GetParameter(BaseSQLInfrastructure.PageSizeParameterName, employee.PageSize),
+                base.GetParameter(BaseSQLInfrastructure.SortColumnParameterName, employee.SortColumn),
+                base.GetParameter(BaseSQLInfrastructure.SortAscendingParameterName, employee.SortAscending),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, employee.Data.CreatedById)
             };
             //TODO: Add other parameters.
 
@@ -209,7 +209,7 @@ namespace MNBEC.Infrastructure
             Employee employeeItem = null;
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, EmployeeInfrastructure.GetListStoredProcedureName, CommandType.StoredProcedure))
@@ -251,7 +251,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(EmployeeInfrastructure.EmployeeIdParameterName, employee.EmployeeId),
                 base.GetParameter(EmployeeInfrastructure.UserTypeIdParameterName, employee.UserTypeId),
                 //base.GetParameter(EmployeeInfrastructure.EmployeeNameParameterName, employee.EmployeeName),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
             };
             //TODO: Add other parameters.
 

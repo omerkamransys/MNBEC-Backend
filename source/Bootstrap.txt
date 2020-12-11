@@ -158,3 +158,9 @@ INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (1, 1,
 INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (2, 1, 1, 1);
 INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (3, 1, 1, 1);
 INSERT INTO employee (EmployeeId, UserTypeId, CreatedById, Active) VALUES (4, 1, 1, 1);
+
+
+SET IDENTITY_INSERT UserType ON
+INSERT INTO UserType (UserTypeId,UserTypeCode,UserTypeName,UserTypeNameTranslation,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (1,'001','Administrator','Administrator',NULL,NULL,NULL,NULL,1);
+INSERT INTO UserType (UserTypeId,UserTypeCode,UserTypeName,UserTypeNameTranslation,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (2,'002','Inspector','Inspector',NULL,NULL,NULL,NULL,1);
+SET IDENTITY_INSERT UserType OFF
