@@ -11,7 +11,7 @@ CREATE TABLE applicationclaimgroup (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([ClaimGroupId]),
   CONSTRAINT [ClaimGroupCode_UNIQUE] UNIQUE  ([ClaimGroupCode])
 )
@@ -33,7 +33,7 @@ CREATE TABLE applicationclaim (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([ClaimId]),
   CONSTRAINT [ClaimCode_UNIQUE] UNIQUE  ([ClaimCode])
  ,
@@ -59,7 +59,7 @@ CREATE TABLE applicationrole (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([RoleId])
 );
 
@@ -86,15 +86,15 @@ CREATE TABLE ApplicationUser (
 
   [Email] varchar(256) DEFAULT NULL,
   [NormalizedEmail] varchar(256) DEFAULT NULL,
-  [EmailConfirmed] binary(1) NOT NULL,
+  [EmailConfirmed] bit NOT NULL,
   [PasswordHash] varchar(256) DEFAULT NULL ,
   [SecurityStamp] varchar(256) DEFAULT NULL ,
   [ConcurrencyStamp] varchar(256) DEFAULT NULL ,
   [PhoneNumber] varchar(20) DEFAULT NULL,
-  [PhoneNumberConfirmed] binary(1) NOT NULL,
-  [TwoFactorEnabled] binary(1) NOT NULL,
+  [PhoneNumberConfirmed] bit NOT NULL,
+  [TwoFactorEnabled] bit NOT NULL,
   [LockoutEnd] datetime2(0) DEFAULT NULL,
-  [LockoutEnabled] binary(1) NOT NULL,
+  [LockoutEnabled] bit NOT NULL,
   [AccessFailedCount] int NOT NULL,
   
   [LoginDate] datetime2(0) DEFAULT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE ApplicationUser (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([UserId]),
   CONSTRAINT [UserNameIndex] UNIQUE ([UserName])
 
@@ -127,7 +127,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'app
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([UserRoleId])
  ,
   CONSTRAINT [FK_ApplicationUserRole_ApplicationRole_RoleId] FOREIGN KEY ([RoleId]) REFERENCES applicationrole ([RoleId]),
@@ -153,7 +153,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'app
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([RoleClaimId])
  ,
   CONSTRAINT [FK_ApplicationRoleClaim_AppicationClaim_ClaimId] FOREIGN KEY ([ClaimId]) REFERENCES applicationclaim ([ClaimId]) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -179,7 +179,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'app
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([UserClaimId])
  ,
   CONSTRAINT [FK_ApplicationUserClaim_ApplicationUser_UserId] FOREIGN KEY ([UserId]) REFERENCES applicationuser ([UserId])
@@ -202,7 +202,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'use
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([UserTypeId])
 );
 
@@ -221,7 +221,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'Emp
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([EmployeeId])
  ,
   CONSTRAINT [FK_Employee_UserType_UserId] FOREIGN KEY ([UserTypeId]) REFERENCES usertype ([UserTypeId]),
@@ -250,7 +250,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'app
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
   [AuditDate] datetime2(0) DEFAULT NULL,
   [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
@@ -277,7 +277,7 @@ CREATE TABLE applicationrolelog (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
    [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
   [AuditDate] datetime2(0) DEFAULT NULL,
   [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
@@ -309,15 +309,15 @@ CREATE TABLE ApplicationUserlog (
 
   [Email] varchar(256) DEFAULT NULL,
   [NormalizedEmail] varchar(256) DEFAULT NULL,
-  [EmailConfirmed] binary(1) NOT NULL,
+  [EmailConfirmed] bit NOT NULL,
   [PasswordHash] varchar(256) DEFAULT NULL ,
   [SecurityStamp] varchar(256) DEFAULT NULL ,
   [ConcurrencyStamp] varchar(256) DEFAULT NULL ,
   [PhoneNumber] varchar(20) DEFAULT NULL,
-  [PhoneNumberConfirmed] binary(1) NOT NULL,
-  [TwoFactorEnabled] binary(1) NOT NULL,
+  [PhoneNumberConfirmed] bit NOT NULL,
+  [TwoFactorEnabled] bit NOT NULL,
   [LockoutEnd] datetime2(0) DEFAULT NULL,
-  [LockoutEnabled] binary(1) NOT NULL,
+  [LockoutEnabled] bit NOT NULL,
   [AccessFailedCount] int NOT NULL,
   
   [LoginDate] datetime2(0) DEFAULT NULL,
@@ -326,7 +326,7 @@ CREATE TABLE ApplicationUserlog (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
    [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
   [AuditDate] datetime2(0) DEFAULT NULL,
   [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
@@ -353,7 +353,7 @@ CREATE TABLE applicationuserrolelog (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
   [AuditDate] datetime2(0) DEFAULT NULL,
   [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
@@ -375,7 +375,7 @@ CREATE TABLE Employeelog (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   [AuditLogId] bigint check ([AuditLogId] > 0) NOT NULL IDENTITY,
   [AuditDate] datetime2(0) DEFAULT NULL,
   [AuditCreatedById] int check ([AuditCreatedById] > 0) DEFAULT NULL,
@@ -400,7 +400,7 @@ CREATE TABLE NotificationActionType (
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([NotificationActionTypeId])
 );
 
@@ -422,7 +422,7 @@ CREATE TABLE Notification (
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
   [NotificationCode] VARCHAR(20)  DEFAULT NULL Unique,
-  [Active] binary(1) NOT NULL DEFAULT 1,
+  [Active] bit NOT NULL DEFAULT 1,
   PRIMARY KEY ([NotificationId])
 
  ,
@@ -449,14 +449,14 @@ CREATE TABLE ApplicationUserNotification (
   [NotificationMessage] varchar(256) NOT NULL,
   [NotificationMessageTranslation] varchar(256) DEFAULT NULL,
   
-  [Sent] binary(1) NOT NULL DEFAULT 0,
-  [Viewed] binary(1) NOT NULL DEFAULT 0,  
+  [Sent] bit NOT NULL DEFAULT 0,
+  [Viewed] bit NOT NULL DEFAULT 0,  
   
   [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
-  [Active] binary(1) NOT NULL DEFAULT 0,
+  [Active] bit NOT NULL DEFAULT 0,
 
   PRIMARY KEY ([ApplicationUserNotificationId]),
 

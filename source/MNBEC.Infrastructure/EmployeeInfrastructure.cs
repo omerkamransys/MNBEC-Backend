@@ -57,23 +57,17 @@ namespace MNBEC.Infrastructure
         /// <returns></returns>
         public async Task<int> Add(Employee employee)
         {
-            var employeeIdParamter = base.GetParameterOut(EmployeeInfrastructure.EmployeeIdColumnName, SqlDbType.Int, employee.EmployeeId);
             var parameters = new List<DbParameter>
             {
-                employeeIdParamter,
                 base.GetParameter(EmployeeInfrastructure.EmployeeIdParameterName, employee.EmployeeId),
                 base.GetParameter(EmployeeInfrastructure.UserTypeIdParameterName, employee.UserTypeId),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, employee.Active),
-
-                //base.GetParameter(EmployeeInfrastructure.EmployeeNameTranslationParameterName, employee.EmployeeName),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, employee.CreatedById)
             };
             //TODO: Add other parameters.
 
             await base.ExecuteNonQuery(parameters, EmployeeInfrastructure.AddStoredProcedureName, CommandType.StoredProcedure);
-
-            employee.EmployeeId = (int)employeeIdParamter.Value;
-
+            
             return employee.EmployeeId;
         }
 

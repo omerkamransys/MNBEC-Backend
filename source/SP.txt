@@ -8,7 +8,7 @@ GO
 CREATE PROCEDURE ApplicationClaimActivate(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary,
+ @PActive bit,
  @PClaimId	int 
 	)
 AS
@@ -40,7 +40,7 @@ CREATE PROCEDURE ApplicationClaimAdd
  @PClaimType	varchar(256),
  @PClaimLabel	varchar(100),
  @PClaimGroupId	varchar(10),
- @PActive	binary)
+ @PActive	bit)
 As
 Begin
 	SET NOCOUNT ON;
@@ -64,7 +64,7 @@ GO
 CREATE PROCEDURE ApplicationClaimGet(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary,
+ @PActive bit,
  @PClaimId	int 
 	)
 As
@@ -102,7 +102,7 @@ CREATE  PROCEDURE ApplicationUserAdd(
  @PLastName	varchar(60),
  @PIdentificationNumber varchar(20),
  @PEmail	varchar(256),
- @PEmailConfirmed	binary,
+ @PEmailConfirmed	bit,
  @PPasswordHash	varchar(max),
  @PSecurityStamp	varchar(max),
  @PConcurrencyStamp	varchar(max),
@@ -111,11 +111,11 @@ CREATE  PROCEDURE ApplicationUserAdd(
  @PAddress2	varchar(max),
  @PCityId	int,
  @PStateId	int,
- @PPhoneNumberConfirmed	binary,
- @PTwoFactorEnabled	binary,
- @PLockoutEnabled	binary,
+ @PPhoneNumberConfirmed	bit,
+ @PTwoFactorEnabled	bit,
+ @PLockoutEnabled	bit,
  @PAccessFailedCount	int,
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -312,7 +312,7 @@ CREATE PROCEDURE ApplicationClaimGroupAdd(
  @PClaimGroupId	int OUT,
  @PClaimGroupLabel	varchar(100),
  @PClaimGroupCode	varchar(10),
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -340,7 +340,7 @@ GO
 CREATE PROCEDURE ApplicationClaimGroupGet(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary
+ @PActive bit
 	)
 As
 Begin
@@ -397,7 +397,7 @@ CREATE PROCEDURE ApplicationClaimGroupUpdate(
  @PClaimGroupId	int,
  @PClaimGroupLabel	varchar(100),
  @PClaimGroupCode	varchar(10),
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -433,7 +433,7 @@ CREATE PROCEDURE ApplicationClaimUpdate(
  @PClaimType	varchar(256),
  @PClaimLabel	varchar(100),
  @PClaimGroupLabel	varchar(10),
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -464,7 +464,7 @@ GO
 CREATE PROCEDURE ApplicationRoleActivate(	
  @PCurrentUserId int,
 	--IN PReasonCodeId int unsigned,
- @PActive binary,
+ @PActive bit,
  @PRoleId	int 
 	)
 As
@@ -499,7 +499,7 @@ CREATE PROCEDURE ApplicationRoleAdd(
  @PRoleName	varchar(60),
     @PRoleCode	varchar(10),
     @PRoleNameTranslation	varchar(60),
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -560,7 +560,7 @@ GO
 CREATE PROCEDURE ApplicationClaimGroupActivate(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary
+ @PActive bit
 	)
 As
 Begin
@@ -592,7 +592,7 @@ CREATE  PROCEDURE ApplicationRoleClaimUpdate(
  @PRoleId	int,
  @PClaimId	int,
  @PClaimType	varchar(256),
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -745,7 +745,7 @@ CREATE PROCEDURE ApplicationRoleUpdate(
  @PRoleName	varchar(60),
  @PRoleCode	varchar(10),
  @PRoleNameTranslation	varchar(60),
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -815,7 +815,7 @@ GO
 CREATE PROCEDURE ApplicationUserActivate(	
  @PCurrentUserId int,
 	--IN PReasonCodeId int unsigned,
- @PActive binary,
+ @PActive bit,
  @PUserId	int 
 	)
 As
@@ -908,7 +908,7 @@ GO
 CREATE PROCEDURE ApplicationUserGet(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary,
+ @PActive bit,
  @PUserId	int 
 	)
 As
@@ -1027,7 +1027,7 @@ GO
 CREATE PROCEDURE ApplicationUserRoleActivate(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary,
+ @PActive bit,
  @PUserRoleId	int 
 	)
 As
@@ -1205,7 +1205,7 @@ CREATE PROCEDURE ApplicationUserRoleUpdate(
  @PUserRoleId	int,
  @PUserId	int,
  @PRoleId	int,
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -1280,16 +1280,16 @@ CREATE PROCEDURE ApplicationUserUpdate(
  @PFirstName	varchar(60),
  @PLastName	varchar(60),
  @PEmail	varchar(256),
- @PEmailConfirmed	binary,
+ @PEmailConfirmed	bit,
  @PIdentificationNumber varchar(20),
  @PSecurityStamp	varchar(max),
  @PConcurrencyStamp	varchar(max),
  @PPhoneNumber	varchar(max),
- @PPhoneNumberConfirmed	binary,
- @PTwoFactorEnabled	binary,
- @PLockoutEnabled	binary,
+ @PPhoneNumberConfirmed	bit,
+ @PTwoFactorEnabled	bit,
+ @PLockoutEnabled	bit,
  @PAccessFailedCount	int,
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -1501,7 +1501,7 @@ GO
 CREATE  PROCEDURE UserTypeActivate(
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary,
+ @PActive bit,
  @PUserTypeId int 
  )
 As
@@ -1536,7 +1536,7 @@ CREATE PROCEDURE UserTypeAdd(
  @PUserTypeCode varchar(10),
  @PUserTypeName varchar(60),
  @PUserTypeNameTranslation varchar(60),
- @PActive binary
+ @PActive bit
  )
 As
 Begin
@@ -1566,7 +1566,7 @@ GO
 CREATE  PROCEDURE UserTypeGet( 
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary,
+ @PActive bit,
  @PUserTypeId int 
  )
 As
@@ -1663,7 +1663,7 @@ CREATE PROCEDURE UserTypeUpdate(
 	 @PUserTypeCode varchar(10),
 	 @PUserTypeName varchar(60),
 	 @PUserTypeNameTranslation varchar(60),
-	 @PActive binary
+	 @PActive bit
  )
 As
 Begin
@@ -1697,7 +1697,7 @@ CREATE PROCEDURE EmployeeAdd(
  @PCurrentUserId int,
  @PEmployeeId	int,
  @PUserTypeId	int,
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin
@@ -1750,7 +1750,7 @@ GO
 CREATE PROCEDURE EmployeeActivate(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary
+ @PActive bit
 	)
 As
 Begin
@@ -1939,7 +1939,7 @@ GO
 
 Create Procedure ApplicationUserNotificationActivate(
  @PCurrentUserId int,
- @PActive binary,
+ @PActive bit,
  @PApplicationUserNotificationId	int)
 As
 Begin
@@ -2074,7 +2074,7 @@ GO
 Create Procedure ApplicationUserNotificationGet(	
     @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary,
+ @PActive bit,
  @PApplicationUserNotificationId	int)
 As
 Begin
@@ -2111,8 +2111,8 @@ GO
 Create Procedure ApplicationUserNotificationUpdate
 ( @PCurrentUserId int,
  @PApplicationUserNotificationId	int,
- @PSent	binary,
- @PViewed	binary
+ @PSent	bit,
+ @PViewed	bit
 	)
 As
 Begin
@@ -2224,7 +2224,7 @@ GO
 CREATE  PROCEDURE EmployeeGet(	
  @PCurrentUserId int,
  @PReasonCodeId int,
- @PActive binary
+ @PActive bit
 	)
 As
 Begin
@@ -2254,7 +2254,7 @@ CREATE PROCEDURE EmployeeUpdate(
  @PCurrentUserId int,
  @PEmployeeId	int,
  @PUserTypeId	int,
- @PActive	binary
+ @PActive	bit
 	)
 As
 Begin

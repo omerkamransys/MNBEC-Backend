@@ -358,9 +358,7 @@ namespace MNBEC.Core.Extensions
                 }
                 else if (!string.IsNullOrWhiteSpace(sourceValue.ToString()))
                 {
-
-                    var bit = (byte[])sourceValue;
-                    value = (bit[0] & (1 << 0)) == 0 ? false : true;
+                    value = Convert.ToBoolean(sourceValue);
                 }
 
 
