@@ -2306,4 +2306,415 @@ GO
 
 
 
+DROP procedure if exists [ApplicationRoleGetAll];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationRoleGetAll(	
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+	Select 
+		RoleId, RoleName,RoleNameTranslation,
+        RoleDescription, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationrole tbl
+	ORDER BY                    
+     case when @PSortColumn = 'RoleId' and @PSortAscending = 1 then RoleId end,
+	 case when @PSortColumn = 'RoleId' and @PSortAscending = 0 then RoleId end desc,
+	 case when @PSortColumn = 'RoleName' and @PSortAscending = 1 then RoleName end asc,
+	 case when @PSortColumn = 'RoleName' and @PSortAscending = 0 then RoleName end desc
+	offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select COUNT(RoleId) from applicationrole) ;
+
+End;
+
+
+DROP procedure if exists [ApplicationClaimGetAll];
+
+Go
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE ApplicationClaimGetAll(	
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+    
+	
+	Select 
+		ClaimId, ClaimType, ClaimLabel,ClaimLabelTranslation, ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationclaim  tbl with (nolock)
+	Where Active = 1	
+	order by 
+		case when @PSortColumn = 'ClaimId' and @PSortAscending = 1 then ClaimId end asc,
+		case when @PSortColumn = 'ClaimId' and @PSortAscending = 0 then ClaimId end desc
+	offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select COUNT(ClaimId) from applicationclaim) ;
+
+End;
+
+
+
+DROP procedure if exists [ApplicationClaimGroupGetAllByRole];
+
+Go
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGroupGetAllByRole(	
+ @PCurrentUserId int,
+ @PRoleId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+    
+    Select distinct 
+        ClaimGroupId, ClaimGroupCode, ClaimGroupLabel
+	From applicationclaimGroup cgtbl
+	Where Active = 1
+    order by ClaimGroupLabel asc;
+        
+	set @PTotalRecord = @@ROWCOUNT;
+    
+	
+	Select distinct
+		ctbl.ClaimId, ctbl.ClaimType, ctbl.ClaimCode, ctbl.ClaimLabel, ctbl.ClaimGroupId,
+        rtbl.RoleId , ctbl.Active
+	From applicationclaim ctbl
+		Left Outer Join applicationroleclaim rctbl On ctbl.ClaimId = rctbl.ClaimId  And rctbl.Active = 1 And rctbl.RoleId = @PRoleId
+		Left Outer Join applicationrole rtbl On rctbl.RoleId = rtbl.RoleId And rtbl.Active = 1
+	Where ctbl.Active = 1 
+    order by ctbl.ClaimGroupId, ctbl.ClaimLabel; 
+
+End;
+GO
+
+
+
+
+DROP procedure IF EXISTS [ApplicationRoleClaimsGetAll];
+Go
+
+CREATE  PROCEDURE ApplicationRoleClaimsGetAll(
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+)
+AS
+BEGIN
+SET NOCOUNT ON;
+
+Select 
+		RoleId, RoleName, RoleDescription, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationrole tbl;
+
+select Distinct  
+        cgtbl.ClaimGroupId,  cgtbl.ClaimGroupCode,  cgtbl.ClaimGroupLabel
+	From applicationclaimGroup cgtbl
+	Where  cgtbl.Active = 1
+    Order By  cgtbl.ClaimGroupLabel asc;
+    
+	
+	Select Distinct
+		ctbl.ClaimId, ctbl.ClaimType, ctbl.ClaimCode, ctbl.ClaimLabel, ctbl.ClaimGroupId,
+        rctbl.Active 
+	From applicationclaim ctbl
+		Left Outer Join applicationroleclaim rctbl On ctbl.ClaimId = rctbl.ClaimId
+
+		Left Outer Join applicationrole rtbl On rctbl.RoleId = rtbl.RoleId 
+	Where ctbl.Active = 1 
+    Order By ctbl.ClaimGroupId, ctbl.ClaimLabel; 	 
+End;
+GO
+
+
+
+DROP procedure if exists [ApplicationUserGetAll];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationUserGetAll(	
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+    @PRoleId int,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		tbl.UserId,
+		tbl.FirstName, 
+        tbl.LastName, 
+        tbl.Email,
+        ut.UserTypeName,
+		ut.UserTypeId,
+        ar.RoleName,
+		ar.RoleId,
+        tbl.Active
+        
+        
+	From applicationuser tbl 
+    Left join applicationuserrole aur on  tbl.UserId = aur.UserId
+    Left join applicationrole ar on aur.RoleId = ar.RoleId
+    Left join employee em on tbl.UserId = em.EmployeeId
+	Left join usertype ut on em.UserTypeId = ut.UserTypeId
+    where aur.RoleId = @PRoleId
+	order by 
+		case when @PSortColumn = 'UserId' and @PSortAscending = 1 then tbl.UserId end asc,
+		case when @PSortColumn = 'UserId' and @PSortAscending = 0 then tbl.UserId end desc
+	offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select COUNT(tbl.UserId) from applicationuser tbl Left join applicationuserrole aur on  tbl.UserId = aur.UserId where aur.RoleId = @PRoleId) ;
+
+End;
+
+
+
+Drop Procedure If Exists [ApplicationUserNotificationGetAllByUserId];
+
+Go
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+Create Procedure ApplicationUserNotificationGetAllByUserId(
+    @PUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int OUT)
+As
+Begin
+Set nocount on;
+
+	
+	Select 
+		ApplicationUserNotificationId,
+		UserId, 
+		NotificationId,
+        NotificationMessage,
+		NotificationMessageTranslation,
+		Sent,
+		Viewed
+	From ApplicationUserNotification tbl
+	Where Viewed = 0
+    And UserId = @PUserId
+    Order by 
+		case when @PSortColumn = 'CreatedDate' and @PSortAscending = 1 then CreatedDate end asc,
+		case when @PSortColumn = 'CreatedDate' and @PSortAscending = 0 then CreatedDate end desc
+		offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select COUNT(UserId) from ApplicationUserNotification Where Viewed = 0 And UserId = @PUserId) ;
+
+End;
+
+
+
+
+
+DROP procedure if exists [ApplicationUserRoleGetAll];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE ApplicationUserRoleGetAll(	
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		UserRoleId, UserId, RoleId, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From applicationuserrole
+	Where Active = 1	order by 
+		case when @PSortColumn = 'UserRoleId' and @PSortAscending = 1 then UserRoleId end asc,
+		case when @PSortColumn = 'UserRoleId' and @PSortAscending = 0 then UserRoleId end desc
+		offset @POffset rows
+		fetch next @PPageSize rows only;
+		set @PTotalRecord =  (Select COUNT(UserRoleId) from applicationuserrole Where Active = 1) ;
+
+End;
+
+
+
+
+
+DROP procedure if exists [UserTypeGetAll];
+
+Go
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE UserTypeGetAll( 
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+ )
+As
+Begin
+Set nocount on;
+ 
+ Select 
+  UserTypeId, UserTypeCode, UserTypeName, UserTypeNameTranslation, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+ From usertype
+ Where Active = 1 order by 
+  case when @PSortColumn = 'UserTypeId' and @PSortAscending = 1 then UserTypeId end asc,
+  case when @PSortColumn = 'UserTypeId' and @PSortAscending = 0 then UserTypeId end desc
+  offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select COUNT(UserTypeId) from usertype Where Active = 1) ;
+
+End;
+
+
+
+
+DROP procedure if exists [EmployeeGetAll];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE EmployeeGetAll(	
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+	
+	Select 
+		EmployeeId, UserTypeId, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active
+	From employee
+	Where Active = 1	order by 
+		case when @PSortColumn = 'EmployeeId' and @PSortAscending = 1 then EmployeeId end asc,
+		case when @PSortColumn = 'EmployeeId' and @PSortAscending = 0 then EmployeeId end desc
+	offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select COUNT(EmployeeId) from employee Where Active = 1) ;
+
+End;
+
+
+
+
+Drop Procedure If Exists [ApplicationUserNotificationGetAll];
+
+go
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+Create Procedure ApplicationUserNotificationGetAll(
+    @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int OUT)
+As
+Begin
+Set nocount on;
+
+	Select 
+		ApplicationUserNotificationId,
+		UserId, 
+		NotificationId,
+        NotificationMessage,
+		NotificationMessageTranslation,
+		Sent,
+		Viewed,
+        CreatedDate,
+        (select Count(ApplicationUserNotificationId) from ApplicationUserNotification au where au.Viewed = 0 AND au.UserId = @PCurrentUserId ) AS UnReadCount
+	From ApplicationUserNotification tbl
+	Where Active = 1	
+    And UserId = @PCurrentUserId
+    Order by 
+    CreatedDate desc
+	offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select COUNT(UserId) from ApplicationUserNotification Where Active = 1	
+    And UserId = @PCurrentUserId);
+    
+
+End;
+Go
+
+
 
