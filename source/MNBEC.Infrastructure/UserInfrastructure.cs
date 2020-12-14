@@ -519,7 +519,6 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(UserInfrastructure.PhoneNumberParameterName, applicationUser.PhoneNumber),
                 base.GetParameter(UserInfrastructure.PhoneNumberConfirmedParameterName, applicationUser.PhoneNumberConfirmed),
                 base.GetParameter(UserInfrastructure.TwoFactorEnabledParameterName, applicationUser.TwoFactorEnabled),
-                base.GetParameter(UserInfrastructure.LockoutEndParameterName, applicationUser.LockoutEnd),
                 base.GetParameter(UserInfrastructure.LockoutEnabledParameterName, applicationUser.LockoutEnabled),
                 base.GetParameter(UserInfrastructure.AccessFailedCountParameterName, applicationUser.AccessFailedCount),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationUser.CreatedById)
