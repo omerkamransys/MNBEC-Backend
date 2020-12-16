@@ -40,7 +40,8 @@ CREATE PROCEDURE ApplicationClaimAdd
  @PClaimType	varchar(256),
  @PClaimLabel	varchar(100),
  @PClaimGroupId	varchar(10),
- @PActive	bit)
+ @PActive	bit
+ )
 As
 Begin
 	SET NOCOUNT ON;
@@ -2716,5 +2717,97 @@ Set nocount on;
 End;
 Go
 
+
+
+DROP procedure if exists [ApplicationUserGetAllByUserType];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationUserGetAllByUserType(	
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending bit,
+    @PUserTypeId int,
+    @PActive bit,
+    @PRoleId	int,
+ @PSearchText varchar(50),
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+	
+    select 
+		tbl.UserId,
+		tbl.FirstName, 
+        tbl.LastName, 
+        tbl.Email,
+        ut.UserTypeName,
+		ut.UserTypeId,
+        tbl.Active
+	From applicationuser tbl 
+		Left join applicationuserrole aur on  tbl.UserId = aur.UserId
+		Left join applicationrole ar on aur.RoleId = ar.RoleId
+		Left join employee em on tbl.UserId = em.EmployeeId
+		Left join usertype ut on em.UserTypeId = ut.UserTypeId
+        where ut.UserTypeId = @PUserTypeId
+       AND ar.RoleId = (CASE WHEN @PRoleId  is not null AND @PRoleId > 0  THEN @PRoleId ELSE ar.RoleId END)
+       AND tbl.Active = 1 
+       AND 
+         (
+          FirstName LIKE Concat('%',@PSearchText,'%')
+         )
+       group by tbl.UserId,tbl.FirstName,tbl.LastName, tbl.Email,ut.UserTypeName,
+		ut.UserTypeId,
+        tbl.Active
+	order by 
+		case when @PSortColumn = 'UserId' and @PSortAscending = 1 then tbl.UserId end asc,
+		case when @PSortColumn = 'UserId' and @PSortAscending = 0 then tbl.UserId end desc, 
+		case when @PSortColumn = 'FirstName' and @PSortAscending = 1 then tbl.FirstName end asc,
+		case when @PSortColumn = 'FirstName' and @PSortAscending = 0 then tbl.FirstName end desc,
+        case when @PSortColumn = 'Email' and @PSortAscending = 1 then Email end asc,
+		case when @PSortColumn = 'Email' and @PSortAscending = 0 then Email end desc,
+        case when @PSortColumn = 'Active' and @PSortAscending = 1 then tbl.Active end asc,
+		case when @PSortColumn = 'Active' and @PSortAscending = 0 then tbl.Active end desc,
+        CASE  WHEN 1 = 1 THEN tbl.UserId end desc
+	offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select  COUNT(tbl.UserId) from applicationuser tbl 
+		Left join applicationuserrole aur on  tbl.UserId = aur.UserId
+		Left join applicationrole ar on aur.RoleId = ar.RoleId
+		Left join employee em on tbl.UserId = em.EmployeeId
+		Left join usertype ut on em.UserTypeId = ut.UserTypeId  where ut.UserTypeId = @PUserTypeId
+       AND ar.RoleId = (CASE WHEN @PRoleId  is not null AND @PRoleId > 0  THEN @PRoleId ELSE ar.RoleId END)
+       AND tbl.Active = 1 
+       AND 
+         (
+          FirstName LIKE Concat('%',@PSearchText,'%')
+         )
+		 group by tbl.UserId,tbl.FirstName,tbl.LastName, tbl.Email,ut.UserTypeName,
+		ut.UserTypeId,
+        tbl.Active
+		 ) ;
+    
+
+ select 
+	    role.RoleName,
+        role.RoleNameTranslation,
+        role.RoleId,
+        users.UserId
+	from applicationuserrole tbl
+    Left join applicationrole role on role.RoleId = tbl.RoleId
+    Left join applicationuser users on users.UserId = tbl.UserId
+    where  
+    tbl.Active = 1;
+        
+End;
+GO
 
 

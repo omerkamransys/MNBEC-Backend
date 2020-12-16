@@ -29,9 +29,7 @@ namespace MNBEC.Infrastructure
         protected BaseSQLInfrastructure(IConfiguration configuration, ILogger logger)
         {
             this.Configuration = configuration;
-            string connectionString = @"data source=LHRLT-2402\SQLEXPRESS;initial catalog=MOMTest;integrated security=True;persist security info=True;multipleactiveresultsets=True;";
-            this.ConnectionString = connectionString;
-            //this.ConnectionString = this.Configuration.GetConnectionString("SecoundaryConnection");
+            this.ConnectionString = this.Configuration.GetConnectionString("DefaultConnection");
             this.Logger = logger;
 
             this.Logger?.LogEnterConstructor(this.GetType());
