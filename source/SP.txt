@@ -2811,3 +2811,44 @@ End;
 GO
 
 
+
+
+DROP procedure if exists [];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE GetUserWithRolesByEmail(
+ @PUserEmail varchar(256)
+	)
+as
+begin
+set nocount on;
+	Declare @currentUserID int = 0;
+	Declare @currentUserTypeCode int = 0;
+
+		select 
+		tbl.UserId,
+		ut.UserTypeCode ,
+		ut.UserTypeCode as UserTypeLoginCode,
+	    tbl.UserId,
+		tbl.FirstName,
+        tbl.LastName,
+        tbl.Email,
+        ut.UserTypeName,
+        tbl.Active
+	from applicationuser tbl
+    left join employee emp on tbl.UserId = emp.EmployeeId
+	left join UserType ut on emp.UserTypeid = ut.UserTypeid and ut.Active = 1
+	where tbl.Email = @PUserEmail;
+
+		
+    
+end;
+
+GO
+

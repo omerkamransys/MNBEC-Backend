@@ -136,86 +136,40 @@ namespace MNBEC.API.Account.Controllers
 
                 ApplicationUser currentUser = await this.UserApplication.GetUserWithRolesByEmail(request);
 
-                if (base.HeaderValue?.ApplicationKey != this.AdminPortal &&  currentUser != null && !currentUser.UserTypeName.Equals(UserTypeEnum.Administrator.ToString())
-                    && !currentUser.UserTypeCode.Equals(this.AdminTypeCode))
-                {
-                    //List<ApplicationClaim> UserClaims = await this.ClaimApplication.GetListByUser(UserDetails); // commented getUserClaims for claim-based-auth
+                List<ApplicationClaim> UserClaims = await this.ClaimApplication.GetListByUser(currentUser); // commented getUserClaims for claim-based-auth
 
-                    var Claims = new ClaimsIdentity(new Claim[]
-                                {
+                var Claims = new ClaimsIdentity(new Claim[]
+                            {
                                     new Claim(JwtRegisteredClaimNames.Sub, paramUser.Email.ToString()),
                                     new Claim(UserId, currentUser.UserId.ToString())
-                                 });
+                             });
 
-                    //adding role claims
-                    foreach (var role in currentUser.Roles)
-                    {
-                        Claims.AddClaim(new Claim(ClaimsIdentity.DefaultRoleClaimType, role.RoleNameCode));
-                    }
-
-
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var encryptionkey = Configuration["Jwt:Encryptionkey"];
-                    var key = Encoding.ASCII.GetBytes(encryptionkey);
-                    var tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Issuer = Configuration["Jwt:Issuer"],
-                        Subject = Claims,
-
-                        Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(Configuration["Jwt:ExpiryTimeInMinutes"])),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-
-                    };
-
-                    SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-                    var tokenString = tokenHandler.WriteToken(token);
-
-
-                    return Ok(new
-                    {
-                        token = tokenString
-                    });
-
-                }
-                else if ((base.HeaderValue?.ApplicationKey == this.AdminPortal && currentUser != null && currentUser.UserTypeName.Equals(UserTypeEnum.Administrator.ToString())
-                    && currentUser.UserTypeCode.Equals(this.AdminTypeCode)))
+                foreach (var item in UserClaims)
                 {
-
-
-                    List<ApplicationClaim> UserClaims = await this.ClaimApplication.GetListByUser(currentUser); // commented getUserClaims for claim-based-auth
-
-                    var Claims = new ClaimsIdentity(new Claim[]
-                                {
-                                    new Claim(JwtRegisteredClaimNames.Sub, paramUser.Email.ToString()),
-                                    new Claim(UserId, currentUser.UserId.ToString())
-                                 });
-
-                    foreach (var item in UserClaims)
-                        {
-                            Claims.AddClaim(new Claim(item.ClaimCode, string.Empty));
-                        }
-
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    var encryptionkey = Configuration["Jwt:Encryptionkey"];
-                    var key = Encoding.ASCII.GetBytes(encryptionkey);
-                    var tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Issuer = Configuration["Jwt:Issuer"],
-                        Subject = Claims,
-
-                        Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(Configuration["Jwt:ExpiryTimeInMinutes"])),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-
-                    };
-
-                    SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-                    var tokenString = tokenHandler.WriteToken(token);
-
-                    return Ok(new
-                    {
-                        token = tokenString
-                    });
+                    Claims.AddClaim(new Claim(item.ClaimCode, string.Empty));
                 }
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var encryptionkey = Configuration["Jwt:Encryptionkey"];
+                var key = Encoding.ASCII.GetBytes(encryptionkey);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Issuer = Configuration["Jwt:Issuer"],
+                    Subject = Claims,
+
+                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToDouble(Configuration["Jwt:ExpiryTimeInMinutes"])),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+
+                };
+
+                SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+                var tokenString = tokenHandler.WriteToken(token);
+
+                return Ok(new
+                {
+                    token = tokenString
+                });
+
             }
             return BadRequest("Wrong Username or password");
         }

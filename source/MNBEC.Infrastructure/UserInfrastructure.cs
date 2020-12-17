@@ -292,18 +292,7 @@ namespace MNBEC.Infrastructure
                             Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
                         };
                     }
-                    if (dataReader.NextResult())
-                    {
-                        while (dataReader.Read())
-                        {
-                            var roles = new ApplicationRole();
-                            roles.RoleId = dataReader.GetUnsignedIntegerValue(UserInfrastructure.ApplicationRoleIdColumnName);
-                            roles.RoleName = dataReader.GetStringValue(UserInfrastructure.ApplicationRoleNameColumnName);
-                            roles.RoleNameCode = dataReader.GetStringValue(UserInfrastructure.ApplicationRoleCodeColumnName);
-                            roles.RoleNameTranslation = dataReader.GetStringValue(UserInfrastructure.ApplicationRoleNameTranslationColumnName);
-                            applicationUserItem?.Roles.Add(roles);
-                        }
-                    }
+                   
 
                     if (!dataReader.IsClosed)
                     {
