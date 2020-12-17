@@ -2852,3 +2852,53 @@ end;
 
 GO
 
+
+DROP procedure if exists [ApplicationClaimGroupGetAllByUser];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGroupGetAllByUser( @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+    Select distinct 
+        tbl.ClaimGroupId, tbl.ClaimGroupCode, 
+        tbl.ClaimGroupLabel, tbl.ClaimGroupLabelTranslation,
+        tbl.Active
+	From applicationclaimGroup tbl
+		Inner Join applicationclaim ctbl on tbl.ClaimGroupId = ctbl.ClaimGroupId And ctbl.Active = 1 
+		Inner Join applicationroleclaim rctbl On ctbl.ClaimId = rctbl.ClaimId  And rctbl.Active = 1 
+		Inner Join applicationrole rtbl On rctbl.RoleId = rtbl.RoleId And rtbl.Active = 1  
+		Inner Join applicationuserrole urtbl On rtbl.RoleId = urtbl.RoleId And urtbl.Active = 1 And urtbl.UserId = @PCurrentUserId
+	Where tbl.Active = 1
+    order by ClaimGroupLabel asc;
+        
+	set @PTotalRecord = @@ROWCOUNT;
+    
+	Select distinct
+		ctbl.ClaimId, 
+        ctbl.ClaimType, ctbl.ClaimCode, 
+        ctbl.ClaimLabel, ctbl.ClaimLabelTranslation, 
+        ctbl.ClaimGroupId,
+        ctbl.Active
+	From applicationclaim ctbl
+		Inner Join applicationroleclaim rctbl On ctbl.ClaimId = rctbl.ClaimId  And rctbl.Active = 1 
+		Inner Join applicationrole rtbl On rctbl.RoleId = rtbl.RoleId And rtbl.Active = 1  
+		Inner Join applicationuserrole urtbl On rtbl.RoleId = urtbl.RoleId And urtbl.Active = 1 And urtbl.UserId = @PCurrentUserId
+	Where ctbl.Active = 1 
+    order by ctbl.ClaimGroupId, ctbl.ClaimLabel; 
+
+End;
+GO
+
