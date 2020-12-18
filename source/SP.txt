@@ -2760,10 +2760,7 @@ Set nocount on;
         where ut.UserTypeId = @PUserTypeId
        AND ar.RoleId = (CASE WHEN @PRoleId  is not null AND @PRoleId > 0  THEN @PRoleId ELSE ar.RoleId END)
        AND tbl.Active = 1 
-       AND 
-         (
-          FirstName LIKE Concat('%',@PSearchText,'%')
-         )
+       
        group by tbl.UserId,tbl.FirstName,tbl.LastName, tbl.Email,ut.UserTypeName,
 		ut.UserTypeId,
         tbl.Active
@@ -2779,20 +2776,14 @@ Set nocount on;
         CASE  WHEN 1 = 1 THEN tbl.UserId end desc
 	offset @POffset rows
 	fetch next @PPageSize rows only;
-	set @PTotalRecord =  (Select  COUNT(tbl.UserId) from applicationuser tbl 
+	set @PTotalRecord =  
+	(Select  COUNT(distinct tbl.UserId) from applicationuser tbl 
 		Left join applicationuserrole aur on  tbl.UserId = aur.UserId
 		Left join applicationrole ar on aur.RoleId = ar.RoleId
 		Left join employee em on tbl.UserId = em.EmployeeId
 		Left join usertype ut on em.UserTypeId = ut.UserTypeId  where ut.UserTypeId = @PUserTypeId
        AND ar.RoleId = (CASE WHEN @PRoleId  is not null AND @PRoleId > 0  THEN @PRoleId ELSE ar.RoleId END)
        AND tbl.Active = 1 
-       AND 
-         (
-          FirstName LIKE Concat('%',@PSearchText,'%')
-         )
-		 group by tbl.UserId,tbl.FirstName,tbl.LastName, tbl.Email,ut.UserTypeName,
-		ut.UserTypeId,
-        tbl.Active
 		 ) ;
     
 
@@ -2901,4 +2892,55 @@ Set nocount on;
 
 End;
 GO
+
+
+
+
+DROP procedure if exists [ApplicationClaimGroupGetAll];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ApplicationClaimGroupGetAll(	
+ @PCurrentUserId int,
+ @POffset int,
+ @PPageSize int,
+ @PSortColumn varchar(60),
+ @PSortAscending binary,
+ @PTotalRecord int  OUT
+	)
+As
+Begin
+Set nocount on;
+	
+    Select 
+        ClaimGroupId, ClaimGroupCode, ClaimGroupLabel,ClaimGroupLabelTranslation
+	From applicationclaimGroup tbl
+	Where Active = 1
+    order by 
+		case when @PSortColumn = 'ClaimGroupId' and @PSortAscending = 1 then ClaimGroupId end asc,
+		case when @PSortColumn = 'ClaimGroupId' and @PSortAscending = 0 then ClaimGroupId end desc,
+		case when @PSortColumn = 'ClaimGroupLabel' and @PSortAscending = 1 then ClaimGroupLabel end asc,
+		case when @PSortColumn = 'ClaimGroupLabel' and @PSortAscending = 0 then ClaimGroupLabel end desc
+	offset @POffset rows
+	fetch next @PPageSize rows only;
+	set @PTotalRecord =  (Select Count(ClaimGroupId) From applicationclaimGroup Where Active = 1) ;
+	
+	
+   
+	Select 
+		ClaimId, ClaimType, ClaimCode, ClaimLabel,ClaimLabelTranslation, ClaimGroupId, Active
+	From applicationclaim  tbl
+	Where 
+	ClaimGroupId in (Select ClaimGroupId From applicationclaimGroup Where Active = 1)
+    order by ClaimGroupId, ClaimLabel; 
+
+End;
+GO
+
+
 
