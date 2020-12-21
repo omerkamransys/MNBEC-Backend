@@ -224,8 +224,7 @@ namespace MNBEC.Infrastructure
             ApplicationClaim applicationClaimItem = null;
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(RoleInfrastructure.RoleIdParameterName, applicationRole.RoleId),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
+                base.GetParameter(RoleInfrastructure.RoleIdParameterName, applicationRole.RoleId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, RoleInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
