@@ -82,7 +82,7 @@ namespace Vitol.Enzo.Infrastructure
                 base.GetParameter(DocumentInfrastructure.DocumentTypeIdParameterName, documents.DocumentTypeId),
                 base.GetParameter(DocumentInfrastructure.DocumentExtensionParameterName, documents.DocumentExtension),
                 base.GetParameter(DocumentInfrastructure.DocumentPathParameterName, documents.DocumentPath),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, documents.CreatedById),
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, documents.CurrentUserId),
                 base.GetParameter(BaseInfrastructure.ActiveParameterName, documents.Active)
             };
 
@@ -98,7 +98,7 @@ namespace Vitol.Enzo.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(DocumentInfrastructure.DocumentIdParameterName, document.DocumentId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, document.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, document.CurrentUserId)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, DocumentInfrastructure.ActivateProcedureName, CommandType.StoredProcedure);
@@ -118,7 +118,7 @@ namespace Vitol.Enzo.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(DocumentInfrastructure.DocumentIdParameterName, document.DocumentId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, document.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, document.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, DocumentInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))

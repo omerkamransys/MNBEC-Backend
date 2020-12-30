@@ -29,7 +29,7 @@ namespace MNBEC.API.Account.Extensions
                 UserName = vm.Email,
                 PhoneNumber = vm.PhoneNumber,
                 Active = vm.Active,
-                CreatedById = vm.CurrentUserId,
+                CurrentUserId = vm.CurrentUserId,
                 UserTypeId = vm.UserTypeId,
                 UserRoles = vm.Roles,
                 IdentificationNumber = vm.IdentificationNumber
@@ -61,7 +61,7 @@ namespace MNBEC.API.Account.Extensions
                 UserName = vm.Email,
                 PhoneNumber = vm.PhoneNumber,
                 Active = vm.Active,
-                CreatedById = vm.CurrentUserId,
+                CurrentUserId = vm.CurrentUserId,
                 UserTypeId = vm.UserTypeId,
                 UserRoles = vm.Roles,
                 IdentificationNumber = vm.IdentificationNumber ?? ""
@@ -97,7 +97,7 @@ namespace MNBEC.API.Account.Extensions
                 RoleId = vm.RoleId,
                 RoleName = vm.RoleName,
                 Active = vm.Active,
-                CreatedById = vm.CurrentUserId
+                CurrentUserId = vm.CurrentUserId
             };
 
             return model;
@@ -114,7 +114,7 @@ namespace MNBEC.API.Account.Extensions
             {
                 RoleId = vm.RoleId,
                 Active = vm.Active,
-                CreatedById = vm.CurrentUserId
+                CurrentUserId = vm.CurrentUserId
             };
 
             return model;
@@ -134,7 +134,7 @@ namespace MNBEC.API.Account.Extensions
                 RoleNameCode = vm.RoleNameCode,
                 RoleNameTranslation = vm.RoleNameTranslation ?? "",
                 Active = vm.Active,
-                CreatedById = vm.CurrentUserId
+                CurrentUserId = vm.CurrentUserId
             };
 
             return model;
@@ -153,7 +153,7 @@ namespace MNBEC.API.Account.Extensions
                 RoleName = vm.RoleName,
                 RoleNameCode = vm.RoleNameCode,
                 RoleNameTranslation = vm.RoleNameTranslation,
-                CreatedById = vm.CurrentUserId,
+                CurrentUserId = vm.CurrentUserId,
                 Active = vm.Active,
                 ClaimGroups = new List<ApplicationClaimGroup>()
             };
@@ -245,7 +245,7 @@ namespace MNBEC.API.Account.Extensions
             allRequest.Data.FirstName = allRequestVM.FirstName;
             allRequest.Data.UserId = allRequestVM.UserId;
             allRequest.Data.LastName = allRequestVM.LastName;
-            allRequest.Data.CreatedById = allRequestVM.CurrentUserId;
+            allRequest.Data.CurrentUserId = allRequestVM.CurrentUserId;
             allRequest.Data.UserTypeId = allRequestVM.UserTypeId;
             allRequest.Data.ActiveColumn = allRequestVM.ActiveColumn ;
             allRequest.Data.RoleId = allRequestVM.RoleId;
@@ -261,7 +261,7 @@ namespace MNBEC.API.Account.Extensions
             allRequest.Data.RoleId = allRequestVM.RoleId;
             allRequest.Data.RoleName = allRequestVM.RoleName;
             allRequest.Data.Active = allRequestVM.Active;
-            allRequest.Data.CreatedById = allRequestVM.CurrentUserId;
+            allRequest.Data.CurrentUserId = allRequestVM.CurrentUserId;
             return allRequest;
         }
         public static AllResponseVM<UserAllResponseVM> ConvertAll(this AllResponse<ApplicationUser> allResponse)
@@ -348,7 +348,7 @@ namespace MNBEC.API.Account.Extensions
                 ClaimGroupId = vm.ClaimGroupId,
                 ClaimType = vm.ClaimType,
                 ClaimLabel = vm.ClaimLabel,
-                CreatedById = vm.CurrentUserId
+                CurrentUserId = vm.CurrentUserId
             };
 
             return model;
@@ -539,7 +539,7 @@ namespace MNBEC.API.Account.Extensions
                 ClaimGroupId = vm.ClaimGroupId,
                 ClaimGroupLabel = vm.ClaimGroupLabel,
                 ClaimGroupCode = vm.ClaimGroupCode,
-                CreatedById = vm.CurrentUserId
+                CurrentUserId = vm.CurrentUserId
             };
 
             return model;
@@ -607,7 +607,7 @@ namespace MNBEC.API.Account.Extensions
             allRequest.Data.ClaimGroupId = allRequestVM.ApplicationClaimGroupId;
             allRequest.Data.ClaimGroupLabel = allRequestVM.ApplicationClaimGroupName;
             allRequest.Data.ClaimGroupCode = allRequestVM.ApplicationClaimGroupCode;
-            allRequest.Data.CreatedById = allRequestVM.CurrentUserId;
+            allRequest.Data.CurrentUserId = allRequestVM.CurrentUserId;
 
             return allRequest;
         }

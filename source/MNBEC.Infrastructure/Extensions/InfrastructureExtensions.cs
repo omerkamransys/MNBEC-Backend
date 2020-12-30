@@ -236,5 +236,13 @@ namespace MNBEC.Infrastructure.Extensions
 
             return services;
         }
+
+        public static IServiceCollection RegisterQuestionnaireTemplateInfrastructure(this IServiceCollection services)
+        {
+            services.AddSingleton<IQuestionnaireTemplateInfrastructure, QuestionnaireTemplateInfrastructure>();
+
+
+            return services;
+        }
     }
 }

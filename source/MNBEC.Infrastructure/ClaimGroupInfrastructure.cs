@@ -66,7 +66,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupLabelParameterName, applicationClaimGroup.ClaimGroupLabel),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupCodeParameterName, applicationClaimGroup.ClaimGroupLabel),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupCodeParameterName, applicationClaimGroup.ClaimGroupCode),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CurrentUserId)
             };
             //TODO: Add other parameters.
 
@@ -87,7 +87,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupIdParameterName, applicationClaimGroup.ClaimGroupId),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CurrentUserId)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, ClaimGroupInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
@@ -106,7 +106,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupIdParameterName, applicationClaimGroup.ClaimGroupId),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ClaimGroupInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
@@ -121,7 +121,7 @@ namespace MNBEC.Infrastructure
                             ClaimGroupLabel = dataReader.GetStringValue(ClaimGroupInfrastructure.ClaimGroupLabelColumnName),
                             ClaimGroupLabelTranslation = dataReader.GetStringValue(ClaimGroupInfrastructure.ClaimGroupLabelTranslationColumnName),
                             ClaimGroupCode = dataReader.GetStringValue(ClaimGroupInfrastructure.ClaimGroupCodeColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CurrentUserId = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.CreatedByIdColumnName),
                             CreatedByName = dataReader.GetStringValue(BaseSQLInfrastructure.CreatedByNameColumnName),
                             CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
                             ModifiedById = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.ModifiedByIdColumnName),
@@ -170,7 +170,7 @@ namespace MNBEC.Infrastructure
             ApplicationClaimGroup applicationClaimGroupItem = null;
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ClaimGroupInfrastructure.GetListStoredProcedureName, CommandType.StoredProcedure))
@@ -211,7 +211,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupIdParameterName, applicationClaimGroup.ClaimGroupId),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupLabelParameterName, applicationClaimGroup.ClaimGroupLabel),
                 base.GetParameter(ClaimGroupInfrastructure.ClaimGroupCodeParameterName, applicationClaimGroup.ClaimGroupCode),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.CurrentUserId)
             };
             //TODO: Add other parameters.
 
@@ -251,7 +251,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(BaseSQLInfrastructure.PageSizeParameterName, applicationClaimGroup.PageSize),
                 base.GetParameter(BaseSQLInfrastructure.SortColumnParameterName, applicationClaimGroup.SortColumn),
                 base.GetParameter(BaseSQLInfrastructure.SortAscendingParameterName, applicationClaimGroup.SortAscending),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.Data.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaimGroup.Data.CurrentUserId)
             };
             //TODO: Add other parameters.
 

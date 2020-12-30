@@ -60,15 +60,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bootstrap", "Bootstrap", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{16BE404E-31FB-4711-82A7-5ADB62AB5825}"
 	ProjectSection(SolutionItems) = preProject
+		QuestionnaireTemplate.sql = QuestionnaireTemplate.sql
 		TBL.txt = TBL.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{6D4DFF7D-B0DD-4649-81BF-F241A3F70843}"
 	ProjectSection(SolutionItems) = preProject
+		QuestionnaireTemplateActivate.sql = QuestionnaireTemplateActivate.sql
+		QuestionnaireTemplateAdd.sql = QuestionnaireTemplateAdd.sql
+		QuestionnaireTemplateGet.sql = QuestionnaireTemplateGet.sql
+		QuestionnaireTemplateGetList.sql = QuestionnaireTemplateGetList.sql
+		QuestionnaireTemplateUpdate.sql = QuestionnaireTemplateUpdate.sql
 		SP.txt = SP.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNBEC.API.WEBAPI", "MNBEC.API.WEBAPI\MNBEC.API.WEBAPI.csproj", "{B7D7948A-8D67-4331-A565-BDA3F8560F58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNBEC.API.WEBAPI", "MNBEC.API.WEBAPI\MNBEC.API.WEBAPI.csproj", "{B7D7948A-8D67-4331-A565-BDA3F8560F58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

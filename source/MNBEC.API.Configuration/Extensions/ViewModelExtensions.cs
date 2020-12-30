@@ -22,7 +22,7 @@ namespace MNBEC.API.Vehicle.Extensions
                 ChannelId = vm.ChannelId,
                 ClientId = vm.ClientId,
                 ChannelName = vm.ChannelName,
-                CreatedById = vm.CurrentUserId,
+                CurrentUserId = vm.CurrentUserId,
                 Active = vm.Active
             };
 
@@ -47,7 +47,7 @@ namespace MNBEC.API.Vehicle.Extensions
                     ChannelName = model.ChannelName,
 
                     Description = model.Description,
-                    CreatedById = model.CreatedById,
+                    CreatedById = model.CurrentUserId,
                     CreatedByName = model.CreatedByName,
                     CreatedDate = model.CreatedDate,
                     ModifiedById = model.ModifiedById,
@@ -70,7 +70,7 @@ namespace MNBEC.API.Vehicle.Extensions
             var model = new Channel
             {
                 ChannelId = vm.ChannelId,
-                CreatedById = vm.CurrentUserId,
+                CurrentUserId = vm.CurrentUserId,
                 Active = vm.Active
             };
 
@@ -90,7 +90,7 @@ namespace MNBEC.API.Vehicle.Extensions
                 ChannelName = vm.ChannelName,
                 ClientId = vm.ClientId,
                 Description = vm.Description ?? "",
-                CreatedById = vm.CurrentUserId
+                CurrentUserId = vm.CurrentUserId
             };
 
             return model;
@@ -109,7 +109,7 @@ namespace MNBEC.API.Vehicle.Extensions
                 ChannelName = vm.ChannelName,
                 Description = vm.Description ?? "",
                 Active = vm.Active,
-                CreatedById = vm.CurrentUserId
+                CurrentUserId = vm.CurrentUserId
             };
 
             return model;

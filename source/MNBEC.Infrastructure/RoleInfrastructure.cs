@@ -142,7 +142,7 @@ namespace MNBEC.Infrastructure
                             RoleName = dataReader.GetStringValue(RoleInfrastructure.RoleNameColumnName),
                             RoleNameTranslation = dataReader.GetStringValue(RoleInfrastructure.RoleNameTranslationColumnName),
                             //RoleNameCode = dataReader.GetStringValue(RoleInfrastructure.RoleNameCodeColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CurrentUserId = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
                             CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
                             ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
                             ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName)
@@ -181,7 +181,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(RoleInfrastructure.RoleNameParameterName, applicationRole.RoleName),
                 base.GetParameter(RoleInfrastructure.RoleNameTranslationParameterName, applicationRole.RoleNameTranslation),
                 base.GetParameter(RoleInfrastructure.RoleCodeParameterName, applicationRole.RoleNameCode),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CurrentUserId),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, applicationRole.Active)
             };
 
@@ -203,7 +203,7 @@ namespace MNBEC.Infrastructure
             {
                 base.GetParameter(RoleInfrastructure.RoleIdParameterName, applicationRole.RoleId),
                 base.GetParameter(RoleInfrastructure.ActiveParameterName, applicationRole.Active),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CurrentUserId)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, RoleInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
@@ -239,7 +239,7 @@ namespace MNBEC.Infrastructure
                             RoleName = dataReader.GetStringValue(RoleInfrastructure.RoleNameColumnName),
                             RoleNameTranslation = dataReader.GetStringValue(RoleInfrastructure.RoleNameTranslationColumnName),
                             RoleNameCode = dataReader.GetStringValue(RoleInfrastructure.RoleNameCodeColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CurrentUserId = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.CreatedByIdColumnName),
                             CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
                             ModifiedById = dataReader.GetUnsignedIntegerValue(BaseSQLInfrastructure.ModifiedByIdColumnName),
                             ModifiedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.ModifiedDateColumnName),
@@ -324,7 +324,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(BaseSQLInfrastructure.PageSizeParameterName, applicationrole.PageSize),
                 base.GetParameter(BaseSQLInfrastructure.SortColumnParameterName, applicationrole.SortColumn),
                 base.GetParameter(BaseSQLInfrastructure.SortAscendingParameterName, applicationrole.SortAscending),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationrole.Data.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationrole.Data.CurrentUserId)
             };
             //TODO: Add other parameters.
 
@@ -368,7 +368,7 @@ namespace MNBEC.Infrastructure
             var roles = new List<ApplicationRole>();
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, RoleInfrastructure.GetListStoredProcedureName, CommandType.StoredProcedure))
@@ -414,7 +414,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(RoleInfrastructure.RoleCodeParameterName, applicationRole.RoleNameCode),
                 base.GetParameter(RoleInfrastructure.RoleNameTranslationParameterName, applicationRole.RoleNameTranslation),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, applicationRole.Active),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CurrentUserId)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, RoleInfrastructure.UpdateStoredProcedureName, CommandType.StoredProcedure);
@@ -430,7 +430,7 @@ namespace MNBEC.Infrastructure
                         base.GetParameter(ClaimInfrastructure.ClaimIdParameterName, claim.ClaimId),
                         base.GetParameter(ClaimInfrastructure.ClaimTypeParameterName, claim.ClaimType),
                         base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, claim.Active),
-                        base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
+                        base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CurrentUserId)
                     };
 
                     var returnValueClaim = await base.ExecuteNonQuery(parametersRoleClaim, RoleInfrastructure.RoleClaimUpdateStoredProcedureName, CommandType.StoredProcedure);

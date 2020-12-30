@@ -9,7 +9,7 @@ namespace MNBEC.Domain.Common
     public abstract class BaseDomain
     {
         #region Propeties
-        public int? CreatedById { get; set; }
+        public int? CurrentUserId { get; set; }
         public string CreatedByName { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int? ModifiedById { get; set; }

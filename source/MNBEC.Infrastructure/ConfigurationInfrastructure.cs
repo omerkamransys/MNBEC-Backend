@@ -61,7 +61,7 @@ namespace MNBEC.Infrastructure
                 configurationIdParamter,
                 base.GetParameter(ConfigurationInfrastructure.ConfigurationKeyParameterName, configuration.ConfigurationKey),
                 base.GetParameter(ConfigurationInfrastructure.ConfigurationValueParameterName, configuration.ConfigurationValue),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CurrentUserId)
             };
             //TODO: Add other parameters.
 
@@ -82,7 +82,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ConfigurationInfrastructure.ConfigurationIdParameterName, configuration.ConfigurationId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CurrentUserId)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, ConfigurationInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
@@ -101,7 +101,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ConfigurationInfrastructure.ConfigurationIdParameterName, configuration.ConfigurationId),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ConfigurationInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
@@ -116,7 +116,7 @@ namespace MNBEC.Infrastructure
                             ConfigurationKey = dataReader.GetStringValue(ConfigurationInfrastructure.ConfigurationKeyColumnName),
                             ConfigurationValue = dataReader.GetStringValue(ConfigurationInfrastructure.ConfigurationValueColumnName),
                             ConfigurationValueTranslation = dataReader.GetStringValue(ConfigurationInfrastructure.ConfigurationValueTranslationColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.CreatedByIdColumnName),
+                            CurrentUserId = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.CreatedByIdColumnName),
                             CreatedByName = dataReader.GetStringValue(BaseInfrastructure.CreatedByNameColumnName),
                             CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
                             ModifiedById = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.ModifiedByIdColumnName),
@@ -160,7 +160,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(BaseInfrastructure.PageSizeParameterName, configuration.PageSize),
                 base.GetParameter(BaseInfrastructure.SortColumnParameterName, configuration.SortColumn),
                 base.GetParameter(BaseInfrastructure.SortAscendingParameterName, configuration.SortAscending),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.Data.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.Data.CurrentUserId)
             };
             //TODO: Add other parameters.
 
@@ -204,7 +204,7 @@ namespace MNBEC.Infrastructure
             Configuration configurationItem = null;
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ConfigurationInfrastructure.GetListStoredProcedureName, CommandType.StoredProcedure))
@@ -245,7 +245,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ConfigurationInfrastructure.ConfigurationIdParameterName, configuration.ConfigurationId),
                 base.GetParameter(ConfigurationInfrastructure.ConfigurationKeyParameterName, configuration.ConfigurationKey),
                 base.GetParameter(ConfigurationInfrastructure.ConfigurationValueParameterName, configuration.ConfigurationValue),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, configuration.CurrentUserId)
             };
             //TODO: Add other parameters.
 

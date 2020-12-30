@@ -71,7 +71,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ChannelInfrastructure.ClientIdParameterName, Channel.ClientId),
                 base.GetParameter(ChannelInfrastructure.ChannelNameParameterName, Channel.ChannelName),
                 base.GetParameter(ChannelInfrastructure.DescriptionParameterName, Channel.Description),                
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CreatedById),
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CurrentUserId),
             };
             //TODO: Add other parameters.
 
@@ -93,7 +93,7 @@ namespace MNBEC.Infrastructure
             {
                 base.GetParameter(ChannelInfrastructure.ChannelIdParameterName, Channel.ChannelId),
                 base.GetParameter(BaseInfrastructure.ActiveParameterName, Channel.Active),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CurrentUserId)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, ChannelInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
@@ -112,7 +112,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ChannelInfrastructure.ChannelIdParameterName, Channel.ChannelId),               
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ChannelInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
@@ -126,7 +126,7 @@ namespace MNBEC.Infrastructure
                             ChannelId = dataReader.GetUnsignedIntegerValue(ChannelInfrastructure.ChannelIdColumnName),
                             ChannelName = dataReader.GetStringValue(ChannelInfrastructure.ChannelNameColumnName),
                             Description = dataReader.GetStringValue(ChannelInfrastructure.DescriptionColumnName),                            
-                            CreatedById = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.CreatedByIdColumnName),
+                            CurrentUserId = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.CreatedByIdColumnName),
                             CreatedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.CreatedDateColumnName),
                             ModifiedById = dataReader.GetUnsignedIntegerValueNullable(BaseInfrastructure.ModifiedByIdColumnName),
                             ModifiedDate = dataReader.GetDateTimeValueNullable(BaseInfrastructure.ModifiedDateColumnName),
@@ -170,7 +170,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(BaseInfrastructure.PageSizeParameterName, Channel.PageSize),
                 base.GetParameter(BaseInfrastructure.SortColumnParameterName, Channel.SortColumn),
                 base.GetParameter(BaseInfrastructure.SortAscendingParameterName, Channel.SortAscending),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.Data.CreatedById)
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.Data.CurrentUserId)
             };
 
 
@@ -265,7 +265,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ChannelInfrastructure.ChannelIdParameterName, Channel.ChannelId),
                 base.GetParameter(ChannelInfrastructure.ChannelNameParameterName, Channel.ChannelName),
                 base.GetParameter(ChannelInfrastructure.DescriptionParameterName, Channel.Description),
-                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CreatedById),
+                base.GetParameter(BaseInfrastructure.CurrentUserIdParameterName, Channel.CurrentUserId),
                 base.GetParameter(BaseInfrastructure.ActiveParameterName, Channel.Active)
             };
 

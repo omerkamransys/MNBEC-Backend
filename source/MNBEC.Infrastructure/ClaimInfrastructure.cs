@@ -77,7 +77,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ClaimInfrastructure.ClaimTypeParameterName, applicationClaim.ClaimType),
                 base.GetParameter(ClaimInfrastructure.ClaimLabelParameterName, applicationClaim.ClaimLabel),
                 base.GetParameter(ClaimInfrastructure.ClaimCodeParameterName, applicationClaim.ClaimCode),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CurrentUserId)
             };
             //TODO: Add other parameters.
 
@@ -98,7 +98,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ClaimInfrastructure.ClaimIdParameterName, applicationClaim.ClaimId),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CurrentUserId)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, ClaimInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
@@ -117,7 +117,7 @@ namespace MNBEC.Infrastructure
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(ClaimInfrastructure.ClaimIdParameterName, applicationClaim.ClaimId),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ClaimInfrastructure.GetStoredProcedureName, CommandType.StoredProcedure))
@@ -132,7 +132,7 @@ namespace MNBEC.Infrastructure
                             ClaimType = dataReader.GetStringValue(ClaimInfrastructure.ClaimTypeColumnName),
                             ClaimLabelTranslation = dataReader.GetStringValue(ClaimInfrastructure.ClaimLabelTranslationColumnName),
                             ClaimCode = dataReader.GetStringValue(ClaimInfrastructure.ClaimCodeColumnName),
-                            CreatedById = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.CreatedByIdColumnName),
+                            CurrentUserId = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.CreatedByIdColumnName),
                             CreatedByName = dataReader.GetStringValue(BaseSQLInfrastructure.CreatedByNameColumnName),
                             CreatedDate = dataReader.GetDateTimeValueNullable(BaseSQLInfrastructure.CreatedDateColumnName),
                             ModifiedById = dataReader.GetUnsignedIntegerValueNullable(BaseSQLInfrastructure.ModifiedByIdColumnName),
@@ -175,7 +175,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(BaseSQLInfrastructure.PageSizeParameterName, applicationClaim.PageSize),
                 base.GetParameter(BaseSQLInfrastructure.SortColumnParameterName, applicationClaim.SortColumn),
                 base.GetParameter(BaseSQLInfrastructure.SortAscendingParameterName, applicationClaim.SortAscending),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.Data.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.Data.CurrentUserId)
             };
             //TODO: Add other parameters.
 
@@ -221,7 +221,7 @@ namespace MNBEC.Infrastructure
             ApplicationClaim applicationClaimItem = null;
             var parameters = new List<DbParameter>
             {
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CurrentUserId)
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, ClaimInfrastructure.GetListStoredProcedureName, CommandType.StoredProcedure))
@@ -266,7 +266,7 @@ namespace MNBEC.Infrastructure
             {
                 base.GetParameter(RoleInfrastructure.RoleIdParameterName, applicationRole.RoleId),
                 base.GetParameter(RoleInfrastructure.RoleCodeParameterName, applicationRole.RoleNameCode),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationRole.CurrentUserId)
 
             };
             //var parameters = new List<DbParameter>
@@ -422,7 +422,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(ClaimInfrastructure.ClaimTypeParameterName, applicationClaim.ClaimType),
                 base.GetParameter(ClaimInfrastructure.ClaimLabelParameterName, applicationClaim.ClaimLabel),
                 base.GetParameter(ClaimInfrastructure.ClaimCodeParameterName, applicationClaim.ClaimCode),
-                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CreatedById)
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, applicationClaim.CurrentUserId)
             };
             //TODO: Add other parameters.
 
