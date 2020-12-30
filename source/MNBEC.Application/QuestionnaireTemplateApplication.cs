@@ -10,7 +10,7 @@ using MNBEC.InfrastructureInterface;
 namespace MNBEC.Application
 {
     /// <summary>
-    /// QuestionnaireTemplateApplication inherits from BaseApplication and implements IClaimGroupApplication. It provides the implementation for QuestionnaireTemplate related operations.
+    /// QuestionnaireTemplateApplication inherits from BaseApplication and implements IQuestionnaireTemplateApplication. It provides the implementation for QuestionnaireTemplate related operations.
     /// </summary>
     public class QuestionnaireTemplateApplication : BaseApplication, IQuestionnaireTemplateApplication
     {

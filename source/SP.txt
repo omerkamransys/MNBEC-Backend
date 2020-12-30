@@ -3083,3 +3083,239 @@ End;
 
 GO
 
+
+DROP procedure if exists [QuestionAdd];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE QuestionAdd(	
+ @PCurrentUserId int,
+ @PId	int OUT,
+ @PQuestionaireTemplateId int,
+ @PArea int,
+ @PFourP int,
+ @PResponsible int,
+ @PLevel int,
+ @PLevel0	nvarchar(max),
+ @PLevel1	nvarchar(max),
+ @PLevel2	nvarchar(max),
+ @PLevel3	nvarchar(max)
+)
+As
+Begin
+Set nocount on;
+	Insert Into Question
+				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, CreatedById,  CreatedDate,  Active, OrderNumber)
+		Values	(@PQuestionaireTemplateId, @PArea, @PFourP, @PResponsible, @PLevel, @PLevel0, @PLevel1, @PLevel2, @PLevel3, @PCurrentUserId, GETUTCDATE(), 1, SCOPE_IDENTITY());
+
+	Set @PId = SCOPE_IDENTITY();
+End;
+
+GO
+
+
+
+DROP procedure if exists [QuestionActivate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE QuestionActivate(	
+ @PCurrentUserId int,
+ @PId	int,
+ @PActive bit
+	)
+As
+Begin
+Set nocount on;
+	Update Question
+		Set 
+			ModifiedById=@PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			Active=@PActive
+			where id = @PId;
+
+End;
+
+GO
+
+
+DROP procedure if exists [QuestionGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE QuestionGet(	
+ @PId int
+)
+As
+Begin
+Set nocount on;
+	Select 
+		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, OrderNumber, Active
+	From Question with(nolock)
+	Where Id = @PId;
+
+End;
+
+GO
+
+
+DROP procedure if exists [QuestionUpdate];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE QuestionUpdate(	
+ @PCurrentUserId int,
+ @PId	int,
+ @PQuestionaireTemplateId int,
+ @PArea int,
+ @PFourP int,
+ @PResponsible int,
+ @PLevel int,
+ @PLevel0	nvarchar(max),
+ @PLevel1	nvarchar(max),
+ @PLevel2	nvarchar(max),
+ @PLevel3	nvarchar(max),
+ @PActive bit
+)
+As
+Begin
+Set nocount on;
+	Update Question 
+		Set 
+			QuestionaireTemplateId = @PQuestionaireTemplateId,
+			Area = @PArea,
+			FourP = @PFourP,
+			Responsible = @PResponsible,
+			Level = @PLevel,
+			Level0 = @PLevel0,
+			Level1 = @PLevel1,
+			Level2 = @PLevel2,
+			Level3 = @PLevel3,
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate = GETUTCDATE(),
+			Active = @PActive
+			where id = @PId;
+End;
+
+GO
+
+
+DROP procedure if exists [AreaLookUpGetList];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE AreaLookUpGetList
+As
+Begin
+Set nocount on;
+
+    Select 
+        tbl.id, tbl.Title
+	From AreaLookUp tbl
+	Where tbl.Active = 1
+    Order By tbl.OrderNumber Asc;
+
+End;
+
+GO
+
+
+DROP procedure if exists [FourPLookUpGetList];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE FourPLookUpGetList
+As
+Begin
+Set nocount on;
+
+    Select 
+        tbl.id, tbl.Title
+	From FourPLookUp tbl
+	Where tbl.Active = 1
+    Order By tbl.OrderNumber Asc;
+
+End;
+
+GO
+
+
+DROP procedure if exists [ResponsibleLookUpGetList];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE ResponsibleLookUpGetList
+As
+Begin
+Set nocount on;
+
+    Select 
+        tbl.id, tbl.Title
+	From ResponsibleLookUp tbl
+	Where tbl.Active = 1
+    Order By tbl.OrderNumber Asc;
+
+End;
+
+GO
+
+
+DROP procedure if exists [LevelLookUpGetList];
+GO
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE  PROCEDURE LevelLookUpGetList
+As
+Begin
+Set nocount on;
+
+    Select 
+        tbl.id, tbl.Title
+	From LevelLookUp tbl
+	Where tbl.Active = 1
+    Order By tbl.OrderNumber Asc;
+
+End;
+
+GO

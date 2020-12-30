@@ -244,5 +244,12 @@ namespace MNBEC.Infrastructure.Extensions
 
             return services;
         }
+        public static IServiceCollection RegisterQuestionInfrastructure(this IServiceCollection services)
+        {
+            services.AddSingleton<IQuestionInfrastructure, QuestionInfrastructure>();
+
+
+            return services;
+        }
     }
 }

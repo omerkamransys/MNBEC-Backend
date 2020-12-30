@@ -164,3 +164,82 @@ SET IDENTITY_INSERT UserType ON
 INSERT INTO UserType (UserTypeId,UserTypeCode,UserTypeName,UserTypeNameTranslation,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (1,'001','Administrator','Administrator',NULL,NULL,NULL,NULL,1);
 INSERT INTO UserType (UserTypeId,UserTypeCode,UserTypeName,UserTypeNameTranslation,CreatedById,CreatedDate,ModifiedById,ModifiedDate,Active) VALUES (2,'002','Inspector','Inspector',NULL,NULL,NULL,NULL,1);
 SET IDENTITY_INSERT UserType OFF
+
+
+SET IDENTITY_INSERT AreaLookUp ON
+
+Insert Into AreaLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(1, 'Return Flow Management', 1, 1, GETUTCDATE(), 1);
+
+Insert Into AreaLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(2, 'Return Payment Management', 2, 1, GETUTCDATE(), 1);
+
+Insert Into AreaLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(3, 'Return assets', 3, 1, GETUTCDATE(), 1);
+
+Insert Into AreaLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(4, 'Return order and scheduling', 4, 1, GETUTCDATE(), 1);
+
+Insert Into AreaLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(5, 'Waste Management', 5, 1, GETUTCDATE(), 1);
+
+Insert Into AreaLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(6, 'Other', 6, 1, GETUTCDATE(), 1);
+
+SET IDENTITY_INSERT AreaLookUp OFF
+
+
+
+
+SET IDENTITY_INSERT FourPLookUp ON
+
+Insert Into FourPLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(1, 'Process', 1, 1, GETUTCDATE(), 1);
+
+Insert Into FourPLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(2, 'Practice', 2, 1, GETUTCDATE(), 1);
+
+Insert Into FourPLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(3, 'Performance', 3, 1, GETUTCDATE(), 1);
+
+Insert Into FourPLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(4, 'People', 4, 1, GETUTCDATE(), 1);
+
+
+Insert Into FourPLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(5, 'Other', 5, 1, GETUTCDATE(), 1);
+
+SET IDENTITY_INSERT FourPLookUp OFF
+
+
+
+
+
+SET IDENTITY_INSERT LevelLookUp ON
+
+Insert Into LevelLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(1, 'Strategic', 1, 1, GETUTCDATE(), 1);
+
+Insert Into LevelLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(2, 'Operational', 2, 1, GETUTCDATE(), 1);
+
+Insert Into LevelLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(3, 'Tactical', 3, 1, GETUTCDATE(), 1);
+
+Insert Into LevelLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(1, 'Other', 4, 1, GETUTCDATE(), 1);
+
+SET IDENTITY_INSERT LevelLookUp OFF
+
+
+
+SET IDENTITY_INSERT ResponsibleLookUp ON
+
+Insert Into ResponsibleLookUp (Id, Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(1, 'Self', 4, 1, GETUTCDATE(), 1);
+
+SET IDENTITY_INSERT ResponsibleLookUp OFF
+
+
+
+

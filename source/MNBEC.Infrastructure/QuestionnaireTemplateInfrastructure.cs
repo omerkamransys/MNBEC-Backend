@@ -93,7 +93,7 @@ namespace MNBEC.Infrastructure
         /// <summary>
         /// Get fetch and returns queried item from database.
         /// </summary>
-        /// <param name="applicationClaimGroup"></param>
+        /// <param name="question"></param>
         /// <returns></returns>
         public async Task<QuestionnaireTemplate> Get(QuestionnaireTemplate questionnaireTemplate)
         {

@@ -146,5 +146,13 @@ namespace MNBEC.Application.Extensions
             return services;
         }
 
+        public static IServiceCollection RegisterQuestionApplication(this IServiceCollection services)
+        {
+
+            services.AddSingleton<IQuestionApplication, QuestionApplication>();
+
+            return services;
+        }
+
     }
 }

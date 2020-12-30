@@ -283,6 +283,52 @@ namespace MNBEC.Infrastructure
             return ds;
         }
 
+        protected async Task<bool> BulkUpdateSQLGeneric(string query, List<string> values)
+        {
+
+            List<uint> InsertedIds = new List<uint>();
+
+            BulkInsertResponse bulkInsertResponse = new BulkInsertResponse();
+
+            StringBuilder SQLquery = new StringBuilder(query);
+            var returnValue = -1;
+            using (SqlConnection mConnection = new SqlConnection(this.ConnectionString))
+            {
+                //makes a comma seprated string our of List of Strings
+                SQLquery.Append(string.Join("  ", values));
+
+                
+
+                mConnection.Open();
+                using (SqlCommand cmd = mConnection.CreateCommand())
+                {
+                    cmd.CommandText = SQLquery.ToString();
+                    try
+                    {
+                        returnValue = await cmd.ExecuteNonQueryAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally
+                    {
+                        if (mConnection.State == ConnectionState.Open)
+                        {
+                            mConnection.Close();
+                            mConnection.Dispose();
+                        }
+                    }
+
+                }
+
+            }
+
+
+
+            return true;
+        }
+
         #endregion
     }
 }
