@@ -20,7 +20,6 @@ INSERT INTO applicationclaimgroup
   
 
 
-
 INSERT INTO applicationclaim 
 ( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
 VALUES (1,'UserManagement.Add','Add New','UMGT_AD',1,GETUTCDATE() , NULL ,NULL, 1);

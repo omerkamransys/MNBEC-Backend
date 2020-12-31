@@ -41,6 +41,17 @@ namespace MNBEC.Infrastructure
         private const string IdColumnName = "Id";
         private const string TitleColumnName = "Title";
 
+        private const string QuestionaireTemplateIdColumnName = "QuestionaireTemplateId";
+        private const string AreaColumnName = "Area";
+        private const string FourPColumnName = "FourP";
+        private const string ResponsibleColumnName = "Responsible";
+        private const string LevelColumnName = "Level";
+        private const string OrderNumberColumnName = "OrderNumber";
+        private const string Level0ColumnName = "Level0";
+        private const string Level1ColumnName = "Level1";
+        private const string Level2ColumnName = "Level2";
+        private const string Level3ColumnName = "Level3";
+
 
         private const string TitleParameterName = "PTitle";
         private const string IdParameterName = "PId";
@@ -98,6 +109,7 @@ namespace MNBEC.Infrastructure
         public async Task<QuestionnaireTemplate> Get(QuestionnaireTemplate questionnaireTemplate)
         {
             QuestionnaireTemplate questionnaireTemplateItem = null;
+            Question questionItem = null;
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(QuestionnaireTemplateInfrastructure.IdParameterName, questionnaireTemplate.Id)
@@ -112,8 +124,32 @@ namespace MNBEC.Infrastructure
                         questionnaireTemplateItem = new QuestionnaireTemplate
                         {
                             Id = dataReader.GetUnsignedIntegerValue(QuestionnaireTemplateInfrastructure.IdColumnName),
-                            Title = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.TitleColumnName)
+                            Title = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.TitleColumnName),
+                            QuestionsList = new List<Question>()
                         };
+                    }
+                    if (dataReader.NextResult())
+                    {
+                        while (dataReader.Read())
+                        {
+                            questionItem = new Question
+                            {
+                                Id = dataReader.GetUnsignedIntegerValue(QuestionnaireTemplateInfrastructure.IdColumnName),
+                                QuestionaireTemplateId = dataReader.GetUnsignedIntegerValue(QuestionnaireTemplateInfrastructure.QuestionaireTemplateIdColumnName),
+                                Area = dataReader.GetUnsignedIntegerValueNullable(QuestionnaireTemplateInfrastructure.AreaColumnName),
+                                FourP = dataReader.GetUnsignedIntegerValueNullable(QuestionnaireTemplateInfrastructure.FourPColumnName),
+                                Responsible = dataReader.GetUnsignedIntegerValueNullable(QuestionnaireTemplateInfrastructure.ResponsibleColumnName),
+                                Level = dataReader.GetUnsignedIntegerValueNullable(QuestionnaireTemplateInfrastructure.LevelColumnName),
+                                Level0 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level0ColumnName),
+                                Level1 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level1ColumnName),
+                                Level2 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level2ColumnName),
+                                Level3 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level3ColumnName),
+                                OrderNumber = dataReader.GetUnsignedIntegerValueNullable(QuestionnaireTemplateInfrastructure.OrderNumberColumnName),
+                                Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
+                            };
+
+                            questionnaireTemplateItem?.QuestionsList.Add(questionItem);
+                        }
                     }
                     if (!dataReader.IsClosed)
                     {
