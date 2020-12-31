@@ -48,7 +48,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpPost("add")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUES_AD")]
         public async Task<int> Add([FromBody] Question requestVM)
         {
 
@@ -65,7 +65,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpPut("activate")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUES_ACT")]
         public async Task<bool> Activate([FromBody] Question requestVM)
         {
 
@@ -81,7 +81,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpGet("get")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUES_GET")]
         public async Task<Question> Get([FromQuery] Question requestVM)
         {
 
@@ -99,7 +99,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpPut("update")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUES_UP")]
         public async Task<bool> Update([FromBody] Question requestVM)
         {
 
@@ -114,7 +114,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpPut("updateOrder")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUES_UP")]
         public async Task<bool> UpdateOrder([FromBody] QuestionOrderRequestVM requestVM)
         {
             var response = await this.QuestionApplication.UpdateOrder(requestVM.questions);

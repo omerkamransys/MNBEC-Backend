@@ -242,3 +242,52 @@ SET IDENTITY_INSERT ResponsibleLookUp OFF
 
 
 
+INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(7,'QuestionnaireTemplate','QUES_TMP',1, GETUTCDATE(), 1 , NULL ,1);
+
+  INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(8,'Question','QUES',1, GETUTCDATE(), 1 , NULL ,1);
+
+
+
+
+  INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('7','QuestionnaireTemplate.Add','Add New','QUESTMP_AD',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('7','QuestionnaireTemplate.Activate','Activate/Deactivate','QUESTMPACT',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('7','QuestionnaireTemplate.Get','Get','QUESTMPGET',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('7','QuestionnaireTemplate.GetList','Get List','QUESTMP_GL',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('7','QuestionnaireTemplate.Update','Update','QUESTMP_UP',1,GETUTCDATE() , NULL ,NULL, 1);
+  
+
+
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('8','Question.Add','Add New','QUES_AD',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('8','Question.Activate','Activate/Deactivate','QUES_ACT',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('8','Question.Get','Get','QUES_GET',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('8','Question.Update','Update','QUES_UP',1,GETUTCDATE() , NULL ,NULL, 1);

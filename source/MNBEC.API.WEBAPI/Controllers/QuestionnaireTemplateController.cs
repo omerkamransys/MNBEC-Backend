@@ -47,7 +47,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpPost("add")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUESTMP_AD")]
         public async Task<int> Add([FromBody] QuestionnaireTemplateRequestVM requestVM)
         {
             QuestionnaireTemplate request = new QuestionnaireTemplate
@@ -69,7 +69,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpPut("activate")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUESTMPACT")]
         public async Task<bool> Activate([FromBody] QuestionnaireTemplate requestVM)
         {
             
@@ -85,7 +85,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpGet("get")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUESTMPGET")]
         public async Task<QuestionnaireTemplate> Get([FromQuery] QuestionnaireTemplate requestVM)
         {
 
@@ -103,7 +103,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpGet("getlist")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUESTMP_GL")]
         public async Task<List<QuestionnaireTemplate>> GetList([FromQuery] QuestionnaireTemplate requestVM)
         { 
             List<QuestionnaireTemplate> response = await this.QuestionnaireTemplateApplication.GetList(requestVM);
@@ -118,7 +118,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// <param name="requestVM"></param>
         /// <returns></returns>
         [HttpPut("update")]
-        [AllowAnonymous]
+        [Authorize(Policy = "QUESTMP_GL")]
         public async Task<bool> Update([FromBody] QuestionnaireTemplateRequestVM requestVM)
         {
             QuestionnaireTemplate request = new QuestionnaireTemplate
