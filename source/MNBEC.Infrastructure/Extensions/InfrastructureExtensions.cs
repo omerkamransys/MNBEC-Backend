@@ -251,5 +251,13 @@ namespace MNBEC.Infrastructure.Extensions
 
             return services;
         }
+
+        public static IServiceCollection RegisterLevelInfrastructure(this IServiceCollection services)
+        {
+            services.AddSingleton<ILevelInfrastructure, LevelInfrastructure>();
+
+
+            return services;
+        }
     }
 }

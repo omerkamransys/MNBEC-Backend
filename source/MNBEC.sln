@@ -62,10 +62,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{16BE40
 	ProjectSection(SolutionItems) = preProject
 		AreaLookUp.sql = AreaLookUp.sql
 		FourPLookUp.sql = FourPLookUp.sql
+		level.sql = level.sql
 		LevelLookUp.sql = LevelLookUp.sql
 		Question.sql = Question.sql
 		QuestionnaireTemplate.sql = QuestionnaireTemplate.sql
 		ResponsibleLookUp.sql = ResponsibleLookUp.sql
+		ReviewerLevel.sql = ReviewerLevel.sql
+		StakeholderLevel.sql = StakeholderLevel.sql
 		TBL.txt = TBL.txt
 	EndProjectSection
 EndProject
@@ -73,7 +76,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 	ProjectSection(SolutionItems) = preProject
 		AreaLookUpGetList.sql = AreaLookUpGetList.sql
 		FourPLookUpGetList.sql = FourPLookUpGetList.sql
+		LevelActivate.sql = LevelActivate.sql
+		LevelAdd.sql = LevelAdd.sql
+		LevelGet.sql = LevelGet.sql
+		LevelGetList.sql = LevelGetList.sql
 		LevelLookUpGetList.sql = LevelLookUpGetList.sql
+		LevelUpdate.sql = LevelUpdate.sql
 		QuestionActivate.sql = QuestionActivate.sql
 		QuestionAdd.sql = QuestionAdd.sql
 		QuestionGet.sql = QuestionGet.sql
@@ -84,7 +92,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 		QuestionnaireTemplateUpdate.sql = QuestionnaireTemplateUpdate.sql
 		QuestionUpdate.sql = QuestionUpdate.sql
 		ResponsibleLookUpGetList.sql = ResponsibleLookUpGetList.sql
+		ReviewerLevelDelete.sql = ReviewerLevelDelete.sql
 		SP.txt = SP.txt
+		StakeholderLevelDelete.sql = StakeholderLevelDelete.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNBEC.API.WEBAPI", "MNBEC.API.WEBAPI\MNBEC.API.WEBAPI.csproj", "{B7D7948A-8D67-4331-A565-BDA3F8560F58}"

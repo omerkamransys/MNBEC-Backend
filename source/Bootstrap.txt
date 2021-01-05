@@ -291,3 +291,30 @@ VALUES ('8','Question.Get','Get','QUES_GET',1,GETUTCDATE() , NULL ,NULL, 1);
 INSERT INTO applicationclaim 
 ( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
 VALUES ('8','Question.Update','Update','QUES_UP',1,GETUTCDATE() , NULL ,NULL, 1);
+
+
+
+INSERT INTO applicationclaimgroup
+ (ClaimGroupId, ClaimGroupLabel, ClaimGroupCode, CreatedById, CreatedDate,
+  ModifiedById, ModifiedDate, Active) VALUES(9,'OrganizationalHierarchy','ORG_HR',1, GETUTCDATE(), 1 , NULL ,1);
+
+
+  INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('9','Level.Add','Add New','ORG_HR_AD',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('9','Level.Activate','Activate/Deactivate','ORG_HR_ACT',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('9','Level.Get','Get','ORG_HR_GET',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('9','Level.GetList','Get List','ORG_HR_GL',1,GETUTCDATE() , NULL ,NULL, 1);
+
+INSERT INTO applicationclaim 
+( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
+VALUES ('9','Question.Level','Update','ORG_HR_UP',1,GETUTCDATE() , NULL ,NULL, 1);

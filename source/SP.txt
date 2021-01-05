@@ -3323,3 +3323,235 @@ Set nocount on;
 End;
 
 GO
+
+
+DROP procedure if exists [levelAdd];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE levelAdd(
+ @PCurrentUserId int,
+ @PLevelId	int OUT,
+ @PLevelName nvarchar(256),
+ @PParentId	int,
+ @PQuestionaireTemplateId int,
+ @PDeadlineDate datetime2(0),
+ @PRenewalDate datetime2(0)
+)
+As
+Begin
+Set nocount on;
+	Insert Into level
+				(LevelName, ParentId, QuestionaireTemplateId, DeadlineDate, RenewalDate, CreatedById,  CreatedDate,  Active)
+		Values	(@PLevelName, @PParentId, @PQuestionaireTemplateId, @PDeadlineDate, @PRenewalDate, @PCurrentUserId, GETUTCDATE(), 1);
+
+	Set @PLevelId = SCOPE_IDENTITY();
+End;
+
+GO
+
+
+
+
+DROP procedure if exists [LevelActivate];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE LevelActivate(
+ @PCurrentUserId int,
+ @PLevelId	int,
+ @PActive bit
+)
+As
+Begin
+Set nocount on;
+	Update level 
+		Set 
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate = GETUTCDATE(),
+			Active = @PActive
+	Where LevelId = @PLevelId;
+End;
+
+GO
+
+
+
+DROP procedure if exists [LevelGet];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE LevelGet(	
+ @PLevelId int
+)
+As
+Begin
+Set nocount on;
+	Select 
+		tbl.LevelId, tbl.LevelName, tbl.ParentId, tbl.QuestionaireTemplateId,
+		tbl.DeadlineDate, tbl.RenewalDate,  tbl.Active
+	From level tbl 
+	Where tbl.LevelId = @PLevelId;
+
+	select ReviewerLevelId, UserId, LevelId
+	from ReviewerLevel
+	where LevelId = @PLevelId and Active = 1;
+
+	select StakeholderLevelId, UserId, LevelId
+	from StakeholderLevel
+	where LevelId = @PLevelId and Active = 1;
+
+End;
+
+GO
+
+
+
+DROP procedure if exists [LevelGetList];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE LevelGetList
+As
+Begin
+Set nocount on;
+
+	Select 
+		tbl.LevelId, tbl.LevelName, tbl.ParentId, tbl.QuestionaireTemplateId,
+		tbl.DeadlineDate, tbl.RenewalDate, tbl.Active
+	From level tbl 
+	Where tbl.Active = 1;
+
+	select ReviewerLevelId, UserId, LevelId
+	from ReviewerLevel
+	where Active = 1;
+
+	select StakeholderLevelId, UserId, LevelId
+	from StakeholderLevel
+	where Active = 1;
+
+End;
+
+GO
+
+
+DROP procedure if exists [LevelUpdate];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE LevelUpdate(
+ @PCurrentUserId int,
+ @PLevelId	int,
+ @PLevelName nvarchar(256),
+ @PParentId	int,
+ @PQuestionaireTemplateId int,
+ @PDeadlineDate datetime2(0),
+ @PRenewalDate datetime2(0)
+)
+As
+Begin
+Set nocount on;
+
+	Update level
+		Set 
+			ParentId = @PParentId,
+			LevelName = @PLevelName,
+			QuestionaireTemplateId = @PQuestionaireTemplateId,
+			DeadlineDate = @PDeadlineDate,
+			RenewalDate = @PRenewalDate,
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate = GETUTCDATE()
+	Where  LevelId = @PLevelId;
+End;
+
+GO
+
+
+
+DROP procedure if exists [ReviewerLevelDelete];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE ReviewerLevelDelete(
+ @PCurrentUserId int,
+ @PLevelId	int
+)
+As
+Begin
+Set nocount on;
+
+	Update ReviewerLevel
+		Set 
+			Active = 0,
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate = GETUTCDATE()
+	Where  LevelId = @PLevelId;
+End;
+
+GO
+
+
+DROP procedure if exists [StakeholderLevelDelete];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+
+CREATE PROCEDURE StakeholderLevelDelete(
+ @PCurrentUserId int,
+ @PLevelId	int
+)
+As
+Begin
+Set nocount on;
+
+	Update StakeholderLevel
+		Set 
+			Active = 0,
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate = GETUTCDATE()
+	Where  LevelId = @PLevelId;
+End;
+
+GO
+
+

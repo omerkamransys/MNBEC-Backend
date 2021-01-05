@@ -154,5 +154,13 @@ namespace MNBEC.Application.Extensions
             return services;
         }
 
+        public static IServiceCollection RegisterLevelApplication(this IServiceCollection services)
+        {
+
+            services.AddSingleton<ILevelApplication, LevelApplication>();
+
+            return services;
+        }
+
     }
 }
