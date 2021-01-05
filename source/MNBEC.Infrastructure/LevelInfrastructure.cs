@@ -101,7 +101,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(LevelInfrastructure.ParentIdParameterName, level.ParentId),
                 base.GetParameter(LevelInfrastructure.QuestionaireTemplateIdParameterName, level.QuestionaireTemplateId),
                 base.GetParameter(LevelInfrastructure.DeadlineDateParameterName, level.DeadlineDate),
-                base.GetParameter(LevelInfrastructure.RenewalDateColumnName, level.RenewalDate),
+                base.GetParameter(LevelInfrastructure.RenewalDateParameterName, level.RenewalDate),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, level.CurrentUserId)
             };
             //TODO: Add other parameters.
@@ -178,7 +178,7 @@ namespace MNBEC.Infrastructure
 
             var returnValue = await base.ExecuteNonQuery(parameters, LevelInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
 
-            return returnValue > 0;
+            return true;
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(LevelInfrastructure.ParentIdParameterName, level.ParentId),
                 base.GetParameter(LevelInfrastructure.QuestionaireTemplateIdParameterName, level.QuestionaireTemplateId),
                 base.GetParameter(LevelInfrastructure.DeadlineDateParameterName, level.DeadlineDate),
-                base.GetParameter(LevelInfrastructure.RenewalDateColumnName, level.RenewalDate),
+                base.GetParameter(LevelInfrastructure.RenewalDateParameterName, level.RenewalDate),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, level.CurrentUserId)
             };
             //TODO: Add other parameters.
@@ -386,8 +386,14 @@ namespace MNBEC.Infrastructure
                 await base.BulkInsertSQLGeneric(BulkInsertReviewerLevelsDynamicForm, BulkReviewerLevels);
             }
 
+            var deleteParameter2 = new List<DbParameter>
+            {
+                base.GetParameter(LevelInfrastructure.LevelIdParameterName, level.LevelId),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, level.CurrentUserId)
+            };
 
-            var returnValue2 = await base.ExecuteNonQuery(deleteParameter, LevelInfrastructure.StakeholderLevelDeleteStoredProcedureName, CommandType.StoredProcedure);
+
+            var returnValue2 = await base.ExecuteNonQuery(deleteParameter2, LevelInfrastructure.StakeholderLevelDeleteStoredProcedureName, CommandType.StoredProcedure);
             if (level.StakeholderLevels != null && level.StakeholderLevels.Count > 0)
             {
                 List<string> BulkStakeholderLevels = new List<string>();
