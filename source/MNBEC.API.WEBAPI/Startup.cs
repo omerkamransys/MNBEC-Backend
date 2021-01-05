@@ -74,7 +74,7 @@ namespace MNBEC.API.WEBAPI
             services.RegisterQuestionApplication();
             services.RegisterQuestionInfrastructure();
             services.RegisterLevelApplication();
-            services.RegisterQuestionInfrastructure();
+            services.RegisterLevelInfrastructure();
 
 
             var serviceProvider = services.BuildServiceProvider();
