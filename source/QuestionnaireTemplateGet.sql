@@ -21,7 +21,7 @@ Set nocount on;
 	Select 
 		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, OrderNumber, Active
 	From Question with(nolock)
-	Where QuestionaireTemplateId = @PId;
+	Where QuestionaireTemplateId = @PId and Active = 1;
 
 End;
 

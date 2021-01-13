@@ -147,6 +147,16 @@ namespace MNBEC.Application
         {
             return await this.QuestionInfrastructure.LevelLookUpGetList();
         }
+
+        /// <summary>
+        /// Add calls QuestionInfrastructure to adds bulk new object in database and returns provided ObjectId.
+        /// </summary>
+        /// <param name="questions"></param>
+        /// <returns></returns>
+        public async Task<bool> AddBulk(List<Question> questions)
+        {
+            return await this.QuestionInfrastructure.AddBulk(questions);
+        }
         #endregion
     }
 }

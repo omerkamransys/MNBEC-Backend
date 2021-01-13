@@ -28,3 +28,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'Que
  );
 
 END;
+
+
+ALTER TABLE Question
+ADD Level4  nvarchar(max) NOT NULL Default '';

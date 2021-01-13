@@ -19,6 +19,7 @@ CREATE PROCEDURE QuestionUpdate(
  @PLevel1	nvarchar(max),
  @PLevel2	nvarchar(max),
  @PLevel3	nvarchar(max),
+ @PLevel4	nvarchar(max),
  @PActive bit
 )
 As
@@ -35,6 +36,7 @@ Set nocount on;
 			Level1 = @PLevel1,
 			Level2 = @PLevel2,
 			Level3 = @PLevel3,
+			Level4 = @PLevel4,
 			ModifiedById = @PCurrentUserId,
 			ModifiedDate = GETUTCDATE(),
 			Active = @PActive

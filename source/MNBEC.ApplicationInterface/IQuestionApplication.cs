@@ -16,5 +16,6 @@ namespace MNBEC.ApplicationInterface
         Task<List<LookUpVM>> FourPLookUpGetList();
         Task<List<LookUpVM>> ResponsibleLookUpGetList();
         Task<List<LookUpVM>> LevelLookUpGetList();
+        Task<bool> AddBulk(List<Question> questions);
     }
 }

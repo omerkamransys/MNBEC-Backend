@@ -59,8 +59,9 @@ namespace MNBEC.Infrastructure
         private const string Level1ColumnName = "Level1";
         private const string Level2ColumnName = "Level2";
         private const string Level3ColumnName = "Level3";
+        private const string Level4ColumnName = "Level4";
 
-        
+
         private const string IdParameterName = "PId";
         private const string QuestionaireTemplateIdParameterName = "PQuestionaireTemplateId";
         private const string AreaParameterName = "PArea";
@@ -72,7 +73,16 @@ namespace MNBEC.Infrastructure
         private const string Level1ParameterName = "PLevel1";
         private const string Level2ParameterName = "PLevel2";
         private const string Level3ParameterName = "PLevel3";
+        private const string Level4ParameterName = "PLevel4";
         #endregion
+
+        private const string BulkInsertQuestions =
+
+            @"
+                
+                   Insert Into Question
+				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, CreatedById,  CreatedDate,  Active)
+		Values";
 
         #region Interface IQuestionInfrastructure Implementation
 
@@ -96,6 +106,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level1ParameterName, question.Level1),
                 base.GetParameter(QuestionInfrastructure.Level2ParameterName, question.Level2),
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
+                base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId)
             };
 
@@ -157,6 +168,7 @@ namespace MNBEC.Infrastructure
                             Level1 = dataReader.GetStringValue(QuestionInfrastructure.Level1ColumnName),
                             Level2 = dataReader.GetStringValue(QuestionInfrastructure.Level2ColumnName),
                             Level3 = dataReader.GetStringValue(QuestionInfrastructure.Level3ColumnName),
+                            Level4 = dataReader.GetStringValue(QuestionInfrastructure.Level4ColumnName),
                             OrderNumber = dataReader.GetUnsignedIntegerValueNullable(QuestionInfrastructure.OrderNumberColumnName),
                             Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
                         };
@@ -210,6 +222,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level1ParameterName, question.Level1),
                 base.GetParameter(QuestionInfrastructure.Level2ParameterName, question.Level2),
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
+                base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, question.CurrentUserId)
             };
@@ -249,7 +262,7 @@ namespace MNBEC.Infrastructure
             LookUpVM lookUpVM = null;
             var parameters = new List<DbParameter>
             {
-                
+
             };
 
             using (var dataReader = await base.ExecuteReader(parameters, QuestionInfrastructure.AreaLookUpGetListProcedureName, CommandType.StoredProcedure))
@@ -385,6 +398,46 @@ namespace MNBEC.Infrastructure
             }
 
             return list;
+        }
+
+        public async Task<bool> AddBulk(List<Question> questions)
+        {
+            List<string> BulkQuestions = new List<string>();
+            foreach (var item in questions)
+            {
+                BulkQuestions.Add(string.Format("({0},{1},{2},{3},{4},'{5}','{6}','{7}','{8}','{9}',{10},GETUTCDATE(),'1')",
+                    item.QuestionaireTemplateId,
+                    GetCreatedById(item.Area),
+                    GetCreatedById(item.FourP),
+                    GetCreatedById(item.Responsible),
+                    GetCreatedById(item.Level),
+                    item.Level0,
+                    item.Level1,
+                    item.Level2,
+                    item.Level3,
+                    item.Level4,
+                    GetCreatedById(item.CurrentUserId)
+                   ));
+            }
+            await base.BulkInsertSQLGeneric(BulkInsertQuestions, BulkQuestions);
+
+            return true;
+        }
+
+        private static string GetCreatedById(int? id)
+        {
+            string CreatedById = null;
+
+            if (id == null)
+            {
+                CreatedById = "null";
+            }
+            else
+            {
+                CreatedById = id.ToString();
+            }
+
+            return CreatedById;
         }
 
         #endregion

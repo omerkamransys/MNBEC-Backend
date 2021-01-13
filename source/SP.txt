@@ -2997,7 +2997,7 @@ Set nocount on;
 	Select 
 		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, OrderNumber, Active
 	From Question with(nolock)
-	Where QuestionaireTemplateId = @PId;
+	Where QuestionaireTemplateId = @PId and Active = 1;
 
 End;
 
@@ -3109,19 +3109,21 @@ CREATE PROCEDURE QuestionAdd(
  @PLevel0	nvarchar(max),
  @PLevel1	nvarchar(max),
  @PLevel2	nvarchar(max),
- @PLevel3	nvarchar(max)
+ @PLevel3	nvarchar(max),
+ @PLevel4	nvarchar(max)
 )
 As
 Begin
 Set nocount on;
 	Insert Into Question
-				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, CreatedById,  CreatedDate,  Active, OrderNumber)
-		Values	(@PQuestionaireTemplateId, @PArea, @PFourP, @PResponsible, @PLevel, @PLevel0, @PLevel1, @PLevel2, @PLevel3, @PCurrentUserId, GETUTCDATE(), 1, SCOPE_IDENTITY());
+				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, CreatedById,  CreatedDate,  Active, OrderNumber)
+		Values	(@PQuestionaireTemplateId, @PArea, @PFourP, @PResponsible, @PLevel, @PLevel0, @PLevel1, @PLevel2, @PLevel3, @PLevel4, @PCurrentUserId, GETUTCDATE(), 1, SCOPE_IDENTITY());
 
 	Set @PId = SCOPE_IDENTITY();
 End;
 
 GO
+
 
 
 
@@ -3170,7 +3172,7 @@ As
 Begin
 Set nocount on;
 	Select 
-		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, OrderNumber, Active
+		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, OrderNumber, Active
 	From Question with(nolock)
 	Where Id = @PId;
 
@@ -3200,6 +3202,7 @@ CREATE PROCEDURE QuestionUpdate(
  @PLevel1	nvarchar(max),
  @PLevel2	nvarchar(max),
  @PLevel3	nvarchar(max),
+ @PLevel4	nvarchar(max),
  @PActive bit
 )
 As
@@ -3216,6 +3219,7 @@ Set nocount on;
 			Level1 = @PLevel1,
 			Level2 = @PLevel2,
 			Level3 = @PLevel3,
+			Level4 = @PLevel4,
 			ModifiedById = @PCurrentUserId,
 			ModifiedDate = GETUTCDATE(),
 			Active = @PActive

@@ -20,6 +20,7 @@ namespace MNBEC.Domain
         public string Level1 { get; set; }
         public string Level2 { get; set; }
         public string Level3 { get; set; }
+        public string Level4 { get; set; }
 
         #endregion
     }

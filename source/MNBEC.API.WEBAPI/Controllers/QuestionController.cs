@@ -89,8 +89,7 @@ namespace MNBEC.API.WEBAPI.Controllers
 
             return response;
         }
-
-
+        
 
         /// <summary>
         /// Update provides API to update existing object in database and returns true if action was successfull.
@@ -180,6 +179,24 @@ namespace MNBEC.API.WEBAPI.Controllers
 
             return response;
         }
+
+        /// <summary>
+        /// Add provides API to add new objects in database and returns bool.
+        /// API Path: api/Question/addBulk
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpPost("addBulk")]
+        //[Authorize(Policy = "QUES_AD")]
+        [AllowAnonymous]
+        public async Task<bool> AddBulk([FromBody] QuestionOrderRequestVM requestVM)
+        {
+
+            var result = await this.QuestionApplication.AddBulk(requestVM.questions);
+
+            return result;
+        }
+
         #endregion
 
     }
