@@ -13,6 +13,8 @@ namespace MNBEC.Domain
         public string AnswerValue { get; set; }
         public int LevelType { get; set; }
         public int StakeholderId { get; set; }
+        public int LevelId { get; set; }
+        public int QuestionaireTemplateId { get; set; }
         public string Level0 { get; set; }
         public string Level1 { get; set; }
         public string Level2 { get; set; }

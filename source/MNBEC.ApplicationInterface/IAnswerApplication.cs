@@ -6,12 +6,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MNBEC.InfrastructureInterface
+namespace MNBEC.ApplicationInterface
 {
-    public  interface IAnswerInfrastructure : IBaseInfrastructure<Answer>
+    public interface IAnswerApplication : IBaseApplication<Answer>
     {
         Task<List<LookUpVM>> LevelTypeLookUpGetList();
         Task<List<Answer>> GetListByStakeholderId(StakeholderAnswerRequest request);
-
     }
 }

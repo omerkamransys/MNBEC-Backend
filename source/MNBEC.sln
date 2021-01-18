@@ -69,6 +69,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{16BE40
 		QuestionnaireTemplate.sql = QuestionnaireTemplate.sql
 		ResponsibleLookUp.sql = ResponsibleLookUp.sql
 		ReviewerLevel.sql = ReviewerLevel.sql
+		StakeholderAnswer.sql = StakeholderAnswer.sql
 		StakeholderLevel.sql = StakeholderLevel.sql
 		StakeholderQuestionnaireStatus.sql = StakeholderQuestionnaireStatus.sql
 		TBL.txt = TBL.txt
@@ -84,6 +85,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 		LevelGetList.sql = LevelGetList.sql
 		LevelGetListByStakeholderId.sql = LevelGetListByStakeholderId.sql
 		LevelLookUpGetList.sql = LevelLookUpGetList.sql
+		LevelTypeLookUpGetList.sql = LevelTypeLookUpGetList.sql
 		LevelUpdate.sql = LevelUpdate.sql
 		QuestionActivate.sql = QuestionActivate.sql
 		QuestionAdd.sql = QuestionAdd.sql
@@ -97,6 +99,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 		ResponsibleLookUpGetList.sql = ResponsibleLookUpGetList.sql
 		ReviewerLevelDelete.sql = ReviewerLevelDelete.sql
 		SP.txt = SP.txt
+		StakeholderAnswerAdd.sql = StakeholderAnswerAdd.sql
+		StakeholderAnswerGetListByStakeholderId.sql = StakeholderAnswerGetListByStakeholderId.sql
+		StakeholderAnswerUpdate.sql = StakeholderAnswerUpdate.sql
 		StakeholderLevelDelete.sql = StakeholderLevelDelete.sql
 	EndProjectSection
 EndProject

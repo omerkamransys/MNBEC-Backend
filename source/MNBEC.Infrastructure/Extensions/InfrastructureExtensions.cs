@@ -259,5 +259,15 @@ namespace MNBEC.Infrastructure.Extensions
 
             return services;
         }
+
+        public static IServiceCollection RegisterAnswernfrastructure(this IServiceCollection services)
+        {
+            services.AddSingleton<IAnswerInfrastructure, AnswerInfrastructure>();
+
+            return services;
+        }
+
+
+        
     }
 }
