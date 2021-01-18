@@ -318,3 +318,25 @@ VALUES ('9','Level.GetList','Get List','ORG_HR_GL',1,GETUTCDATE() , NULL ,NULL, 
 INSERT INTO applicationclaim 
 ( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
 VALUES ('9','Question.Level','Update','ORG_HR_UP',1,GETUTCDATE() , NULL ,NULL, 1);
+
+
+
+SET IDENTITY_INSERT LevelTypeLookUp ON
+
+Insert Into LevelTypeLookUp (Id, Code,Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(1, 'Level0', 'Level0', 1, 1, GETUTCDATE(), 1);
+
+Insert Into LevelTypeLookUp (Id, Code,Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(2, 'Level1', 'Level1', 1, 1, GETUTCDATE(), 1);
+
+Insert Into LevelTypeLookUp (Id, Code,Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(3, 'Level2', 'Level2', 1, 1, GETUTCDATE(), 1);
+Insert Into LevelTypeLookUp (Id, Code,Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(4, 'Level4', 'Level4', 1, 1, GETUTCDATE(), 1);
+
+Insert Into LevelTypeLookUp (Id, Code,Title, OrderNumber, CreatedById,  CreatedDate,  Active) 
+				Values	(5, 'Level5', 'Level5', 1, 1, GETUTCDATE(), 1);
+
+SET IDENTITY_INSERT LevelTypeLookUp OFF
+
+

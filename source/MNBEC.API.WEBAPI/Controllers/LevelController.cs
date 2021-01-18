@@ -9,6 +9,7 @@ using MNBEC.Core.Interface;
 using MNBEC.Domain;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using MNBEC.ViewModel.Level;
 
 namespace MNBEC.API.WEBAPI.Controllers
 {
@@ -114,6 +115,16 @@ namespace MNBEC.API.WEBAPI.Controllers
             var isUpdated = await this.LevelApplication.Update(request);
 
             return isUpdated;
+        }
+
+
+        [HttpGet("getlistbystakeholderid")]
+        [Authorize(Policy = "ORG_HR_GL")]
+        public async Task<List<StakeholderLevelModel>> GetListByStakeholderId(int stakeholderId)
+        {
+            List<StakeholderLevelModel> response = await this.LevelApplication.GetListByStakeholderId(stakeholderId);
+
+            return response;
         }
         #endregion
     }

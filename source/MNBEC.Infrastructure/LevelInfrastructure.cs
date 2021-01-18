@@ -4,6 +4,7 @@ using MNBEC.Domain;
 using MNBEC.Domain.Common;
 using MNBEC.Infrastructure.Extensions;
 using MNBEC.InfrastructureInterface;
+using MNBEC.ViewModel.Level;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -39,6 +40,7 @@ namespace MNBEC.Infrastructure
         private const string GetStoredProcedureName = "LevelGet";
         private const string GetAllStoredProcedureName = "LevelGetAll";
         private const string GetListStoredProcedureName = "LevelGetList";
+        private const string GetListByStakeholderIdStoredProcedureName = "LevelGetListByStakeholderId";
         private const string UpdateStoredProcedureName = "LevelUpdate";
 
         private const string LevelIdColumnName = "LevelId";
@@ -50,6 +52,8 @@ namespace MNBEC.Infrastructure
         private const string StakeholderLevelIdColumnName = "StakeholderLevelId";
         private const string DeadlineDateColumnName = "DeadlineDate";
         private const string RenewalDateColumnName = "RenewalDate";
+        private const string QuestionaireTemplateNameColumnName = "QuestionaireTemplateName";
+        private const string IsSubmitColumnName = "IsSubmit";
 
 
         private const string LevelIdParameterName = "PLevelId";
@@ -58,6 +62,7 @@ namespace MNBEC.Infrastructure
         private const string QuestionaireTemplateIdParameterName = "PQuestionaireTemplateId";
         private const string DeadlineDateParameterName = "PDeadlineDate";
         private const string RenewalDateParameterName = "PRenewalDate";
+        private const string StakeholderIdParameterName = "PStakeholderId";
 
 
 
@@ -79,8 +84,8 @@ namespace MNBEC.Infrastructure
                    Insert Into ReviewerLevel(UserId,LevelId,CreatedById,CreatedDate,Active)
 		Values";
 
-        
-       
+
+
 
 
         #endregion
@@ -141,26 +146,11 @@ namespace MNBEC.Infrastructure
                 await base.BulkInsertSQLGeneric(BulkInsertReviewerLevelsDynamicForm, BulkReviewerLevels);
             }
 
-            
+
 
             return level.LevelId;
         }
 
-        private static string GetCreatedById(int? id)
-        {
-            string CreatedById = null;
-
-            if (id == null)
-            {
-                CreatedById = "null";
-            }
-            else
-            {
-                CreatedById = id.ToString();
-            }
-
-            return CreatedById;
-        }
 
         /// <summary>
         /// Activate activate/deactivate provided record and returns true if action was successfull.
@@ -334,8 +324,49 @@ namespace MNBEC.Infrastructure
                             CurrentlevelItem?.StakeholderLevels.Add(stakeholderLevel);
                         }
                     }
-                    
 
+
+                }
+            }
+
+            return levels;
+        }
+
+        /// <summary>
+        /// GetListByStakeholderId fetch and returns queried list of items with specific fields from database.
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public async Task<List<StakeholderLevelModel>> GetListByStakeholderId(int stakeholderId)
+        {
+
+            var levels = new List<StakeholderLevelModel>();
+            StakeholderLevelModel levelItem = null;
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(LevelInfrastructure.StakeholderIdParameterName, stakeholderId),
+            };
+
+            using (var dataReader = await base.ExecuteReader(parameters, LevelInfrastructure.GetListByStakeholderIdStoredProcedureName, CommandType.StoredProcedure))
+            {
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        levelItem = new StakeholderLevelModel
+                        {
+                            LevelId = dataReader.GetUnsignedIntegerValue(LevelInfrastructure.LevelIdColumnName),
+                            ParentId = dataReader.GetUnsignedIntegerValueNullable(LevelInfrastructure.ParentIdColumnName),
+                            QuestionaireTemplateId = dataReader.GetUnsignedIntegerValueNullable(LevelInfrastructure.QuestionaireTemplateIdColumnName),
+                            LevelName = dataReader.GetStringValue(LevelInfrastructure.LevelNameColumnName),
+                            QuestionaireTemplateName = dataReader.GetStringValue(LevelInfrastructure.QuestionaireTemplateNameColumnName),
+                            IsSumbit = dataReader.GetBooleanValue(LevelInfrastructure.IsSubmitColumnName)
+
+                        };
+                        levels.Add(levelItem);
+                    }
+
+                    
                 }
             }
 
@@ -408,8 +439,24 @@ namespace MNBEC.Infrastructure
                 }
                 await base.BulkInsertSQLGeneric(BulkInsertStakeholderLevelsDynamicForm, BulkStakeholderLevels);
             }
-            
+
             return true;
+        }
+
+        private static string GetCreatedById(int? id)
+        {
+            string CreatedById = null;
+
+            if (id == null)
+            {
+                CreatedById = "null";
+            }
+            else
+            {
+                CreatedById = id.ToString();
+            }
+
+            return CreatedById;
         }
         #endregion
     }

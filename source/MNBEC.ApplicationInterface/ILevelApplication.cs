@@ -1,4 +1,7 @@
 ﻿using MNBEC.Domain;
+using MNBEC.ViewModel.Level;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MNBEC.ApplicationInterface
 {
@@ -7,6 +10,6 @@ namespace MNBEC.ApplicationInterface
     /// </summary>
     public interface ILevelApplication : IBaseApplication<Level>
     {
-
+        Task<List<StakeholderLevelModel>> GetListByStakeholderId(int stakeholderId);
     }
 }

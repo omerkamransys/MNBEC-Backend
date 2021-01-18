@@ -1,7 +1,9 @@
 ﻿using MNBEC.Domain;
+using MNBEC.ViewModel.Level;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MNBEC.InfrastructureInterface
 {
@@ -10,5 +12,6 @@ namespace MNBEC.InfrastructureInterface
     /// </summary>
     public interface ILevelInfrastructure : IBaseInfrastructure<Level>
     {
+        Task<List<StakeholderLevelModel>> GetListByStakeholderId(int stakeholderId);
     }
 }

@@ -4,6 +4,7 @@ using MNBEC.ApplicationInterface;
 using MNBEC.Domain;
 using MNBEC.Domain.Common;
 using MNBEC.InfrastructureInterface;
+using MNBEC.ViewModel.Level;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -95,6 +96,11 @@ namespace MNBEC.Application
         public async Task<bool> Update(Level level)
         {
             return await this.LevelInfrastructure.Update(level);
+        }
+
+        public async Task<List<StakeholderLevelModel>> GetListByStakeholderId(int stakeholderId)
+        {
+            return await this.LevelInfrastructure.GetListByStakeholderId(stakeholderId);
         }
         #endregion
     }

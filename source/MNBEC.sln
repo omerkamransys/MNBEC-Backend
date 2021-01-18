@@ -64,11 +64,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{16BE40
 		FourPLookUp.sql = FourPLookUp.sql
 		level.sql = level.sql
 		LevelLookUp.sql = LevelLookUp.sql
+		LevelTypeLookUp.sql = LevelTypeLookUp.sql
 		Question.sql = Question.sql
 		QuestionnaireTemplate.sql = QuestionnaireTemplate.sql
 		ResponsibleLookUp.sql = ResponsibleLookUp.sql
 		ReviewerLevel.sql = ReviewerLevel.sql
 		StakeholderLevel.sql = StakeholderLevel.sql
+		StakeholderQuestionnaireStatus.sql = StakeholderQuestionnaireStatus.sql
 		TBL.txt = TBL.txt
 	EndProjectSection
 EndProject
@@ -80,6 +82,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 		LevelAdd.sql = LevelAdd.sql
 		LevelGet.sql = LevelGet.sql
 		LevelGetList.sql = LevelGetList.sql
+		LevelGetListByStakeholderId.sql = LevelGetListByStakeholderId.sql
 		LevelLookUpGetList.sql = LevelLookUpGetList.sql
 		LevelUpdate.sql = LevelUpdate.sql
 		QuestionActivate.sql = QuestionActivate.sql
