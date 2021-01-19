@@ -37,6 +37,7 @@ namespace MNBEC.Infrastructure
         private const string AddStoredProcedureName = "StakeholderAnswerAdd";
         private const string UpdateStoredProcedureName = "StakeholderAnswerUpdate";
         private const string GetListByStakeholderIdStoredProcedureName = "StakeholderAnswerGetListByStakeholderId";
+        private const string StakeholderQuestionnaireStatusAddStoredProcedureName = "StakeholderQuestionnaireStatusAdd";
 
         private const string IdColumnName = "Id";
         private const string TitleColumnName = "Title";
@@ -237,6 +238,32 @@ namespace MNBEC.Infrastructure
             }
 
             return answers;
+        }
+
+
+        /// <summary>
+        /// Add StakeholderQuestionnaireStatus  new object in database and returns provided ObjectId.
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
+        public async Task<int> QuestionnaireStatusToSumbit(StakeholderQuestionnaireStatus request)
+        {
+            var questionnaireStatusIdParamter = base.GetParameterOut(AnswerInfrastructure.IdParameterName, SqlDbType.Int, request.Id);
+            var parameters = new List<DbParameter>
+            {
+                questionnaireStatusIdParamter,
+                base.GetParameter(AnswerInfrastructure.QuestionaireTemplateIdParameterName, request.QuestionaireTemplateId),
+                base.GetParameter(AnswerInfrastructure.StakeholderIdParameterName, request.StakeholderId),
+                base.GetParameter(AnswerInfrastructure.LevelIdParameterName, request.LevelId),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, request.CurrentUserId)
+            };
+
+
+            await base.ExecuteNonQuery(parameters, AnswerInfrastructure.StakeholderQuestionnaireStatusAddStoredProcedureName, CommandType.StoredProcedure);
+
+            request.Id = Convert.ToInt32(questionnaireStatusIdParamter.Value);
+
+            return request.Id;
         }
 
 

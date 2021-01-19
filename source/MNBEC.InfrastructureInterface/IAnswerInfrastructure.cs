@@ -12,6 +12,7 @@ namespace MNBEC.InfrastructureInterface
     {
         Task<List<LookUpVM>> LevelTypeLookUpGetList();
         Task<List<Answer>> GetListByStakeholderId(StakeholderAnswerRequest request);
+        Task<int> QuestionnaireStatusToSumbit(StakeholderQuestionnaireStatus request);
 
     }
 }

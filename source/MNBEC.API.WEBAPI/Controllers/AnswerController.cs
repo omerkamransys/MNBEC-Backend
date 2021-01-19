@@ -139,6 +139,19 @@ namespace MNBEC.API.WEBAPI.Controllers
             return response;
         }
 
+        /// <summary>
+        /// QuestionnaireStatusToSumbit provides API to fetch and returns queried list of items.
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpPost("stakeholderQuestionnaireStatusAdd")]
+        [AllowAnonymous]
+        public async Task<int> QuestionnaireStatusToSumbit([FromBody] StakeholderQuestionnaireStatus requestVM)
+        {
+            var id = await this.AnswerApplication.QuestionnaireStatusToSumbit(requestVM);
+            return id;
+        }
+
 
         #endregion
 

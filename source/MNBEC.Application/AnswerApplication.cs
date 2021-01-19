@@ -117,6 +117,17 @@ namespace MNBEC.Application
         {
             return await this.AnswerInfrastructure.GetListByStakeholderId(request);
         }
+        /// <summary>
+        /// QuestionnaireStatusToSumbit calls AnswerInfrastructure to fetch and returns queried list of items with specific fields from database.
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns></returns>
+        public async Task<int> QuestionnaireStatusToSumbit(StakeholderQuestionnaireStatus request)
+        {
+            return await this.AnswerInfrastructure.QuestionnaireStatusToSumbit(request);
+        }
+
+
         
 
         #endregion
