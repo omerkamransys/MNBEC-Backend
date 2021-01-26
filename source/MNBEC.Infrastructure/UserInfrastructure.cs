@@ -518,7 +518,7 @@ namespace MNBEC.Infrastructure
 
             // return returnValue > 0;
 
-            return returnValue > 0 ? IdentityResult.Success : IdentityResult.Failed();
+            return IdentityResult.Success;
         }
         public Task SetEmailAsync(ApplicationUser user, string email, CancellationToken cancellationToken)
         {
