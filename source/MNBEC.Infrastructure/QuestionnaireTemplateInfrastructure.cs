@@ -51,6 +51,8 @@ namespace MNBEC.Infrastructure
         private const string Level1ColumnName = "Level1";
         private const string Level2ColumnName = "Level2";
         private const string Level3ColumnName = "Level3";
+        private const string Level4ColumnName = "Level4";
+        private const string ElementColumnName = "Element";
 
 
         private const string TitleParameterName = "PTitle";
@@ -144,6 +146,8 @@ namespace MNBEC.Infrastructure
                                 Level1 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level1ColumnName),
                                 Level2 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level2ColumnName),
                                 Level3 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level3ColumnName),
+                                Level4 = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.Level4ColumnName),
+                                QuestionElement = dataReader.GetStringValue(QuestionnaireTemplateInfrastructure.ElementColumnName),
                                 OrderNumber = dataReader.GetUnsignedIntegerValueNullable(QuestionnaireTemplateInfrastructure.OrderNumberColumnName),
                                 Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
                             };
