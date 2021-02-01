@@ -52,6 +52,8 @@ namespace MNBEC.Infrastructure
         private const string Level2ColumnName = "Level2";
         private const string Level3ColumnName = "Level3";
         private const string Level4ColumnName = "Level4";
+        private const string ElementColumnName = "Element";
+        private const string AreaLookUpTitleColumnName = "AreaLookUpTitle";
 
         private const string IdParameterName = "PId";
         private const string QuestionIdParameterName = "PQuestionId";
@@ -227,7 +229,9 @@ namespace MNBEC.Infrastructure
                             Level1 = dataReader.GetStringValue(AnswerInfrastructure.Level1ColumnName),
                             Level2 = dataReader.GetStringValue(AnswerInfrastructure.Level2ColumnName),
                             Level3 = dataReader.GetStringValue(AnswerInfrastructure.Level3ColumnName),
-                            Level4 = dataReader.GetStringValue(AnswerInfrastructure.Level4ColumnName)
+                            Level4 = dataReader.GetStringValue(AnswerInfrastructure.Level4ColumnName),
+                            Element = dataReader.GetStringValue(AnswerInfrastructure.ElementColumnName),
+                            AreaLookUpTitle = dataReader.GetStringValue(AnswerInfrastructure.AreaLookUpTitleColumnName)
 
                         };
                         answers.Add(item);
