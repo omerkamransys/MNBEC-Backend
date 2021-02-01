@@ -66,6 +66,7 @@ namespace MNBEC.Infrastructure
         private const string Level2ColumnName = "Level2";
         private const string Level3ColumnName = "Level3";
         private const string Level4ColumnName = "Level4";
+        private const string ElementColumnName = "Element";
 
 
         private const string IdParameterName = "PId";
@@ -81,6 +82,7 @@ namespace MNBEC.Infrastructure
         private const string Level3ParameterName = "PLevel3";
         private const string Level4ParameterName = "PLevel4";
         private const string TitleParameterName = "PTitle";
+        private const string ElementParameterName = "PElement";
         #endregion
 
         private const string BulkInsertQuestions =
@@ -114,6 +116,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level2ParameterName, question.Level2),
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
                 base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
+                base.GetParameter(QuestionInfrastructure.ElementParameterName, question.Element),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId)
             };
 
@@ -176,6 +179,7 @@ namespace MNBEC.Infrastructure
                             Level2 = dataReader.GetStringValue(QuestionInfrastructure.Level2ColumnName),
                             Level3 = dataReader.GetStringValue(QuestionInfrastructure.Level3ColumnName),
                             Level4 = dataReader.GetStringValue(QuestionInfrastructure.Level4ColumnName),
+                            Element = dataReader.GetStringValue(QuestionInfrastructure.ElementColumnName),
                             OrderNumber = dataReader.GetUnsignedIntegerValueNullable(QuestionInfrastructure.OrderNumberColumnName),
                             Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
                         };
@@ -230,6 +234,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level2ParameterName, question.Level2),
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
                 base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
+                base.GetParameter(QuestionInfrastructure.ElementParameterName, question.Element),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, question.Active)
             };
