@@ -21,7 +21,7 @@ namespace MNBEC.Domain
         public string Level2 { get; set; }
         public string Level3 { get; set; }
         public string Level4 { get; set; }
-        public string Element { get; set; }
+        public string QuestionElement { get; set; }
 
         #endregion
     }

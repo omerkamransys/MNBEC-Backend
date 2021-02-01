@@ -90,7 +90,7 @@ namespace MNBEC.Infrastructure
             @"
                 
                    Insert Into Question
-				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, CreatedById,  CreatedDate,  Active)
+				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, CreatedById,  CreatedDate,  Active, Element)
 		Values";
 
         #region Interface IQuestionInfrastructure Implementation
@@ -116,7 +116,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level2ParameterName, question.Level2),
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
                 base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
-                base.GetParameter(QuestionInfrastructure.ElementParameterName, question.Element),
+                base.GetParameter(QuestionInfrastructure.ElementParameterName, question.QuestionElement),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId)
             };
 
@@ -179,7 +179,7 @@ namespace MNBEC.Infrastructure
                             Level2 = dataReader.GetStringValue(QuestionInfrastructure.Level2ColumnName),
                             Level3 = dataReader.GetStringValue(QuestionInfrastructure.Level3ColumnName),
                             Level4 = dataReader.GetStringValue(QuestionInfrastructure.Level4ColumnName),
-                            Element = dataReader.GetStringValue(QuestionInfrastructure.ElementColumnName),
+                            QuestionElement = dataReader.GetStringValue(QuestionInfrastructure.ElementColumnName),
                             OrderNumber = dataReader.GetUnsignedIntegerValueNullable(QuestionInfrastructure.OrderNumberColumnName),
                             Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
                         };
@@ -234,7 +234,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level2ParameterName, question.Level2),
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
                 base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
-                base.GetParameter(QuestionInfrastructure.ElementParameterName, question.Element),
+                base.GetParameter(QuestionInfrastructure.ElementParameterName, question.QuestionElement),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, question.Active)
             };
@@ -515,7 +515,7 @@ namespace MNBEC.Infrastructure
             List<string> BulkQuestions = new List<string>();
             foreach (var item in questions)
             {
-                BulkQuestions.Add(string.Format("({0},{1},{2},{3},{4},'{5}','{6}','{7}','{8}','{9}',{10},GETUTCDATE(),'1')",
+                BulkQuestions.Add(string.Format("({0},{1},{2},{3},{4},'{5}','{6}','{7}','{8}','{9}',{10},GETUTCDATE(),'1',{11})",
                     item.QuestionaireTemplateId,
                     GetCreatedById(item.Area),
                     GetCreatedById(item.FourP),
@@ -526,7 +526,8 @@ namespace MNBEC.Infrastructure
                     item.Level2,
                     item.Level3,
                     item.Level4,
-                    GetCreatedById(item.CurrentUserId)
+                    GetCreatedById(item.CurrentUserId),
+                    item.QuestionElement
                    ));
             }
             await base.BulkInsertSQLGeneric(BulkInsertQuestions, BulkQuestions);
