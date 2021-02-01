@@ -2341,7 +2341,7 @@ Set nocount on;
 	set @PTotalRecord =  (Select COUNT(RoleId) from applicationrole) ;
 
 End;
-
+GO
 
 DROP procedure if exists [ApplicationClaimGetAll];
 
@@ -2378,7 +2378,7 @@ Set nocount on;
 
 End;
 
-
+GO
 
 DROP procedure if exists [ApplicationClaimGroupGetAllByRole];
 
@@ -2515,7 +2515,7 @@ Set nocount on;
 
 End;
 
-
+GO
 
 Drop Procedure If Exists [ApplicationUserNotificationGetAllByUserId];
 
@@ -2560,7 +2560,7 @@ End;
 
 
 
-
+GO
 
 DROP procedure if exists [ApplicationUserRoleGetAll];
 
@@ -2597,7 +2597,7 @@ Set nocount on;
 End;
 
 
-
+GO
 
 
 DROP procedure if exists [UserTypeGetAll];
@@ -2635,7 +2635,7 @@ Set nocount on;
 End;
 
 
-
+GO
 
 DROP procedure if exists [EmployeeGetAll];
 
@@ -2672,7 +2672,7 @@ End;
 
 
 
-
+GO
 Drop Procedure If Exists [ApplicationUserNotificationGetAll];
 
 go
@@ -2804,7 +2804,7 @@ GO
 
 
 
-DROP procedure if exists [];
+DROP procedure if exists [GetUserWithRolesByEmail];
 GO
 
 -- =============================================
