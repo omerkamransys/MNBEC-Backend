@@ -7,6 +7,7 @@ using MNBEC.Domain;
 using MNBEC.Domain.Common;
 using MNBEC.InfrastructureInterface;
 using MNBEC.ViewModel;
+using MNBEC.ViewModel.LookUp;
 
 namespace MNBEC.Application
 {
@@ -117,6 +118,47 @@ namespace MNBEC.Application
         {
             return await this.QuestionInfrastructure.AreaLookUpGetList();
         }
+
+        /// <summary>
+        /// AreaLookUpAdd calls QuestionInfrastructure to fetch and returns queried list of items with specific fields from database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<int> AreaLookUpAdd(LookUpRequestVM request)
+        {
+            return await this.QuestionInfrastructure.AreaLookUpAdd(request);
+        }
+
+        /// <summary>
+        /// AreaLookUpUpdate calls QuestionInfrastructure to fetch and returns queried list of items with specific fields from database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<bool> AreaLookUpUpdate(LookUpRequestVM request)
+        {
+            return await this.QuestionInfrastructure.AreaLookUpUpdate(request);
+        }
+
+        /// <summary>
+        /// AreaLookUpActivate calls QuestionInfrastructure to fetch and returns queried list of items with specific fields from database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<bool> AreaLookUpActivate(LookUpRequestVM request)
+        {
+            return await this.QuestionInfrastructure.AreaLookUpActivate(request);
+        }
+
+        /// <summary>
+        /// Get AreaLookUp fetch and returns queried item from database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<LookUpRequestVM> AreaLookUpGet(LookUpVM request)
+        {
+            return await this.QuestionInfrastructure.AreaLookUpGet(request);
+        }
+
 
         /// <summary>
         /// FourPLookUpGetList calls QuestionInfrastructure to fetch and returns queried list of items with specific fields from database.

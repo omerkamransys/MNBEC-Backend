@@ -11,6 +11,7 @@ using MNBEC.Domain.Common;
 using MNBEC.Infrastructure.Extensions;
 using MNBEC.InfrastructureInterface;
 using MNBEC.ViewModel;
+using MNBEC.ViewModel.LookUp;
 
 namespace MNBEC.Infrastructure
 {
@@ -46,6 +47,11 @@ namespace MNBEC.Infrastructure
         private const string ResponsibleLookUpGetListProcedureName = "ResponsibleLookUpGetList";
         private const string LevelLookUpGetListProcedureName = "LevelLookUpGetList";
 
+        private const string AddAreaLookUpStoredProcedureName = "AreaLookUpAdd";
+        private const string UpdateAreaLookUpStoredProcedureName = "AreaLookUpUpdateUpdate";
+        private const string ActivateAreaLookUpStoredProcedureName = "AreaLookUpActivate";
+        private const string GetAreaLookUpStoredProcedureName = "AreaLookUpGet";
+
 
         private const string IdColumnName = "Id";
         private const string TitleColumnName = "Title";
@@ -74,6 +80,7 @@ namespace MNBEC.Infrastructure
         private const string Level2ParameterName = "PLevel2";
         private const string Level3ParameterName = "PLevel3";
         private const string Level4ParameterName = "PLevel4";
+        private const string TitleParameterName = "PTitle";
         #endregion
 
         private const string BulkInsertQuestions =
@@ -224,7 +231,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
                 base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId),
-                base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, question.CurrentUserId)
+                base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, question.Active)
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, QuestionInfrastructure.UpdateStoredProcedureName, CommandType.StoredProcedure);
@@ -287,6 +294,104 @@ namespace MNBEC.Infrastructure
             }
 
             return list;
+        }
+
+        /// <summary>
+        /// Add Area adds new object in database and returns provided ObjectId.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<int> AreaLookUpAdd(LookUpRequestVM request)
+        {
+            var areaLookIdParamter = base.GetParameterOut(QuestionInfrastructure.IdParameterName, SqlDbType.Int, request.Id);
+            var parameters = new List<DbParameter>
+            {
+                areaLookIdParamter,
+                base.GetParameter(QuestionInfrastructure.TitleParameterName, request.Title),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, request.CurrentUserId)
+            };
+
+
+            await base.ExecuteNonQuery(parameters, QuestionInfrastructure.AddAreaLookUpStoredProcedureName, CommandType.StoredProcedure);
+
+            request.Id = Convert.ToInt32(areaLookIdParamter.Value);
+
+            return request.Id;
+        }
+
+        /// <summary>
+        /// Update AreaLookUp updates existing object in database and returns true if action was successfull.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<bool> AreaLookUpUpdate(LookUpRequestVM request)
+        {
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(QuestionInfrastructure.IdParameterName, request.Id),
+                base.GetParameter(QuestionInfrastructure.TitleParameterName, request.Title),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, request.CurrentUserId),
+                base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, request.Active)
+            };
+
+            var returnValue = await base.ExecuteNonQuery(parameters, QuestionInfrastructure.UpdateAreaLookUpStoredProcedureName, CommandType.StoredProcedure);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Activate AreaLookUp activate/deactivate provided record and returns true if action was successfull.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<bool> AreaLookUpActivate(LookUpRequestVM request)
+        {
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(QuestionInfrastructure.IdParameterName, request.Id),
+                base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, request.Active),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, request.CurrentUserId)
+            };
+
+            var returnValue = await base.ExecuteNonQuery(parameters, QuestionInfrastructure.ActivateAreaLookUpStoredProcedureName, CommandType.StoredProcedure);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Get AreaLookUp fetch and returns queried item from database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<LookUpRequestVM> AreaLookUpGet(LookUpVM request)
+        {
+            LookUpRequestVM areaLookUpItem = null;
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(QuestionInfrastructure.IdParameterName, request.Id)
+            };
+
+            using (var dataReader = await base.ExecuteReader(parameters, QuestionInfrastructure.GetAreaLookUpStoredProcedureName, CommandType.StoredProcedure))
+            {
+                if (dataReader != null && dataReader.HasRows)
+                {
+                    if (dataReader.Read())
+                    {
+                        areaLookUpItem = new LookUpRequestVM
+                        {
+                            Id = dataReader.GetUnsignedIntegerValue(QuestionInfrastructure.IdColumnName),
+                            Title = dataReader.GetStringValue(QuestionInfrastructure.TitleColumnName),
+                            Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
+                        };
+                    }
+                    if (!dataReader.IsClosed)
+                    {
+                        dataReader.Close();
+                    }
+                }
+            }
+
+            return areaLookUpItem;
         }
 
         /// <summary>

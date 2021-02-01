@@ -8,6 +8,7 @@ using MNBEC.ApplicationInterface;
 using MNBEC.Core.Interface;
 using MNBEC.Domain;
 using MNBEC.ViewModel;
+using MNBEC.ViewModel.LookUp;
 using MNBEC.ViewModel.Question;
 using MNBEC.ViewModel.QuestionnaireTemplate;
 using System.Collections.Generic;
@@ -126,11 +127,76 @@ namespace MNBEC.API.WEBAPI.Controllers
         /// </summary>
         /// <param name="requestVM"></param>
         /// <returns></returns>
+        
         [HttpGet("areaLookUpGetList")]
         [AllowAnonymous]
         public async Task<List<LookUpVM>> AreaLookUpGetList()
         {
             List<LookUpVM> response = await this.QuestionApplication.AreaLookUpGetList();
+
+            return response;
+        }
+
+        /// <summary>
+        /// AreaLookUpAdd provides API to fetch and returns queried list of items.
+        /// API Path:  api/QuestionnaireTemplate/areaLookUpAdd
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpPost("areaLookUpAdd")]
+        [AllowAnonymous]
+        public async Task<int> AreaLookUpAdd([FromBody] LookUpRequestVM requestVM)
+        {
+
+            var Id = await this.QuestionApplication.AreaLookUpAdd(requestVM);
+
+            return Id;
+        }
+
+        /// <summary>
+        /// AreaLookUpUpdate provides API to fetch and returns queried list of items.
+        /// API Path:  api/QuestionnaireTemplate/areaLookUpUpdate
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpPost("areaLookUpUpdate")]
+        [AllowAnonymous]
+        public async Task<bool> AreaLookUpUpdate([FromBody] LookUpRequestVM requestVM)
+        {
+
+            var isUpdated = await this.QuestionApplication.AreaLookUpUpdate(requestVM);
+
+            return isUpdated;
+        }
+
+        /// <summary>
+        /// AreaLookUpActivate provides API to fetch and returns queried list of items.
+        /// API Path:  api/QuestionnaireTemplate/areaLookUpActivate
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpPost("areaLookUpActivate")]
+        [AllowAnonymous]
+        public async Task<bool> AreaLookUpActivate([FromBody] LookUpRequestVM requestVM)
+        {
+
+            var isUpdated = await this.QuestionApplication.AreaLookUpActivate(requestVM);
+
+            return isUpdated;
+        }
+
+        /// <summary>
+        /// Get AreaLookUpGet provides API to fetch and returns queried item.
+        /// API Path:  api/Question/areaLookUpGet
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpGet("areaLookUpGet")]
+        [AllowAnonymous]
+        public async Task<LookUpRequestVM> AreaLookUpGet([FromQuery] LookUpVM requestVM)
+        {
+
+            LookUpRequestVM response = await this.QuestionApplication.AreaLookUpGet(requestVM);
 
             return response;
         }

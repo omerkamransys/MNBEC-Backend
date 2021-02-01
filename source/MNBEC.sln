@@ -77,7 +77,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tables", "Tables", "{16BE40
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredProcedures", "{6D4DFF7D-B0DD-4649-81BF-F241A3F70843}"
 	ProjectSection(SolutionItems) = preProject
+		AreaLookUpActivate.sql = AreaLookUpActivate.sql
+		AreaLookUpAdd.sql = AreaLookUpAdd.sql
+		AreaLookUpGet.sql = AreaLookUpGet.sql
 		AreaLookUpGetList.sql = AreaLookUpGetList.sql
+		AreaLookUpUpdateUpdate.sql = AreaLookUpUpdateUpdate.sql
 		FourPLookUpGetList.sql = FourPLookUpGetList.sql
 		LevelActivate.sql = LevelActivate.sql
 		LevelAdd.sql = LevelAdd.sql

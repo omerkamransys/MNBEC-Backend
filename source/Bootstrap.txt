@@ -65,15 +65,6 @@ INSERT INTO applicationclaim
 VALUES (2,'Account.Search','Search','ACC_SR',1,GETUTCDATE() , NULL ,NULL, 1);
 INSERT INTO applicationclaim 
 ( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
-VALUES (2,'Account.AddDealer','Add Dealer','ACC_AD',1,GETUTCDATE() , NULL ,NULL, 1);
-INSERT INTO applicationclaim 
-( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
-VALUES (2,'Account.UpdateDealer','Update Dealer','ACC_UD',1,GETUTCDATE() , NULL ,NULL, 1);
-INSERT INTO applicationclaim 
-( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
-VALUES (2,'Account.AddDealerShip','Add Dealership','ACC_ADS',1,GETUTCDATE() , NULL ,NULL, 1);
-INSERT INTO applicationclaim 
-( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
 VALUES (2,'Account.ChangePassword','ChangePassword','ACC_CP',1,GETUTCDATE() , NULL ,NULL, 1);
 INSERT INTO applicationclaim 
 ( ClaimGroupId, ClaimType, ClaimLabel,  ClaimCode, CreatedById, CreatedDate, ModifiedById, ModifiedDate, Active)
