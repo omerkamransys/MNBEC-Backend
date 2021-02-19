@@ -93,6 +93,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 		LevelUpdate.sql = LevelUpdate.sql
 		QuestionActivate.sql = QuestionActivate.sql
 		QuestionAdd.sql = QuestionAdd.sql
+		QuestionDesiredLevelChange.sql = QuestionDesiredLevelChange.sql
 		QuestionGet.sql = QuestionGet.sql
 		QuestionnaireTemplateActivate.sql = QuestionnaireTemplateActivate.sql
 		QuestionnaireTemplateAdd.sql = QuestionnaireTemplateAdd.sql

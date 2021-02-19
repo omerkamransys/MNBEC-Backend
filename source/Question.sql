@@ -16,6 +16,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'Que
   [Level3] nvarchar(max) NOT NULL,
   [Level4] nvarchar(max) NOT NULL,
   [Element] nvarchar(max) NOT NULL,
+  [DesiredLevel] int check ([DesiredLevel] > 0) DEFAULT NULL,
   [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
@@ -26,7 +27,8 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'Que
   CONSTRAINT [FK_Question_AreaLookUp_Area] FOREIGN KEY ([Area]) REFERENCES AreaLookUp ([Id]),
   CONSTRAINT [FK_Question_FourPLookUp_FourP] FOREIGN KEY ([FourP]) REFERENCES FourPLookUp ([Id]),
   CONSTRAINT [FK_Question_Applicationrole_Responsible] FOREIGN KEY ([Responsible]) REFERENCES  [Applicationrole] ([RoleId]),
-  CONSTRAINT [FK_Question_LevelLookUp_Level] FOREIGN KEY ([Level]) REFERENCES LevelLookUp ([Id])
+  CONSTRAINT [FK_Question_Applicationrole_Responsible] FOREIGN KEY ([Responsible]) REFERENCES  [Applicationrole] ([RoleId]),
+  CONSTRAINT [FK_Question_LevelTypeLookUp_DesiredLevel]  FOREIGN KEY([DesiredLevel]) REFERENCES LevelTypeLookUp ([Id])
  );
 
 END;
@@ -40,4 +42,12 @@ ADD Element nvarchar(max) NOT NULL Default '';
 
 ALTER TABLE [Question]  WITH CHECK ADD  CONSTRAINT [FK_Question_Applicationrole_Responsible] FOREIGN KEY([Responsible])
 REFERENCES [Applicationrole] ([RoleId])
+GO
+
+
+ALTER TABLE Question
+ADD DesiredLevel int DEFAULT NULL;
+GO
+ALTER TABLE [Question]  WITH CHECK ADD  CONSTRAINT [FK_Question_LevelTypeLookUp_DesiredLevel] FOREIGN KEY([DesiredLevel])
+REFERENCES LevelTypeLookUp ([Id])
 GO
