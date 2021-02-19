@@ -22,5 +22,6 @@ namespace MNBEC.ApplicationInterface
         Task<bool> AreaLookUpUpdate(LookUpRequestVM request);
         Task<bool> AreaLookUpActivate(LookUpRequestVM request);
         Task<LookUpRequestVM> AreaLookUpGet(LookUpVM request);
+        Task<bool> DesiredLevelChange(Question question);
     }
 }

@@ -139,6 +139,13 @@ namespace MNBEC.Application
             return await this.QuestionInfrastructure.AreaLookUpUpdate(request);
         }
 
+        public async Task<bool> DesiredLevelChange(Question question)
+        {
+            return await this.QuestionInfrastructure.DesiredLevelChange(question);
+        }
+
+        
+
         /// <summary>
         /// AreaLookUpActivate calls QuestionInfrastructure to fetch and returns queried list of items with specific fields from database.
         /// </summary>

@@ -46,6 +46,7 @@ namespace MNBEC.Infrastructure
         private const string FourPLookUpGetListProcedureName = "FourPLookUpGetList";
         private const string ResponsibleLookUpGetListProcedureName = "ResponsibleLookUpGetList";
         private const string LevelLookUpGetListProcedureName = "LevelLookUpGetList";
+        private const string QuestionDesiredLevelChangeProcedureName = "QuestionDesiredLevelChange";
 
         private const string AddAreaLookUpStoredProcedureName = "AreaLookUpAdd";
         private const string UpdateAreaLookUpStoredProcedureName = "AreaLookUpUpdateUpdate";
@@ -67,6 +68,7 @@ namespace MNBEC.Infrastructure
         private const string Level3ColumnName = "Level3";
         private const string Level4ColumnName = "Level4";
         private const string ElementColumnName = "Element";
+        private const string DesiredLevelColumnName = "DesiredLevel";
 
 
         private const string IdParameterName = "PId";
@@ -83,6 +85,7 @@ namespace MNBEC.Infrastructure
         private const string Level4ParameterName = "PLevel4";
         private const string TitleParameterName = "PTitle";
         private const string ElementParameterName = "PElement";
+        private const string DesiredLevelParameterName = "PDesiredLevel";
         #endregion
 
         private const string BulkInsertQuestions =
@@ -90,7 +93,7 @@ namespace MNBEC.Infrastructure
             @"
                 
                    Insert Into Question
-				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, CreatedById,  CreatedDate,  Active, Element)
+				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, CreatedById,  CreatedDate,  Active, Element, DesiredLevel)
 		Values";
 
         #region Interface IQuestionInfrastructure Implementation
@@ -117,6 +120,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level3ParameterName, question.Level3),
                 base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
                 base.GetParameter(QuestionInfrastructure.ElementParameterName, question.QuestionElement),
+                base.GetParameter(QuestionInfrastructure.DesiredLevelParameterName, question.DesiredLevel),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId)
             };
 
@@ -143,6 +147,20 @@ namespace MNBEC.Infrastructure
             };
 
             var returnValue = await base.ExecuteNonQuery(parameters, QuestionInfrastructure.ActivateStoredProcedureName, CommandType.StoredProcedure);
+
+            return true;
+        }
+
+        public async Task<bool> DesiredLevelChange(Question question)
+        {
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(QuestionInfrastructure.IdParameterName, question.Id),
+                base.GetParameter(QuestionInfrastructure.DesiredLevelParameterName, question.DesiredLevel),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId)
+            };
+
+            var returnValue = await base.ExecuteNonQuery(parameters, QuestionInfrastructure.QuestionDesiredLevelChangeProcedureName, CommandType.StoredProcedure);
 
             return true;
         }
@@ -181,7 +199,8 @@ namespace MNBEC.Infrastructure
                             Level4 = dataReader.GetStringValue(QuestionInfrastructure.Level4ColumnName),
                             QuestionElement = dataReader.GetStringValue(QuestionInfrastructure.ElementColumnName),
                             OrderNumber = dataReader.GetUnsignedIntegerValueNullable(QuestionInfrastructure.OrderNumberColumnName),
-                            Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName)
+                            Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName),
+                            DesiredLevel = dataReader.GetUnsignedIntegerValueNullable(QuestionInfrastructure.DesiredLevelColumnName),
                         };
                     }
                     if (!dataReader.IsClosed)
@@ -236,6 +255,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(QuestionInfrastructure.Level4ParameterName, question.Level4),
                 base.GetParameter(QuestionInfrastructure.ElementParameterName, question.QuestionElement),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, question.CurrentUserId),
+                 base.GetParameter(QuestionInfrastructure.DesiredLevelParameterName, question.DesiredLevel),
                 base.GetParameter(BaseSQLInfrastructure.ActiveParameterName, question.Active)
             };
 
@@ -515,7 +535,7 @@ namespace MNBEC.Infrastructure
             List<string> BulkQuestions = new List<string>();
             foreach (var item in questions)
             {
-                BulkQuestions.Add(string.Format("({0},{1},{2},{3},{4},'{5}','{6}','{7}','{8}','{9}',{10},GETUTCDATE(),'1',{11})",
+                BulkQuestions.Add(string.Format("({0},{1},{2},{3},{4},'{5}','{6}','{7}','{8}','{9}',{10},GETUTCDATE(),'1',{11},{12})",
                     item.QuestionaireTemplateId,
                     GetCreatedById(item.Area),
                     GetCreatedById(item.FourP),
@@ -527,7 +547,8 @@ namespace MNBEC.Infrastructure
                     item.Level3,
                     item.Level4,
                     GetCreatedById(item.CurrentUserId),
-                    item.QuestionElement
+                    item.QuestionElement,
+                    item.DesiredLevel
                    ));
             }
             await base.BulkInsertSQLGeneric(BulkInsertQuestions, BulkQuestions);

@@ -169,6 +169,25 @@ namespace MNBEC.API.WEBAPI.Controllers
             return isUpdated;
         }
 
+
+
+        /// <summary>
+        /// DesiredLevelChange provides API to fetch and returns queried list of items.
+        /// API Path:  api/DesiredLevelChange
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpPost("desiredLevelChange")]
+        [AllowAnonymous]
+        public async Task<bool> DesiredLevelChange([FromBody] Question requestVM)
+        {
+
+            var isUpdated = await this.QuestionApplication.DesiredLevelChange(requestVM);
+
+            return isUpdated;
+        }
+
+
         /// <summary>
         /// AreaLookUpActivate provides API to fetch and returns queried list of items.
         /// API Path:  api/QuestionnaireTemplate/areaLookUpActivate

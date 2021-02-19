@@ -2995,7 +2995,7 @@ Set nocount on;
 	Where tbl.Id = @PId;
 
 	Select 
-		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3,Level4,Element, OrderNumber, Active
+		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3,Level4,Element, OrderNumber, Active, DesiredLevel
 	From Question with(nolock)
 	Where QuestionaireTemplateId = @PId and Active = 1;
 
@@ -3112,14 +3112,15 @@ CREATE PROCEDURE QuestionAdd(
  @PLevel2	nvarchar(max),
  @PLevel3	nvarchar(max),
  @PLevel4	nvarchar(max),
- @PElement	nvarchar(max)
+ @PElement	nvarchar(max),
+ @PDesiredLevel int
 )
 As
 Begin
 Set nocount on;
 	Insert Into Question
-				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, Element, CreatedById,  CreatedDate,  Active, OrderNumber)
-		Values	(@PQuestionaireTemplateId, @PArea, @PFourP, @PResponsible, @PLevel, @PLevel0, @PLevel1, @PLevel2, @PLevel3, @PLevel4, @PElement, @PCurrentUserId, GETUTCDATE(), 1, SCOPE_IDENTITY());
+				(QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, Element, CreatedById,  CreatedDate,  Active, OrderNumber, DesiredLevel)
+		Values	(@PQuestionaireTemplateId, @PArea, @PFourP, @PResponsible, @PLevel, @PLevel0, @PLevel1, @PLevel2, @PLevel3, @PLevel4, @PElement, @PCurrentUserId, GETUTCDATE(), 1, SCOPE_IDENTITY(), @PDesiredLevel);
 
 	Set @PId = SCOPE_IDENTITY();
 End;
@@ -3174,13 +3175,14 @@ As
 Begin
 Set nocount on;
 	Select 
-		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, Element, OrderNumber, Active
+		Id, QuestionaireTemplateId, Area, FourP, Responsible, Level, Level0, Level1, Level2, Level3, Level4, Element, OrderNumber, Active, DesiredLevel
 	From Question with(nolock)
 	Where Id = @PId;
 
 End;
 
 GO
+
 
 
 DROP procedure if exists [QuestionUpdate];
@@ -3206,7 +3208,8 @@ CREATE PROCEDURE QuestionUpdate(
  @PLevel3	nvarchar(max),
  @PLevel4	nvarchar(max),
  @PElement	nvarchar(max),
- @PActive bit
+ @PActive bit,
+ @PDesiredLevel int
 )
 As
 Begin
@@ -3226,11 +3229,13 @@ Set nocount on;
 			Element = @PElement,
 			ModifiedById = @PCurrentUserId,
 			ModifiedDate = GETUTCDATE(),
-			Active = @PActive
+			Active = @PActive,
+			DesiredLevel = @PDesiredLevel
 			where id = @PId;
 End;
 
 GO
+
 
 DROP procedure if exists [AreaLookUpGetList];
 GO
@@ -3868,6 +3873,36 @@ Set nocount on;
 		Id, Title, Active
 	From AreaLookUp with(nolock)
 	Where Id = @PId;
+
+End;
+
+GO
+
+
+
+DROP procedure if exists [QuestionDesiredLevelChange];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE QuestionDesiredLevelChange(	
+ @PCurrentUserId int,
+ @PId	int,
+ @PDesiredLevel bit
+	)
+As
+Begin
+Set nocount on;
+	Update Question
+		Set 
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate=GETUTCDATE(),
+			DesiredLevel = @PDesiredLevel
+			where id = @PId;
 
 End;
 
