@@ -10,7 +10,7 @@ GO
 CREATE PROCEDURE QuestionDesiredLevelChange(	
  @PCurrentUserId int,
  @PId	int,
- @PDesiredLevel bit
+ @PDesiredLevel int
 	)
 As
 Begin
