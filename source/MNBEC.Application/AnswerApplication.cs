@@ -6,6 +6,7 @@ using MNBEC.Domain.Common;
 using MNBEC.InfrastructureInterface;
 using MNBEC.ViewModel;
 using MNBEC.ViewModel.Answer;
+using MNBEC.ViewModel.ReportResponseVM;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -116,6 +117,15 @@ namespace MNBEC.Application
         public async Task<List<Answer>> GetListByStakeholderId(StakeholderAnswerRequest request)
         {
             return await this.AnswerInfrastructure.GetListByStakeholderId(request);
+        }
+        /// <summary>
+        /// GetReportList calls AnswerInfrastructure to fetch and returns queried list of items with specific fields from database.
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns></returns>
+        public async Task<ReportResponseVM> GetReportList(StakeholderAnswerRequest request)
+        {
+            return await this.AnswerInfrastructure.GetReportList(request);
         }
         /// <summary>
         /// QuestionnaireStatusToSumbit calls AnswerInfrastructure to fetch and returns queried list of items with specific fields from database.

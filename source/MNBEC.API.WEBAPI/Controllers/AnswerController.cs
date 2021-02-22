@@ -14,6 +14,7 @@ using MNBEC.Core.Interface;
 using MNBEC.Domain;
 using MNBEC.ViewModel;
 using MNBEC.ViewModel.Answer;
+using MNBEC.ViewModel.ReportResponseVM;
 
 namespace MNBEC.API.WEBAPI.Controllers
 {
@@ -42,7 +43,7 @@ namespace MNBEC.API.WEBAPI.Controllers
         public IAnswerApplication AnswerApplication { get; }
         #endregion
 
-        #region API Methods
+  #region API Methods
 
         /// <summary>
         /// Add provides API to add new object in database and returns provided ObjectId.
@@ -152,7 +153,18 @@ namespace MNBEC.API.WEBAPI.Controllers
             return id;
         }
 
-
+        /// <summary>
+        /// GetReportList provides API to fetch and returns queried list of items.
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpGet("GetReportList")]
+        [AllowAnonymous]
+        public async Task<ReportResponseVM> GetReportList([FromQuery] StakeholderAnswerRequest requestVM)
+        {
+            ReportResponseVM response = await this.AnswerApplication.GetReportList(requestVM);
+            return response;
+        }
         #endregion
 
     }

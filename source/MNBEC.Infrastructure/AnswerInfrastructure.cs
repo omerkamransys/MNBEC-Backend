@@ -7,11 +7,11 @@ using MNBEC.Infrastructure.Extensions;
 using MNBEC.InfrastructureInterface;
 using MNBEC.ViewModel;
 using MNBEC.ViewModel.Answer;
+using MNBEC.ViewModel.ReportResponseVM;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MNBEC.Infrastructure
@@ -37,6 +37,7 @@ namespace MNBEC.Infrastructure
         private const string AddStoredProcedureName = "StakeholderAnswerAdd";
         private const string UpdateStoredProcedureName = "StakeholderAnswerUpdate";
         private const string GetListByStakeholderIdStoredProcedureName = "StakeholderAnswerGetListByStakeholderId";
+        private const string GetReportListStoredProcedureName = "SP_GetReportList";
         private const string StakeholderQuestionnaireStatusAddStoredProcedureName = "StakeholderQuestionnaireStatusAdd";
 
         private const string IdColumnName = "Id";
@@ -193,6 +194,44 @@ namespace MNBEC.Infrastructure
         }
 
 
+        /// <summary>
+        /// GetReportList fetch and returns queried list of items with specific fields from database.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public async Task<ReportResponseVM> GetReportList(StakeholderAnswerRequest request)
+        {
+
+            var answers = new ReportResponseVM();
+            answers.Report = new List<FourP>();
+            FourP item  = null;
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(AnswerInfrastructure.LevelIdParameterName, request.LevelId),
+                base.GetParameter(AnswerInfrastructure.QuestionaireTemplateIdParameterName, request.QuestionaireTemplateId)
+            };
+
+            using (var dataReader = await base.ExecuteReader(parameters, AnswerInfrastructure.GetReportListStoredProcedureName, CommandType.StoredProcedure))
+            {
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        item = new FourP
+                        {
+                            FounrPId = dataReader.GetUnsignedIntegerValue("FourP"),
+                            Count = dataReader.GetUnsignedIntegerValue("count"),
+                            Sum = dataReader.GetUnsignedIntegerValue("sum")
+                        };
+                        answers.Report.Add(item);
+                    }
+
+
+                }
+            }
+
+            return answers;
+        }
         /// <summary>
         /// GetListByStakeholderId fetch and returns queried list of items with specific fields from database.
         /// </summary>
