@@ -15,7 +15,8 @@ CREATE PROCEDURE LevelUpdate(
  @PParentId	int,
  @PQuestionaireTemplateId int,
  @PDeadlineDate datetime2(0),
- @PRenewalDate datetime2(0)
+ @PRenewalDate datetime2(0),
+ @PWF decimal(18,4)
 )
 As
 Begin
@@ -28,6 +29,7 @@ Set nocount on;
 			QuestionaireTemplateId = @PQuestionaireTemplateId,
 			DeadlineDate = @PDeadlineDate,
 			RenewalDate = @PRenewalDate,
+			WF = @PWF,
 			ModifiedById = @PCurrentUserId,
 			ModifiedDate = GETUTCDATE()
 	Where  LevelId = @PLevelId;

@@ -3337,6 +3337,8 @@ End;
 GO
 
 
+
+
 DROP procedure if exists [levelAdd];
 GO
 
@@ -3354,14 +3356,15 @@ CREATE PROCEDURE levelAdd(
  @PParentId	int,
  @PQuestionaireTemplateId int,
  @PDeadlineDate datetime2(0),
- @PRenewalDate datetime2(0)
+ @PRenewalDate datetime2(0),
+ @PWF decimal(18,4)
 )
 As
 Begin
 Set nocount on;
 	Insert Into level
-				(LevelName, ParentId, QuestionaireTemplateId, DeadlineDate, RenewalDate, CreatedById,  CreatedDate,  Active)
-		Values	(@PLevelName, @PParentId, @PQuestionaireTemplateId, @PDeadlineDate, @PRenewalDate, @PCurrentUserId, GETUTCDATE(), 1);
+				(LevelName, ParentId, QuestionaireTemplateId, DeadlineDate, RenewalDate, CreatedById,  CreatedDate,  Active, WF)
+		Values	(@PLevelName, @PParentId, @PQuestionaireTemplateId, @PDeadlineDate, @PRenewalDate, @PCurrentUserId, GETUTCDATE(), 1, @PWF);
 
 	Set @PLevelId = SCOPE_IDENTITY();
 End;
@@ -3418,7 +3421,7 @@ Begin
 Set nocount on;
 	Select 
 		tbl.LevelId, tbl.LevelName, tbl.ParentId, tbl.QuestionaireTemplateId,
-		tbl.DeadlineDate, tbl.RenewalDate,  tbl.Active
+		tbl.DeadlineDate, tbl.RenewalDate,  tbl.Active, tbl.WF
 	From level tbl 
 	Where tbl.LevelId = @PLevelId;
 
@@ -3452,7 +3455,7 @@ Set nocount on;
 
 	Select 
 		tbl.LevelId, tbl.LevelName, tbl.ParentId, tbl.QuestionaireTemplateId,
-		tbl.DeadlineDate, tbl.RenewalDate, tbl.Active
+		tbl.DeadlineDate, tbl.RenewalDate, tbl.Active,tbl.WF
 	From level tbl 
 	Where tbl.Active = 1;
 
@@ -3486,7 +3489,8 @@ CREATE PROCEDURE LevelUpdate(
  @PParentId	int,
  @PQuestionaireTemplateId int,
  @PDeadlineDate datetime2(0),
- @PRenewalDate datetime2(0)
+ @PRenewalDate datetime2(0),
+ @PWF decimal(18,4)
 )
 As
 Begin
@@ -3499,6 +3503,7 @@ Set nocount on;
 			QuestionaireTemplateId = @PQuestionaireTemplateId,
 			DeadlineDate = @PDeadlineDate,
 			RenewalDate = @PRenewalDate,
+			WF = @PWF,
 			ModifiedById = @PCurrentUserId,
 			ModifiedDate = GETUTCDATE()
 	Where  LevelId = @PLevelId;
@@ -3880,6 +3885,7 @@ GO
 
 
 
+
 DROP procedure if exists [QuestionDesiredLevelChange];
 
 GO
@@ -3900,11 +3906,14 @@ Set nocount on;
 	Update Question
 		Set 
 			ModifiedById = @PCurrentUserId,
-			ModifiedDate=GETUTCDATE(),
-			DesiredLevel = @PDesiredLevel
+			ModifiedDate = GETUTCDATE(),
+			DesiredLevel =  @PDesiredLevel
 			where id = @PId;
 
 End;
 
 GO
+
+
+
 

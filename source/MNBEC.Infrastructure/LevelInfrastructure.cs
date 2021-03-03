@@ -54,6 +54,7 @@ namespace MNBEC.Infrastructure
         private const string RenewalDateColumnName = "RenewalDate";
         private const string QuestionaireTemplateNameColumnName = "QuestionaireTemplateName";
         private const string IsSubmitColumnName = "IsSubmit";
+        private const string WFColumnName = "WF";
 
 
         private const string LevelIdParameterName = "PLevelId";
@@ -62,6 +63,7 @@ namespace MNBEC.Infrastructure
         private const string QuestionaireTemplateIdParameterName = "PQuestionaireTemplateId";
         private const string DeadlineDateParameterName = "PDeadlineDate";
         private const string RenewalDateParameterName = "PRenewalDate";
+        private const string WFParameterName = "PWF";
         private const string StakeholderIdParameterName = "PStakeholderId";
 
 
@@ -107,6 +109,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(LevelInfrastructure.QuestionaireTemplateIdParameterName, level.QuestionaireTemplateId),
                 base.GetParameter(LevelInfrastructure.DeadlineDateParameterName, level.DeadlineDate),
                 base.GetParameter(LevelInfrastructure.RenewalDateParameterName, level.RenewalDate),
+                base.GetParameter(LevelInfrastructure.WFParameterName, level.WF),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, level.CurrentUserId)
             };
             //TODO: Add other parameters.
@@ -200,6 +203,7 @@ namespace MNBEC.Infrastructure
                             RenewalDate = dataReader.GetDateTimeValueNullable(LevelInfrastructure.RenewalDateColumnName),
                             DeadlineDate = dataReader.GetDateTimeValueNullable(LevelInfrastructure.DeadlineDateColumnName),
                             LevelName = dataReader.GetStringValue(LevelInfrastructure.LevelNameColumnName),
+                            WF = dataReader.GetDecimalValueNullable(LevelInfrastructure.WFColumnName),
                             Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName),
                             ReviewerLevels = new List<ReviewerLevel>(),
                             StakeholderLevels = new List<StakeholderLevel>()
@@ -283,6 +287,7 @@ namespace MNBEC.Infrastructure
                             RenewalDate = dataReader.GetDateTimeValueNullable(LevelInfrastructure.RenewalDateColumnName),
                             DeadlineDate = dataReader.GetDateTimeValueNullable(LevelInfrastructure.DeadlineDateColumnName),
                             LevelName = dataReader.GetStringValue(LevelInfrastructure.LevelNameColumnName),
+                            WF = dataReader.GetDecimalValueNullable(LevelInfrastructure.WFColumnName),
                             Active = dataReader.GetBooleanValue(BaseSQLInfrastructure.ActiveColumnName),
                             ReviewerLevels = new List<ReviewerLevel>(),
                             StakeholderLevels = new List<StakeholderLevel>()
@@ -388,6 +393,7 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(LevelInfrastructure.QuestionaireTemplateIdParameterName, level.QuestionaireTemplateId),
                 base.GetParameter(LevelInfrastructure.DeadlineDateParameterName, level.DeadlineDate),
                 base.GetParameter(LevelInfrastructure.RenewalDateParameterName, level.RenewalDate),
+                base.GetParameter(LevelInfrastructure.WFParameterName, level.WF),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, level.CurrentUserId)
             };
             //TODO: Add other parameters.

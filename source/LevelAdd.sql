@@ -1,4 +1,6 @@
-﻿DROP procedure if exists [levelAdd];
+﻿
+
+DROP procedure if exists [levelAdd];
 GO
 
 
@@ -15,14 +17,15 @@ CREATE PROCEDURE levelAdd(
  @PParentId	int,
  @PQuestionaireTemplateId int,
  @PDeadlineDate datetime2(0),
- @PRenewalDate datetime2(0)
+ @PRenewalDate datetime2(0),
+ @PWF decimal(18,4)
 )
 As
 Begin
 Set nocount on;
 	Insert Into level
-				(LevelName, ParentId, QuestionaireTemplateId, DeadlineDate, RenewalDate, CreatedById,  CreatedDate,  Active)
-		Values	(@PLevelName, @PParentId, @PQuestionaireTemplateId, @PDeadlineDate, @PRenewalDate, @PCurrentUserId, GETUTCDATE(), 1);
+				(LevelName, ParentId, QuestionaireTemplateId, DeadlineDate, RenewalDate, CreatedById,  CreatedDate,  Active, WF)
+		Values	(@PLevelName, @PParentId, @PQuestionaireTemplateId, @PDeadlineDate, @PRenewalDate, @PCurrentUserId, GETUTCDATE(), 1, @PWF);
 
 	Set @PLevelId = SCOPE_IDENTITY();
 End;

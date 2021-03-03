@@ -15,7 +15,7 @@ Begin
 Set nocount on;
 	Select 
 		tbl.LevelId, tbl.LevelName, tbl.ParentId, tbl.QuestionaireTemplateId,
-		tbl.DeadlineDate, tbl.RenewalDate,  tbl.Active
+		tbl.DeadlineDate, tbl.RenewalDate,  tbl.Active, tbl.WF
 	From level tbl 
 	Where tbl.LevelId = @PLevelId;
 

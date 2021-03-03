@@ -14,6 +14,7 @@ namespace MNBEC.Domain
         public int? QuestionaireTemplateId { get; set; }
         public DateTime? DeadlineDate { get; set; }
         public DateTime? RenewalDate { get; set; }
+        public decimal? WF { get; set; }
 
         public List<StakeholderLevel> StakeholderLevels { get; set; }
         public List<ReviewerLevel> ReviewerLevels { get; set; }

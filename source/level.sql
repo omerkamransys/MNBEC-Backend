@@ -9,6 +9,7 @@ IF (NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'Lev
   [QuestionaireTemplateId] int check ([QuestionaireTemplateId] > 0) DEFAULT NULL,
   [DeadlineDate] datetime2(0) DEFAULT NULL,
   [RenewalDate] datetime2(0) DEFAULT NULL,
+  [WF] decimal(18,4) DEFAULT NULL,
   [CreatedById] int check ([CreatedById] > 0) DEFAULT NULL,
   [CreatedDate] datetime2(0) DEFAULT NULL,
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
