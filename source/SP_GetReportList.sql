@@ -17,7 +17,9 @@ Begin
 Set nocount on;
 
 	
-select q.FourP,SUM(lt.score) as [sum],COUNT(q.ID) as [count] from StakeholderAnswer ans with (nolock)
+select q.FourP,
+4 As [Max], (Sum(q.DesiredLevel)/COUNT(q.ID)) as Desired, (SUM(lt.score) / COUNT(q.ID)) As [Current]
+ from StakeholderAnswer ans with (nolock)
 	inner join Question q on q.Id = ans.QuestionId
 		inner join LevelTypeLookUp lt on ans.LevelType = lt.Id
 	where ans.QuestionaireTemplateId = @PQuestionaireTemplateId and ans.LevelId = @PLevelId
