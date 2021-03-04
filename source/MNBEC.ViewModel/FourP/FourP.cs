@@ -7,11 +7,16 @@ namespace MNBEC.ViewModel
     public class FourP
     {
         public int FounrPId { get; set; }
-        public int Count { get; set; }
-        public decimal Sum { get; set; }
-        public decimal Avg
+        public int Max { get; set; }
+        public decimal Desired { get; set; }
+        public decimal Current { get; set; }
+        public decimal DesiredPST
         {
-            get { return Count > 0 ?  Sum/Count : 0; }
+            get { return Desired > 0 ? Current / Desired : 0; }
+        }
+        public decimal TotalPST
+        {
+            get { return Max > 0 ? Current / Max : 0; }
         }
 
     }

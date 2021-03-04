@@ -220,8 +220,9 @@ namespace MNBEC.Infrastructure
                         item = new FourP
                         {
                             FounrPId = dataReader.GetUnsignedIntegerValue("FourP"),
-                            Count = dataReader.GetUnsignedIntegerValue("count"),
-                            Sum = dataReader.GetUnsignedIntegerValue("sum")
+                            Desired = dataReader.GetDecimalValue("Desired"),
+                            Current = dataReader.GetDecimalValue("Current"),
+                            Max = dataReader.GetUnsignedIntegerValue("Max")
                         };
                         answers.Report.Add(item);
                     }
