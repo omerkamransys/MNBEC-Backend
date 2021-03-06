@@ -204,7 +204,8 @@ namespace MNBEC.Infrastructure
 
             var answers = new ReportResponseVM();
             answers.Report = new List<FourP>();
-            FourP item  = null;
+            FourP item = null;
+            ReportQList item1 = null;
             var parameters = new List<DbParameter>
             {
                 base.GetParameter(AnswerInfrastructure.LevelIdParameterName, request.LevelId),
@@ -225,6 +226,19 @@ namespace MNBEC.Infrastructure
                             Max = dataReader.GetUnsignedIntegerValue("Max")
                         };
                         answers.Report.Add(item);
+                    }
+                    if(dataReader.NextResult())
+                    {
+                        while (dataReader.Read())
+                        {
+                            item1 = new ReportQList
+                            {
+                                Title = dataReader.GetStringValue("Title"),
+                                Desired = dataReader.GetDecimalValue("Desired"),
+                                Current = dataReader.GetDecimalValue("Current"),
+                            };
+                            answers.ReportQList.Add(item1);
+                        }
                     }
 
 
