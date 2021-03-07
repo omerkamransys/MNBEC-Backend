@@ -11,5 +11,10 @@ namespace MNBEC.ApplicationInterface
     public interface ILevelApplication : IBaseApplication<Level>
     {
         Task<List<StakeholderLevelModel>> GetListByStakeholderId(int stakeholderId);
+
+        Task<PlanReportComment> GetPlanReportComment(PlanReportComment level);
+        Task<int> AddPlanReportComment(PlanReportComment entity);
+
+        Task<bool> UpdatePlanReportComment(PlanReportComment entity);
     }
 }

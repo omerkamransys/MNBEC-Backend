@@ -11,6 +11,7 @@
   [ModifiedById] int check ([ModifiedById] > 0) DEFAULT NULL,
   [ModifiedDate] datetime2(0) DEFAULT NULL,
   [Active] bit NOT NULL DEFAULT 1,
+  [score] [int] NULL,
   PRIMARY KEY ([Id])
  );
 

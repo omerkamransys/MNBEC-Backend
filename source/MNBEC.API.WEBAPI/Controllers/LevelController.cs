@@ -126,6 +126,34 @@ namespace MNBEC.API.WEBAPI.Controllers
 
             return response;
         }
+
+        [HttpGet("getPlanReportComment")]
+        [AllowAnonymous]
+        public async Task<PlanReportComment> GetPlanReportComment([FromQuery] PlanReportComment request)
+        {
+            var response = await this.LevelApplication.GetPlanReportComment(request);
+
+            return response;
+        }
+
+        [HttpPost("AddPlanReportComment")]
+        [AllowAnonymous]
+        public async Task<int> AddPlanReportComment([FromBody] PlanReportComment request)
+        {
+            var response = await this.LevelApplication.AddPlanReportComment(request);
+
+            return response;
+        }
+        [HttpPut("updatePlanReportComment")]
+        [AllowAnonymous]
+        public async Task<bool> UpdatePlanReportComment([FromBody] PlanReportComment request)
+        {
+            var isUpdated = await this.LevelApplication.UpdatePlanReportComment(request);
+
+            return isUpdated;
+        }
+        
+
         #endregion
     }
 }

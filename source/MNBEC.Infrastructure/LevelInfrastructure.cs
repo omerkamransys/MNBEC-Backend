@@ -38,10 +38,13 @@ namespace MNBEC.Infrastructure
         private const string ReviewerLevelDeleteStoredProcedureName = "ReviewerLevelDelete";
         private const string StakeholderLevelDeleteStoredProcedureName = "StakeholderLevelDelete";
         private const string GetStoredProcedureName = "LevelGet";
+        private const string GetPlanReportCommentStoredProcedureName = "GetPlanReportComment";
         private const string GetAllStoredProcedureName = "LevelGetAll";
         private const string GetListStoredProcedureName = "LevelGetList";
         private const string GetListByStakeholderIdStoredProcedureName = "LevelGetListByStakeholderId";
         private const string UpdateStoredProcedureName = "LevelUpdate";
+        private const string AddPlanReportCommentStoredProcedureName = "AddPlanReportComment";
+        private const string UpdatePlanReportCommentStoredProcedureName = "UpdatePlanReportComment";
 
         private const string LevelIdColumnName = "LevelId";
         private const string ParentIdColumnName = "ParentId";
@@ -55,9 +58,12 @@ namespace MNBEC.Infrastructure
         private const string QuestionaireTemplateNameColumnName = "QuestionaireTemplateName";
         private const string IsSubmitColumnName = "IsSubmit";
         private const string WFColumnName = "WF";
+        private const string StrengthsColumnName = "Strengths";
+        private const string OFIColumnName = "OFI";
 
 
         private const string LevelIdParameterName = "PLevelId";
+        private const string IdParameterName = "PId";
         private const string LevelNameParameterName = "PLevelName";
         private const string ParentIdParameterName = "PParentId";
         private const string QuestionaireTemplateIdParameterName = "PQuestionaireTemplateId";
@@ -65,6 +71,8 @@ namespace MNBEC.Infrastructure
         private const string RenewalDateParameterName = "PRenewalDate";
         private const string WFParameterName = "PWF";
         private const string StakeholderIdParameterName = "PStakeholderId";
+        private const string StrengthsParameterName = "PStrengths";
+        private const string OFIParameterName = "POFI";
 
 
 
@@ -463,6 +471,74 @@ namespace MNBEC.Infrastructure
             }
 
             return CreatedById;
+        }
+
+        public async Task<PlanReportComment> GetPlanReportComment(PlanReportComment level)
+        {
+            PlanReportComment LevelItem = null;
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(LevelInfrastructure.LevelIdParameterName, level.LevelId),
+            };
+
+            using (var dataReader = await base.ExecuteReader(parameters, LevelInfrastructure.GetPlanReportCommentStoredProcedureName, CommandType.StoredProcedure))
+            {
+                if (dataReader != null && dataReader.HasRows)
+                {
+                    if (dataReader.Read())
+                    {
+                        LevelItem = new PlanReportComment
+                        {
+                            Strengths = dataReader.GetStringValue(LevelInfrastructure.StrengthsColumnName),
+                            OFI = dataReader.GetStringValue(LevelInfrastructure.OFIColumnName)
+
+                        };
+                    }
+
+                   
+
+                }
+            }
+
+            return LevelItem;
+        }
+
+
+        public async Task<int> AddPlanReportComment(PlanReportComment entity)
+        {
+            var levelIdParamter = base.GetParameterOut(LevelInfrastructure.IdParameterName, SqlDbType.Int, entity.Id);
+            var parameters = new List<DbParameter>
+            {
+                levelIdParamter,
+                base.GetParameter(LevelInfrastructure.StrengthsParameterName, entity.Strengths),
+                base.GetParameter(LevelInfrastructure.LevelIdParameterName, entity.LevelId),
+                base.GetParameter(LevelInfrastructure.OFIParameterName, entity.OFI),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, entity.CurrentUserId)
+            };
+            //TODO: Add other parameters.
+
+            await base.ExecuteNonQuery(parameters, LevelInfrastructure.AddPlanReportCommentStoredProcedureName, CommandType.StoredProcedure);
+
+            
+            return entity.Id;
+        }
+
+        public async Task<bool> UpdatePlanReportComment(PlanReportComment entity)
+        {
+            
+            var parameters = new List<DbParameter>
+            {   base.GetParameter(LevelInfrastructure.IdParameterName,  entity.Id),
+                base.GetParameter(LevelInfrastructure.StrengthsParameterName, entity.Strengths),
+                base.GetParameter(LevelInfrastructure.LevelIdParameterName, entity.LevelId),
+                base.GetParameter(LevelInfrastructure.OFIParameterName, entity.OFI),
+                base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, entity.CurrentUserId)
+            };
+            //TODO: Add other parameters.
+
+            await base.ExecuteNonQuery(parameters, LevelInfrastructure.UpdatePlanReportCommentStoredProcedureName, CommandType.StoredProcedure);
+
+
+            return true;
         }
         #endregion
     }

@@ -102,6 +102,23 @@ namespace MNBEC.Application
         {
             return await this.LevelInfrastructure.GetListByStakeholderId(stakeholderId);
         }
+
+        public async Task<PlanReportComment> GetPlanReportComment(PlanReportComment level)
+        {
+            return await this.LevelInfrastructure.GetPlanReportComment(level);
+        }
+
+        public async Task<int> AddPlanReportComment(PlanReportComment entity)
+        {
+            return await this.LevelInfrastructure.AddPlanReportComment(entity);
+        }
+        public async Task<bool> UpdatePlanReportComment(PlanReportComment entity)
+        {
+            return await this.LevelInfrastructure.UpdatePlanReportComment(entity);
+        }
+       
+
+
         #endregion
     }
 }

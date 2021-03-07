@@ -13,5 +13,8 @@ namespace MNBEC.InfrastructureInterface
     public interface ILevelInfrastructure : IBaseInfrastructure<Level>
     {
         Task<List<StakeholderLevelModel>> GetListByStakeholderId(int stakeholderId);
+        Task<PlanReportComment> GetPlanReportComment(PlanReportComment level);
+        Task<int> AddPlanReportComment(PlanReportComment level);
+        Task<bool> UpdatePlanReportComment(PlanReportComment entity);
     }
 }

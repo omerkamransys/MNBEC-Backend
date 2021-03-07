@@ -3958,3 +3958,93 @@ Max(q.DesiredLevel) as Desired, (SUM(lt.score) / COUNT(q.ID)) As [Current]
 End;
 
 GO
+
+
+DROP procedure if exists [GetPlanReportComment];
+
+GO
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE GetPlanReportComment(	
+ @PLevelId int
+)
+As
+Begin
+Set nocount on;
+	Select 
+		 tbl.Strengths, tbl.OFI
+	From PlanReportComment tbl 
+	Where tbl.LevelId = @PLevelId;
+
+
+End;
+
+GO
+
+
+DROP procedure if exists [AddPlanReportComment];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE AddPlanReportComment(
+ @PCurrentUserId int,
+ @PId	int OUT,
+ @PLevelId	int,
+ @PStrengths	nvarchar(max),
+ @POFI	nvarchar(max)
+)
+As
+Begin
+Set nocount on;
+	Insert Into PlanReportComment
+				(LevelId, Strengths, OFI, CreatedById,  CreatedDate,  Active)
+		Values	(@PLevelId, @PStrengths, @POFI, @PCurrentUserId, GETUTCDATE(), 1);
+
+	Set @PId = SCOPE_IDENTITY();
+End;
+
+GO
+
+DROP procedure if exists [UpdatePlanReportComment];
+GO
+
+
+-- =============================================
+-- Author:		
+-- Create date: 
+-- Description:	
+-- =============================================
+
+CREATE PROCEDURE UpdatePlanReportComment(
+ @PCurrentUserId int,
+ @PId	int,
+ @PLevelId	int,
+ @PStrengths	nvarchar(max),
+ @POFI	nvarchar(max)
+)
+As
+Begin
+Set nocount on;
+	
+	
+	Update PlanReportComment 
+		Set 
+			Strengths=@PStrengths,
+			OFI = @POFI,
+			ModifiedById = @PCurrentUserId,
+			ModifiedDate = GETUTCDATE()
+	Where LevelId = @PLevelId
+
+End;
+
+GO
