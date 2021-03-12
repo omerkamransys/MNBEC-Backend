@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MNBEC.ViewModel.ReportResponseVM;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,5 +20,9 @@ namespace MNBEC.ViewModel
             get { return Max > 0 ? Current / Max : 0; }
         }
 
+        public static implicit operator FourP(SPResponseVM v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

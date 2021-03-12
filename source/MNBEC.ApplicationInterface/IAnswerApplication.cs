@@ -12,6 +12,7 @@ namespace MNBEC.ApplicationInterface
         Task<List<LookUpVM>> LevelTypeLookUpGetList();
         Task<List<Answer>> GetListByStakeholderId(StakeholderAnswerRequest request);
         Task<ReportResponseVM> GetReportList(StakeholderAnswerRequest request);
+        Task<ParentReportResponseVM> GetParentReportList(int LevelId);
 
         Task<int> QuestionnaireStatusToSumbit(StakeholderQuestionnaireStatus request);
     }

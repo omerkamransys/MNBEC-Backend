@@ -165,6 +165,18 @@ namespace MNBEC.API.WEBAPI.Controllers
             ReportResponseVM response = await this.AnswerApplication.GetReportList(requestVM);
             return response;
         }
+        /// <summary>
+        /// GetReportList provides API to fetch and returns queried list of items.
+        /// </summary>
+        /// <param name="requestVM"></param>
+        /// <returns></returns>
+        [HttpGet("GetParentReportList")]
+        [AllowAnonymous]
+        public async Task<ParentReportResponseVM> GetParentReportList([FromQuery] int LevelId)
+        {
+            ParentReportResponseVM response = await this.AnswerApplication.GetParentReportList(LevelId);
+            return response;
+        }
         #endregion
 
     }

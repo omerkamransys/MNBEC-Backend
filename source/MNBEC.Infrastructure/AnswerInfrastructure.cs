@@ -247,6 +247,39 @@ namespace MNBEC.Infrastructure
 
             return answers;
         }
+        public async Task<List<SPResponseVM>> GetParentReportList(int LevelId)
+        {
+
+            var answers = new List<SPResponseVM>();
+            SPResponseVM item = null;
+            var parameters = new List<DbParameter>
+            {
+                base.GetParameter(AnswerInfrastructure.LevelIdParameterName, LevelId),
+            };
+
+            using (var dataReader = await base.ExecuteReader(parameters, "SP_GetParentReportList", CommandType.StoredProcedure))
+            {
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        item = new SPResponseVM
+                        {
+                            FourPId = dataReader.GetUnsignedIntegerValue("FourP"),
+                            LevelId = dataReader.GetUnsignedIntegerValue("LevelId"),
+                            ParentId = dataReader.GetUnsignedIntegerValue("ParentId"),
+                            Desired = dataReader.GetDecimalValue("Desired"),
+                            Current = dataReader.GetDecimalValue("Current"),
+                            Max = dataReader.GetUnsignedIntegerValue("Max"),
+                            modelTitle = dataReader.GetStringValue("LevelName")
+                        };
+                        answers.Add(item);
+                    }
+                }
+            }
+
+            return answers;
+        }
         /// <summary>
         /// GetListByStakeholderId fetch and returns queried list of items with specific fields from database.
         /// </summary>

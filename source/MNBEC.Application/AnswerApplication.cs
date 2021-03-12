@@ -9,6 +9,7 @@ using MNBEC.ViewModel.Answer;
 using MNBEC.ViewModel.ReportResponseVM;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -136,9 +137,87 @@ namespace MNBEC.Application
         {
             return await this.AnswerInfrastructure.QuestionnaireStatusToSumbit(request);
         }
+        List<SPResponseVM> result;
+        public async Task<ParentReportResponseVM> GetParentReportList(int LevelId)
+        {
+            result = await this.AnswerInfrastructure.GetParentReportList(LevelId);
+
+            ParentReportResponseVM modeledData = getModeledData(LevelId,"");
+            return modeledData;
+        }
+
+        private ParentReportResponseVM getModeledData(int levelId,string modelName)
+        {
+            var imidiateChild = result.Where(x => x.ParentId == levelId);
+            if(imidiateChild != null && imidiateChild.Count() > 0)
+            {
+                ParentReportResponseVM obj = new ParentReportResponseVM();
+                obj.ChilderenList = new List<ParentReportResponseVM>();
+                obj.LevelId = levelId;
+                obj.modelTitle = modelName;
+                obj.TotalFourPReport.FounrPId = 0;
+                obj.TotalFourPReport.Max = 4;
+                List<int> processedChild = new List<int>();
+                int divider = 0;
+                foreach (var child in imidiateChild)
+                {
+                    if(!processedChild.Contains(child.LevelId))
+                    {
+                        var childres = getModeledData(child.LevelId,child.modelTitle);
+                        childres.ParentId = levelId;
+                        obj.ChilderenList.Add(childres);
+                        processedChild.Add(child.LevelId);
+                        obj.TotalFourPReport.Desired += childres.TotalFourPReport.Desired;
+                        obj.TotalFourPReport.Current += childres.TotalFourPReport.Current;
+                        divider++;
+                    }
+                    
+                }
+                if(divider>0 )
+                {
+                    obj.TotalFourPReport.Desired = obj.TotalFourPReport.Desired > 0 ? (obj.TotalFourPReport.Desired/divider) : 0;
+                    obj.TotalFourPReport.Current = obj.TotalFourPReport.Current > 0 ? (obj.TotalFourPReport.Current/ divider) : 0;
+                }
+                return obj;
+            } 
+            else
+            {
+                ParentReportResponseVM obj = new ParentReportResponseVM();
+                obj.LevelId = levelId;
+                obj.modelTitle = modelName;
+                var FPList = result.Where(x => x.LevelId == levelId && x.FourPId > 0);
+                obj.TotalFourPReport.FounrPId = 0;
+                obj.TotalFourPReport.Max = 4;
+                foreach (var child in FPList)
+                {
+                    if(child.FourPId > 0)
+                    {
+                        FourP fp = new FourP();
+                        fp.FounrPId = child.FourPId;
+                        fp.Max = 4;
+                        fp.Desired = child.Desired;
+                        fp.Current = child.Current;
+                        obj.FourPReport.Add(fp);
+
+                        obj.TotalFourPReport.Desired += fp.Desired;
+                        obj.TotalFourPReport.Current += fp.Current;
+                    }
+                    
+                }
+                if(FPList !=null && FPList.Count()>0)
+                {
+
+                    obj.TotalFourPReport.Desired = obj.TotalFourPReport.Desired > 0 ? (obj.TotalFourPReport.Desired / FPList.Count()) : 0;
+                    obj.TotalFourPReport.Current = obj.TotalFourPReport.Current > 0 ? (obj.TotalFourPReport.Current / FPList.Count()) : 0;
+                }
+                
+                return obj;
+            }
+
+        }
 
 
-        
+
 
         #endregion
     }
