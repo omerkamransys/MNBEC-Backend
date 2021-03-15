@@ -142,11 +142,11 @@ namespace MNBEC.Application
         {
             result = await this.AnswerInfrastructure.GetParentReportList(LevelId);
 
-            ParentReportResponseVM modeledData = getModeledData(LevelId,"");
+            ParentReportResponseVM modeledData = getModeledData(LevelId,"",0);
             return modeledData;
         }
 
-        private ParentReportResponseVM getModeledData(int levelId,string modelName)
+        private ParentReportResponseVM getModeledData(int levelId,string modelName,decimal wf)
         {
             var imidiateChild = result.Where(x => x.ParentId == levelId);
             if(imidiateChild != null && imidiateChild.Count() > 0)
@@ -155,6 +155,7 @@ namespace MNBEC.Application
                 obj.ChilderenList = new List<ParentReportResponseVM>();
                 obj.LevelId = levelId;
                 obj.modelTitle = modelName;
+                obj.wf = wf;
                 obj.TotalFourPReport.FounrPId = 0;
                 obj.TotalFourPReport.Max = 4;
                 List<int> processedChild = new List<int>();
@@ -163,7 +164,7 @@ namespace MNBEC.Application
                 {
                     if(!processedChild.Contains(child.LevelId))
                     {
-                        var childres = getModeledData(child.LevelId,child.modelTitle);
+                        var childres = getModeledData(child.LevelId,child.modelTitle,child.wf);
                         childres.ParentId = levelId;
                         obj.ChilderenList.Add(childres);
                         processedChild.Add(child.LevelId);
@@ -185,6 +186,7 @@ namespace MNBEC.Application
                 ParentReportResponseVM obj = new ParentReportResponseVM();
                 obj.LevelId = levelId;
                 obj.modelTitle = modelName;
+                obj.wf = wf;
                 var FPList = result.Where(x => x.LevelId == levelId && x.FourPId > 0);
                 obj.TotalFourPReport.FounrPId = 0;
                 obj.TotalFourPReport.Max = 4;

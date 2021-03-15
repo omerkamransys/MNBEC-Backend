@@ -8,6 +8,7 @@ namespace MNBEC.ViewModel.ReportResponseVM
     {
         public int LevelId;
         public int? ParentId;
+        public decimal wf;
         public string modelTitle { get; set; }
         public List<ParentReportResponseVM> ChilderenList { get; set; }
         public List<FourP> FourPReport { get; set; } = new List<FourP>();
@@ -22,6 +23,7 @@ namespace MNBEC.ViewModel.ReportResponseVM
         public decimal Max;
         public decimal Desired;
         public decimal Current;
+        public decimal wf;
         public string modelTitle { get; set; }
     }
 }

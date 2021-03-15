@@ -270,6 +270,7 @@ namespace MNBEC.Infrastructure
                             ParentId = dataReader.GetUnsignedIntegerValue("ParentId"),
                             Desired = dataReader.GetDecimalValue("Desired"),
                             Current = dataReader.GetDecimalValue("Current"),
+                            wf = dataReader.GetDecimalValue("wf"),
                             Max = dataReader.GetUnsignedIntegerValue("Max"),
                             modelTitle = dataReader.GetStringValue("LevelName")
                         };
