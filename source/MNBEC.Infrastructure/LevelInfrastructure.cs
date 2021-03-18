@@ -60,6 +60,9 @@ namespace MNBEC.Infrastructure
         private const string WFColumnName = "WF";
         private const string StrengthsColumnName = "Strengths";
         private const string OFIColumnName = "OFI";
+        private const string OpportunitiesColumnName = "Opportunities";
+        private const string RecommendationsColumnName = "Recommendations";
+        private const string ConclusionColumnName = "Conclusion";
 
 
         private const string LevelIdParameterName = "PLevelId";
@@ -73,6 +76,9 @@ namespace MNBEC.Infrastructure
         private const string StakeholderIdParameterName = "PStakeholderId";
         private const string StrengthsParameterName = "PStrengths";
         private const string OFIParameterName = "POFI";
+        private const string OpportunitiesParameterName = "POpportunities";
+        private const string RecommendationsParameterName = "PRecommendations";
+        private const string ConclusionParameterName = "PConclusion";
 
 
 
@@ -490,7 +496,10 @@ namespace MNBEC.Infrastructure
                         LevelItem = new PlanReportComment
                         {
                             Strengths = dataReader.GetStringValue(LevelInfrastructure.StrengthsColumnName),
-                            OFI = dataReader.GetStringValue(LevelInfrastructure.OFIColumnName)
+                            OFI = dataReader.GetStringValue(LevelInfrastructure.OFIColumnName),
+                            Opportunities = dataReader.GetStringValue(LevelInfrastructure.OpportunitiesColumnName),
+                            Recommendations = dataReader.GetStringValue(LevelInfrastructure.RecommendationsColumnName),
+                            Conclusion = dataReader.GetStringValue(LevelInfrastructure.ConclusionColumnName)
 
                         };
                     }
@@ -513,6 +522,9 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(LevelInfrastructure.StrengthsParameterName, entity.Strengths),
                 base.GetParameter(LevelInfrastructure.LevelIdParameterName, entity.LevelId),
                 base.GetParameter(LevelInfrastructure.OFIParameterName, entity.OFI),
+                base.GetParameter(LevelInfrastructure.OpportunitiesParameterName, entity.Opportunities),
+                base.GetParameter(LevelInfrastructure.RecommendationsParameterName, entity.Recommendations),
+                base.GetParameter(LevelInfrastructure.ConclusionParameterName, entity.Conclusion),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, entity.CurrentUserId)
             };
             //TODO: Add other parameters.
@@ -531,6 +543,9 @@ namespace MNBEC.Infrastructure
                 base.GetParameter(LevelInfrastructure.StrengthsParameterName, entity.Strengths),
                 base.GetParameter(LevelInfrastructure.LevelIdParameterName, entity.LevelId),
                 base.GetParameter(LevelInfrastructure.OFIParameterName, entity.OFI),
+                base.GetParameter(LevelInfrastructure.OpportunitiesParameterName, entity.Opportunities),
+                base.GetParameter(LevelInfrastructure.RecommendationsParameterName, entity.Recommendations),
+                base.GetParameter(LevelInfrastructure.ConclusionParameterName, entity.Conclusion),
                 base.GetParameter(BaseSQLInfrastructure.CurrentUserIdParameterName, entity.CurrentUserId)
             };
             //TODO: Add other parameters.

@@ -118,6 +118,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StoredProcedures", "StoredP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MNBEC.API.WEBAPI", "MNBEC.API.WEBAPI\MNBEC.API.WEBAPI.csproj", "{B7D7948A-8D67-4331-A565-BDA3F8560F58}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReleaseChanges", "ReleaseChanges", "{43FF3926-1DDB-4566-AE12-F8EFA5035620}"
+	ProjectSection(SolutionItems) = preProject
+		PlanReportCommentChanges.sql = PlanReportCommentChanges.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -217,6 +222,7 @@ Global
 		{16BE404E-31FB-4711-82A7-5ADB62AB5825} = {1E468302-F103-4A31-9C4C-06A0805B6C88}
 		{6D4DFF7D-B0DD-4649-81BF-F241A3F70843} = {1E468302-F103-4A31-9C4C-06A0805B6C88}
 		{B7D7948A-8D67-4331-A565-BDA3F8560F58} = {FE48ECC2-5661-4624-B830-2B22E604F7A0}
+		{43FF3926-1DDB-4566-AE12-F8EFA5035620} = {1E468302-F103-4A31-9C4C-06A0805B6C88}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {82900769-AC7A-4993-A7E8-A9DF05FC9FB8}

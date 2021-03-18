@@ -13,14 +13,17 @@ CREATE PROCEDURE AddPlanReportComment(
  @PId	int OUT,
  @PLevelId	int,
  @PStrengths	nvarchar(max),
- @POFI	nvarchar(max)
+ @POFI	nvarchar(max),
+ @POpportunities	nvarchar(max),
+ @PRecommendations	nvarchar(max),
+ @PConclusion	nvarchar(max)
 )
 As
 Begin
 Set nocount on;
 	Insert Into PlanReportComment
-				(LevelId, Strengths, OFI, CreatedById,  CreatedDate,  Active)
-		Values	(@PLevelId, @PStrengths, @POFI, @PCurrentUserId, GETUTCDATE(), 1);
+				(LevelId, Strengths, OFI,Opportunities,Recommendations,Conclusion, CreatedById,  CreatedDate,  Active)
+		Values	(@PLevelId, @PStrengths, @POFI,@POpportunities,@PRecommendations,@PConclusion, @PCurrentUserId, GETUTCDATE(), 1);
 
 	Set @PId = SCOPE_IDENTITY();
 End;

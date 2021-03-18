@@ -13,6 +13,9 @@ namespace MNBEC.ViewModel.Level
        
         public string Strengths { get; set; }
         public string OFI { get; set; }
+        public string Opportunities { get; set; }
+        public string Recommendations { get; set; }
+        public string Conclusion { get; set; }
 
         #endregion
     }

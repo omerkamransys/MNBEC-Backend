@@ -14,10 +14,9 @@ As
 Begin
 Set nocount on;
 	Select 
-		 tbl.Strengths, tbl.OFI
+		 tbl.Strengths, tbl.OFI, tbl.Opportunities,tbl.Recommendations,tbl.Conclusion
 	From PlanReportComment tbl 
 	Where tbl.LevelId = @PLevelId;
-
 
 End;
 

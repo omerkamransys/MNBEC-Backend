@@ -3976,10 +3976,9 @@ As
 Begin
 Set nocount on;
 	Select 
-		 tbl.Strengths, tbl.OFI
+		 tbl.Strengths, tbl.OFI, tbl.Opportunities,tbl.Recommendations,tbl.Conclusion
 	From PlanReportComment tbl 
 	Where tbl.LevelId = @PLevelId;
-
 
 End;
 
@@ -4001,19 +4000,24 @@ CREATE PROCEDURE AddPlanReportComment(
  @PId	int OUT,
  @PLevelId	int,
  @PStrengths	nvarchar(max),
- @POFI	nvarchar(max)
+ @POFI	nvarchar(max),
+ @POpportunities	nvarchar(max),
+ @PRecommendations	nvarchar(max),
+ @PConclusion	nvarchar(max)
 )
 As
 Begin
 Set nocount on;
 	Insert Into PlanReportComment
-				(LevelId, Strengths, OFI, CreatedById,  CreatedDate,  Active)
-		Values	(@PLevelId, @PStrengths, @POFI, @PCurrentUserId, GETUTCDATE(), 1);
+				(LevelId, Strengths, OFI,Opportunities,Recommendations,Conclusion, CreatedById,  CreatedDate,  Active)
+		Values	(@PLevelId, @PStrengths, @POFI,@POpportunities,@PRecommendations,@PConclusion, @PCurrentUserId, GETUTCDATE(), 1);
 
 	Set @PId = SCOPE_IDENTITY();
 End;
 
 GO
+
+
 
 DROP procedure if exists [UpdatePlanReportComment];
 GO
@@ -4030,7 +4034,10 @@ CREATE PROCEDURE UpdatePlanReportComment(
  @PId	int,
  @PLevelId	int,
  @PStrengths	nvarchar(max),
- @POFI	nvarchar(max)
+ @POFI	nvarchar(max),
+  @POpportunities	nvarchar(max),
+ @PRecommendations	nvarchar(max),
+ @PConclusion	nvarchar(max)
 )
 As
 Begin
@@ -4041,6 +4048,9 @@ Set nocount on;
 		Set 
 			Strengths=@PStrengths,
 			OFI = @POFI,
+			Opportunities = @POpportunities,
+			Recommendations = @PRecommendations,
+			Conclusion = @PConclusion,
 			ModifiedById = @PCurrentUserId,
 			ModifiedDate = GETUTCDATE()
 	Where LevelId = @PLevelId
