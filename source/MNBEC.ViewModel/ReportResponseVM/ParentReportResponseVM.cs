@@ -12,6 +12,7 @@ namespace MNBEC.ViewModel.ReportResponseVM
         public string modelTitle { get; set; }
         public List<ParentReportResponseVM> ChilderenList { get; set; }
         public List<FourP> FourPReport { get; set; } = new List<FourP>();
+        public List<ModeledFourP> ModeledFourPReport { get; set; } = new List<ModeledFourP>();
         public FourP TotalFourPReport { get; set; } = new FourP();
 
     }
@@ -25,5 +26,12 @@ namespace MNBEC.ViewModel.ReportResponseVM
         public decimal Current;
         public decimal wf;
         public string modelTitle { get; set; }
+    }
+    public class ModeledFourP
+    {
+        
+        public int FourPId;
+        public List<FourP> FourPReport { get; set; } = new List<FourP>();
+
     }
 }

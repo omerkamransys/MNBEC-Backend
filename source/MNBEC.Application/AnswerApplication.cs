@@ -166,6 +166,24 @@ namespace MNBEC.Application
                     {
                         var childres = getModeledData(child.LevelId,child.modelTitle,child.wf);
                         childres.ParentId = levelId;
+                        ////////////////////////
+                        foreach (var itemfp in childres.ModeledFourPReport)
+                        {
+                            var mpfobj = obj.ModeledFourPReport.Find(x=>x.FourPId == itemfp.FourPId);
+                            if(mpfobj !=null)
+                            {
+                                mpfobj.FourPReport.AddRange(itemfp.FourPReport);
+                            }
+                            else
+                            {
+                                ModeledFourP mfp = new ModeledFourP();
+                                mfp.FourPId = itemfp.FourPId;
+                                mfp.FourPReport.AddRange(itemfp.FourPReport);
+                                obj.ModeledFourPReport.Add(mfp);
+                            }
+                        }
+                        
+                        ////////////////////////
                         obj.ChilderenList.Add(childres);
                         processedChild.Add(child.LevelId);
                         obj.TotalFourPReport.Desired += childres.TotalFourPReport.Desired;
@@ -200,7 +218,10 @@ namespace MNBEC.Application
                         fp.Desired = child.Desired;
                         fp.Current = child.Current;
                         obj.FourPReport.Add(fp);
-
+                        ModeledFourP mfp = new ModeledFourP();
+                        mfp.FourPId = fp.FounrPId;
+                        mfp.FourPReport.Add(fp);
+                        obj.ModeledFourPReport.Add(mfp);
                         obj.TotalFourPReport.Desired += fp.Desired;
                         obj.TotalFourPReport.Current += fp.Current;
                     }
